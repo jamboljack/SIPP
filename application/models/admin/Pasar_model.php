@@ -60,9 +60,31 @@ class Pasar_model extends CI_Model {
 		return $this->db->get();
 	}
 	
+	function getkodeunik() {
+		$this->db->select('RIGHT(pasar_inisial, 2) as kode', FALSE);
+		$this->db->order_by('pasar_inisial', 'desc');
+		$this->db->limit(1);
+
+		$query = $this->db->get('sipp_pasar');
+
+		if ($query->num_rows() <> 0) {
+			$data = $query->row();
+			$kode = intval($data->kode) + 1;
+		} else {
+			$kode = 1;
+		}
+
+		$kodejadi = str_pad($kode, 2, "0", STR_PAD_LEFT);
+		return $kodejadi;
+   	}
+
 	function insert_data() {
+		// Kode Pasar
+		$Kode_Pasar 	= $this->pasar_model->getkodeunik();
+
 		if (!empty($_FILES['userfile']['name'])) {
 			$data = array(
+					'pasar_inisial'			=> $Kode_Pasar,
 					'pasar_kode'			=> strtoupper(trim($this->input->post('kode'))),
 					'pasar_nama'			=> strtoupper(trim($this->input->post('nama'))),
 					'pasar_thn_berdiri'		=> trim($this->input->post('tahun')),
@@ -104,6 +126,7 @@ class Pasar_model extends CI_Model {
 			);
 		} else {		
 			$data = array(
+					'pasar_inisial'				=> $Kode_Pasar,
 					'pasar_kode'			=> strtoupper(trim($this->input->post('kode'))),
 					'pasar_nama'			=> strtoupper(trim($this->input->post('nama'))),
 					'pasar_thn_berdiri'		=> trim($this->input->post('tahun')),

@@ -1,8 +1,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
 <script>
-    function hapusData(jenis_id) {
-        var id = jenis_id;        
+    function hapusData(tempat_id) {
+        var id = tempat_id;
         swal({
             title: 'Anda Yakin ?',
             text: 'Data ini Akan di Hapus !',type: 'warning',
@@ -13,7 +13,7 @@
             cancelButtonText: 'No',
             closeOnConfirm: true
         }, function() {
-            window.location.href="<?php echo site_url('admin/jenis/deletedata'); ?>"+"/"+id
+            window.location.href="<?php echo site_url('admin/tempat/deletedata'); ?>"+"/"+id
         });
     }
 </script>
@@ -23,8 +23,8 @@
         $(document).on("click",'.edit_button', function(e) {
             var id      = $(this).data('id');
             var name    = $(this).data('name');            
-            $(".jenis_id").val(id);
-            $(".jenis_name").val(name);            
+            $(".tempat_id").val(id);
+            $(".tempat_name").val(name);            
         })
     });
 </script>
@@ -46,18 +46,18 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="modal bs-modal-lg" id="add" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="<?php echo site_url('admin/jenis/savedata'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
+            <form action="<?php echo site_url('admin/tempat/savedata'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         
             <div class="modal-header">                      
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title"><i class="fa fa-plus-square"></i> Form Tambah Jenis Dagangan</h4>
+                <h4 class="modal-title"><i class="fa fa-plus-square"></i> Form Tambah Jenis Tempat</h4>
             </div>
             <div class="modal-body">                
                 <div class="form-group">                    
-                    <label class="col-md-3 control-label">Jenis Dagangan</label>
+                    <label class="col-md-3 control-label">Jenis Tempat</label>
                     <div class="col-md-9 has-error">
-                        <input type="text" class="form-control" placeholder="Enter Jenis Dagangan" name="nama" autocomplete="off" required>
+                        <input type="text" class="form-control" placeholder="Enter Jenis Tempat" name="nama" autocomplete="off" required>
                     </div>
                 </div>                
             </div>
@@ -75,19 +75,19 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="modal bs-modal-lg" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="<?php echo site_url('admin/jenis/updatedata'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
+            <form action="<?php echo site_url('admin/tempat/updatedata'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-            <input type="hidden" class="form-control jenis_id" name="id">
+            <input type="hidden" class="form-control tempat_id" name="id">
                         
             <div class="modal-header">                      
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title"><i class="fa fa-edit"></i> Form Edit Jenis Dagangan</h4>
+                <h4 class="modal-title"><i class="fa fa-edit"></i> Form Edit Jenis Tempat</h4>
             </div>
             <div class="modal-body">                
                 <div class="form-group">                    
-                    <label class="col-md-3 control-label">Jenis Dagangan</label>
+                    <label class="col-md-3 control-label">Jenis Tempat</label>
                     <div class="col-md-9 has-error">
-                        <input type="text" class="form-control jenis_name" placeholder="Enter Jenis Dagangan" name="nama" autocomplete="off" required>
+                        <input type="text" class="form-control tempat_name" placeholder="Enter Jenis Tempat" name="nama" autocomplete="off" required>
                     </div>
                 </div>                
             </div>
@@ -104,7 +104,7 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Master <small>Jenis Dagangan</small>
+            Master <small>Jenis Tempat</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -118,7 +118,7 @@ if ($this->session->flashdata('notification')) { ?>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Jenis Dagangan</a>
+                    <a href="#">Jenis Tempat</a>
                 </li>
             </ul>                
         </div>            
@@ -132,7 +132,7 @@ if ($this->session->flashdata('notification')) { ?>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-list"></i> Daftar Jenis Dagangan
+                            <i class="fa fa-list"></i> Daftar Jenis Tempat
                         </div>
                         <div class="tools"></div>
                     </div>
@@ -141,9 +141,8 @@ if ($this->session->flashdata('notification')) { ?>
                         <table class="table table-striped table-bordered table-hover" id="sample_1">
                         <thead>
                             <tr>
-                                <th width="5%">No</th>
-                                <th width="10%">Kode</th>
-                                <th>Jenis Dagangan</th>
+                                <th width="5%">No</th>                                
+                                <th>Jenis Tempat</th>                                
                                 <th width="16%">Aksi</th>
                             </tr>
                         </thead>
@@ -152,16 +151,15 @@ if ($this->session->flashdata('notification')) { ?>
                             <?php 
                             $no = 1;
                             foreach($daftarlist as $r) {
-                                $jenis_id = $r->jenis_id;                                
+                                $tempat_id = $r->tempat_id;
                             ?>
                             <tr>
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $r->jenis_kode; ?></td>
-                                <td><?php echo $r->jenis_nama; ?></td>
+                                <td><?php echo $no; ?></td>                                
+                                <td><?php echo $r->tempat_nama; ?></td>                                
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->jenis_id; ?>" data-name="<?php echo $r->jenis_nama; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
+                                    <button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->tempat_id; ?>" data-name="<?php echo $r->tempat_nama; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
                                     </button>
-                                    <a onclick="hapusData(<?php echo $jenis_id; ?>)"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button>
+                                    <a onclick="hapusData(<?php echo $tempat_id; ?>)"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button>
                                     </a>
                                 </td>
                             </tr>

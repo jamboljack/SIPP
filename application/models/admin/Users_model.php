@@ -19,7 +19,10 @@ class Users_model extends CI_Model {
 	    			'user_username' 		=> trim($this->input->post('username')),
 	    			'user_password' 		=> sha1(trim($this->input->post('password'))),
 	    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    			'user_image' 			=> $this->upload->file_name,
+	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+	    			'user_level' 			=> trim($this->input->post('lstLevel')),
+	    			'user_avatar' 			=> $this->upload->file_name,
 	    			'user_date_update' 		=> date('Y-m-d'),
 	    			'user_time_update' 		=> date('Y-m-d H:i:s')
 				);
@@ -28,17 +31,20 @@ class Users_model extends CI_Model {
 	    			'user_username' 		=> trim($this->input->post('username')),
 	    			'user_password' 		=> sha1(trim($this->input->post('password'))),
 	    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
+	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+	    			'user_level' 			=> trim($this->input->post('lstLevel')),
 	    			'user_date_update' 		=> date('Y-m-d'),
 	    			'user_time_update' 		=> date('Y-m-d H:i:s')  			
 				);
 		}
 		
-		$this->db->insert('clinic_users', $data);
+		$this->db->insert('sipp_users', $data);
 	}
 	
 	function select_by_id($user_username) {
 		$this->db->select('*');
-		$this->db->from('clinic_users');		
+		$this->db->from('sipp_users');		
 		$this->db->where('user_username', $user_username);
 		
 		return $this->db->get();
@@ -52,42 +58,50 @@ class Users_model extends CI_Model {
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(	    			
 		    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-	    				'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    				'user_status' 			=> trim($this->input->post('lstStatus')),
-	    				'user_image' 			=> $this->upload->file_name,
-	    				'user_date_update' 		=> date('Y-m-d'),
-	    				'user_time_update' 		=> date('Y-m-d H:i:s')
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+		    			'user_avatar' 			=> $this->upload->file_name,
+		    			'user_date_update' 		=> date('Y-m-d'),
+		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			} else {
 				$data = array(	    			
 		    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-	    				'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    				'user_status' 			=> trim($this->input->post('lstStatus')),
-	    				'user_date_update' 		=> date('Y-m-d'),
-	    				'user_time_update' 		=> date('Y-m-d H:i:s')
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel')),		    			
+		    			'user_date_update' 		=> date('Y-m-d'),
+		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			}
 		} else {
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(
-	    				'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    				'user_status' 			=> trim($this->input->post('lstStatus')),
-	    				'user_image' 			=> $this->upload->file_name,
-	    				'user_date_update' 		=> date('Y-m-d'),
-	    				'user_time_update' 		=> date('Y-m-d H:i:s')
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+		    			'user_avatar' 			=> $this->upload->file_name,
+		    			'user_date_update' 		=> date('Y-m-d'),
+		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			} else {
 				$data = array(		    					    			
 	    				'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    				'user_status' 			=> trim($this->input->post('lstStatus')),
-	    				'user_date_update' 		=> date('Y-m-d'),
-	    				'user_time_update' 		=> date('Y-m-d H:i:s')
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+		    			'user_date_update' 		=> date('Y-m-d'),
+		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			}
 		}
 
 		$this->db->where('user_username', $user_username);
-		$this->db->update('clinic_users', $data);
+		$this->db->update('sipp_users', $data);
 	}	
 }
 /* Location: ./application/model/admin/Users_model.php */

@@ -73,11 +73,11 @@ if ($this->session->flashdata('notification')) { ?>
                             <tr>
                                 <th width="5%">No</th>
                                 <th width="12%">No. Surat</th>
-                                <th width="8%">Tanggal</th>
+                                <th width="10%">Tanggal</th>
                                 <th width="8%">NPWRD</th>
                                 <th>Nama Pedagang</th>
                                 <th width="15%">Nama Pasar</th>
-                                <th width="20%">Keterangan</th>
+                                <th width="15%">Keterangan</th>
                                 <th width="10%">Aksi</th>
                             </tr>
                         </thead>
@@ -102,7 +102,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $r->dasar_npwrd; ?></td>
                                 <td><?php echo $r->pedagang_nama; ?></td>
                                 <td><?php echo $r->pasar_nama; ?></td>
-                                <td><?php echo 'Blok '.$r->dasar_blok.', Ruko '.$r->dasar_ruko.', Kios '.$r->dasar_kios.', LOS '.$r->dasar_los.', Luas '.$r->dasar_luas.' m2'; ?></td>
+                                <td><?php echo 'Blok '.$r->dasar_blok.', Nomor '.$r->dasar_nomor."<br>".'Luas '.$r->dasar_luas.' m2'; ?></td>
                                 <td>
                                     <a href="<?php echo site_url('admin/dasar/editdata/'.$r->dasar_id); ?>">
                                         <button class="btn btn-primary btn-xs" title="Edit Data">

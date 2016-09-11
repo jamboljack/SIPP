@@ -6,10 +6,33 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
     $kepemilikan    = '';
+    $jenis          = '';
+    $data           = '';
+    $span_data_1    = '';
+    $span_data_2    = '';
+    $pasar          = '';
+    $pedagang       = '';
+    $trans          = '';
+    $span_trans_1   = '';
+    $span_trans_2   = '';
+    $pendasaran     = '';
+    $retribusi      = '';    
+    $users          = '';
+} elseif ($uri == 'tempat') {
+    $dashboard      = '';
+    $master         = 'active open';
+    $span_master_1  = '<span class="selected"></span>';
+    $span_master_2  = 'open';
+    $tempat         = 'active';
+    $kelas          = '';
+    $bentuk         = '';
+    $kondisi        = '';
+    $kepemilikan    = '';    
     $jenis          = '';
     $data           = '';
     $span_data_1    = '';
@@ -27,6 +50,7 @@ if ($uri == 'home') {
     $master         = 'active open';
     $span_master_1  = '<span class="selected"></span>';
     $span_master_2  = 'open';
+    $tempat         = '';
     $kelas          = 'active';
     $bentuk         = '';
     $kondisi        = '';
@@ -48,6 +72,7 @@ if ($uri == 'home') {
     $master         = 'active open';
     $span_master_1  = '<span class="selected"></span>';
     $span_master_2  = 'open';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = 'active';
     $kondisi        = '';
@@ -69,6 +94,7 @@ if ($uri == 'home') {
     $master         = 'active open';
     $span_master_1  = '<span class="selected"></span>';
     $span_master_2  = 'open';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = 'active';
@@ -90,6 +116,7 @@ if ($uri == 'home') {
     $master         = 'active open';
     $span_master_1  = '<span class="selected"></span>';
     $span_master_2  = 'open';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -111,6 +138,7 @@ if ($uri == 'home') {
     $master         = 'active open';
     $span_master_1  = '<span class="selected"></span>';
     $span_master_2  = 'open';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -132,6 +160,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -153,6 +182,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -174,6 +204,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -195,6 +226,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -216,6 +248,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -237,6 +270,7 @@ if ($uri == 'home') {
     $master         = '';
     $span_master_1  = '';
     $span_master_2  = '';
+    $tempat         = '';
     $kelas          = '';
     $bentuk         = '';
     $kondisi        = '';
@@ -292,6 +326,12 @@ if ($uri == 'home') {
                     <span class="arrow <?php echo $span_master_2; ?>"></span>
                 </a>
                 <ul class="sub-menu">
+                    <li class="<?php echo $tempat; ?>">
+                        <a href="<?php echo site_url('admin/tempat'); ?>">
+                            <i class="fa fa-check-square-o"></i>
+                            Jenis Tempat
+                        </a>
+                    </li>
                     <li class="<?php echo $kelas; ?>">
                         <a href="<?php echo site_url('admin/kelas'); ?>">
                             <i class="fa fa-check-square-o"></i>

@@ -13,14 +13,36 @@ class Jenis_model extends CI_Model {
 		return $this->db->get();
 	}
 	
-	function insert_data() {		
+	function getkodeunik() {
+		$this->db->select('RIGHT(jenis_kode, 2) as kode', FALSE);
+		$this->db->order_by('jenis_kode', 'desc');
+		$this->db->limit(1);
+
+		$query = $this->db->get('sipp_jenis');
+
+		if ($query->num_rows() <> 0) {
+			$data = $query->row();
+			$kode = intval($data->kode) + 1;
+		} else {
+			$kode = 1;
+		}
+
+		$kodejadi = str_pad($kode, 2, "0", STR_PAD_LEFT);
+		return $kodejadi;
+   	}
+
+	function insert_data() {
+		// Kode Jenis
+		$Kode_Jenis 	= $this->jenis_model->getkodeunik();		
+
 		$data = array(
+				'jenis_kode'			=> $Kode_Jenis,
 				'jenis_nama'			=> strtoupper(trim($this->input->post('nama'))),
 		   		'jenis_date_update' 	=> date('Y-m-d'),
 		   		'jenis_time_update' 	=> date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('sipp_jenis', $data);
+		$this->db->insert('sipp_jenis', $data);		
 	}	
 
 	function update_data() {

@@ -80,12 +80,12 @@ if ($this->session->flashdata('notification')) { ?>
                                 <?php if (empty($r->user_avatar)) { ?>
                                     <img src="<?php echo base_url(); ?>img/avatar.png">
                                 <?php } else { ?>
-                                    <img src="<?php echo base_url(); ?>icon/<?php echo $r->user_image; ?>" width="50%">
+                                    <img src="<?php echo base_url(); ?>icon/<?php echo $r->user_avatar; ?>" width="50%">
                                 <?php } ?>
                                 </td>                               
                                 <td>
                                     <?php if ($r->user_level <> 'Admin') { ?>
-                                    <a href="<?php echo site_url('admin/users/aksespasar/'.$r->user_username); ?>"><button class="btn btn-primary btn-xs" title="Edit Data"><i class="icon-list"></i> Akses Pasar</button>
+                                    <a href="<?php echo site_url('admin/users/aksespasar/'.$r->user_username); ?>"><button class="btn btn-danger btn-xs" title="Hak Akses Pasar"><i class="icon-list"></i> Akses Pasar</button>
                                     </a>
                                     <?php } ?>
                                     <a href="<?php echo site_url('admin/users/editdata/'.$r->user_username); ?>"><button class="btn btn-primary btn-xs" title="Edit Data"><i class="icon-pencil"></i> Edit</button>

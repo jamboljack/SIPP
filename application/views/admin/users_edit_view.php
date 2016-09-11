@@ -6,8 +6,8 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
                 <li>
-                    <i class="fa fa-bar-chart"></i>
-                    <a href="<?php echo site_url('admin/home'); ?>">Statistik</a>
+                    <i class="fa fa-home"></i>
+                    <a href="<?php echo site_url('admin/home'); ?>">Dashboard</a>
                     <i class="fa fa-angle-right"></i>
                 </li>                
                 <li>
@@ -42,13 +42,13 @@
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-2 control-label" for="form_control_1">Username</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" value="<?php echo $detail->user_username; ?>" id="form_control_1" type="text" readonly>
+                                        <input class="form-control" value="<?php echo $detail->user_username; ?>" type="text" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-2 control-label" for="form_control_1">Password</label>
                                     <div class="col-md-10">
-                                        <input type="password" class="form-control" id="form_control_1" placeholder="Change Password" name="password" autocomplete="off">
+                                        <input type="password" class="form-control" placeholder="Change Password" name="password" autocomplete="off">
                                         <div class="form-control-focus"></div>
                                         <span class="help-block">Isi Password Jika Ingin di RUBAH.</span>
                                     </div>
@@ -56,25 +56,52 @@
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-2 control-label" for="form_control_1">Nama Lengkap</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" id="form_control_1" placeholder="Enter Name" name="name" value="<?php echo $detail->user_name; ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter Name" name="name" value="<?php echo $detail->user_name; ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-2 control-label" for="form_control_1">Status</label>
+                                    <label class="col-md-2 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-10">
+                                        <input type="text" class="form-control" placeholder="Enter Alamat" name="alamat" value="<?php echo $detail->user_address; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-2 control-label" for="form_control_1">No. Telp</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" placeholder="Enter No. Telp" name="telp" value="<?php echo $detail->user_phone; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-2 control-label" for="form_control_1">Level</label>
+                                    <div class="col-md-3">
+                                        <select class="form-control" name="lstLevel" required>
+                                            <option value="">- Pilih Level -</option>
+                                            <option value="Admin" <?php if ($detail->user_level == 'Admin') { echo 'selected'; } ?>>Admin</option>
+                                            <option value="Supervisor" <?php if ($detail->user_level == 'Supervisor') { echo 'selected'; } ?>>Supervisor</option>
+                                            <option value="Operator" <?php if ($detail->user_level == 'Operator') { echo 'selected'; } ?>>Operator</option>
+                                        </select>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div> 
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-2 control-label" for="form_control_1">Status</label>
+                                    <div class="col-md-3">
                                         <select class="form-control" name='lstStatus' required>
                                             <option value="">- Select Status -</option>
                                             <option value="Active" <?php if ($detail->user_status == 'Active') { echo 'selected'; } ?>>Active</option>
                                             <option value="Non Active" <?php if ($detail->user_status == 'Non Active') { echo 'selected'; } ?>>Non Active</option>
                                         </select>
+                                        <div class="form-control-focus"></div>
                                     </div>                      
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">Avatar Lama</label>
                                     <div class="col-md-10 has-error">
-                                        <?php if (!empty($detail->user_image)) { ?>
-                                        <img src="<?php echo base_url(); ?>icon/<?php echo $detail->user_image; ?>" width="20%">
+                                        <?php if (!empty($detail->user_avatar)) { ?>
+                                        <img src="<?php echo base_url(); ?>icon/<?php echo $detail->user_avatar; ?>" width="10%">
                                         <?php } else { ?>
                                         <img src="<?php echo base_url(); ?>img/avatar.png">
                                         <?php } ?>

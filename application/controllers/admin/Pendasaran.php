@@ -21,8 +21,8 @@ class Pendasaran extends CI_Controller {
 		} 
 	}
 
-	public function adddata() {
-		$data['error']			= false;		
+	public function adddata() {		
+		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
 		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
 		$data['listPedagang'] 	= $this->pendasaran_model->select_pedagang()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
@@ -36,7 +36,10 @@ class Pendasaran extends CI_Controller {
 	}
 	
 	public function editdata($pendasaran_id) {		
-		$data['listAlamat'] 	= $this->pendasaran_model->select_prov_kab()->result();
+		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
+		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
+		$data['listPedagang'] 	= $this->pendasaran_model->select_pedagang()->result();
+		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
 		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($pendasaran_id)->row();
 		$this->template->display('admin/pendasaran_edit_view', $data);
 	}

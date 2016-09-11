@@ -59,7 +59,7 @@ class Users extends CI_Controller {
 			}
 
 			$this->users_model->insert_data();
-			$this->session->set_flashdata('notification','Save Data Success.');
+			$this->session->set_flashdata('notification','Simpan Data Sukses.');
  			redirect(site_url('admin/users'));
 		}
 	}
