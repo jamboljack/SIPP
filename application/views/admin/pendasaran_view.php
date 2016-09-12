@@ -104,19 +104,21 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>                                
                                 <td>
                                     <?php if ($r->dasar_status=='Baru') { ?>
-                                        <span class="label label-sm label-success"><?php echo $r->dasar_status; ?></span>
+                                        <span class="label label-info"><i class="fa fa-plus-circle"></i> <?php echo $r->dasar_status; ?></span>
+                                    <?php } elseif ($r->dasar_status=='Perpanjangan') { ?>
+                                        <span class="label label-warning"><i class="fa fa-copy (alias)"></i> <?php echo $r->dasar_status; ?></span>
                                     <?php } else { ?>
-                                        <span class="label label-sm label-warning"><?php echo $r->dasar_status; ?></span>
+                                        <span class="label label-primary"><i class="fa fa-random"></i> <?php echo $r->dasar_status; ?></span>
                                     <?php } ?>
                                     <br>
                                     <?php if ($r->dasar_st_print == 1) { ?>
-                                        <span class="label label-sm label-warning"><?php echo 'Di Cetak'; ?></span>
+                                        <span class="label label-default"><i class="fa fa-print"></i> <?php echo 'Di Cetak'; ?></span>
                                     <?php } else { ?>
-                                        <span class="label label-sm label-danger"><?php echo 'Belum Cetak'; ?></span>
+                                        <span class="label label-danger"><i class="fa fa-print"></i> <?php echo 'Belum Cetak'; ?></span>
                                     <?php } ?>
                                 </td>
                                 <td>
-                                    <?php if ($r->dasar_perpanjang == 0) { ?>
+                                    <?php if ($r->dasar_data == 0) { ?>
                                         <?php if ($r->dasar_st_print == 0) { ?>
                                         <a href="<?php echo site_url('admin/pendasaran/editdata/'.$r->dasar_id); ?>">
                                             <button class="btn btn-primary btn-xs" title="Edit Data">
@@ -137,6 +139,8 @@ if ($this->session->flashdata('notification')) { ?>
                                         </a>
                                         <?php } ?>
                                     <?php } else { ?>
+                                        <span class="label label-danger"><i class="fa fa-remove (alias)"></i> Tidak Berlaku</span>
+                                    <?php } ?>
                                 </td>
                             </tr>
                             <?php

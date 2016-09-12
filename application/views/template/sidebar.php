@@ -21,6 +21,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'tempat') {
@@ -43,6 +44,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'kelas') {
@@ -65,6 +67,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'bentuk') {
@@ -87,6 +90,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'kondisi') {
@@ -109,6 +113,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'kepemilikan') {
@@ -131,6 +136,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'jenis') {
@@ -153,6 +159,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'pasar') {
@@ -175,6 +182,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'pedagang') {
@@ -197,6 +205,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'pendasaran') {
@@ -219,6 +228,7 @@ if ($uri == 'home') {
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
     $pendasaran     = 'active';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'retribusi') {
@@ -241,6 +251,7 @@ if ($uri == 'home') {
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = 'active';    
     $users          = '';
 } elseif ($uri == 'users') {
@@ -263,6 +274,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = 'active';
 } else {
@@ -285,6 +297,7 @@ if ($uri == 'home') {
     $span_trans_1   = '';
     $span_trans_2   = '';
     $pendasaran     = '';
+    $baliknama      = '';
     $retribusi      = '';    
     $users          = ''; 
 }
@@ -398,6 +411,12 @@ if ($uri == 'home') {
                         <a href="<?php echo site_url('admin/pendasaran'); ?>">
                             <i class="fa fa-check-square-o"></i>
                             Surat Pendasaran
+                        </a>
+                    </li>
+                    <li class="<?php echo $baliknama; ?>">
+                        <a href="<?php echo site_url('admin/baliknama'); ?>">
+                            <i class="fa fa-check-square-o"></i>
+                            Balik Nama
                         </a>
                     </li>
                     <li class="<?php echo $retribusi; ?>">

@@ -300,7 +300,7 @@ class Pendasaran_model extends CI_Model {
 
 		// Update Surat Lama jadi di Perpanjang
 		$data = array(
-				'dasar_perpanjang'		=> 1				
+				'dasar_data'		=> 1				
 			);
 
 		$this->db->where('dasar_id', $dasar_id);

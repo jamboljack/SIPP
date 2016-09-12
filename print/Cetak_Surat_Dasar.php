@@ -7,8 +7,8 @@ $id 		= $_REQUEST['id'];
 $npwrd 		= base64_decode(trim($_REQUEST['npwrd']));
 mysql_select_db($database, $konekdb);
 
-$sqla 		= "SELECT d.*, p.pedagang_nik, p.pedagang_nama, p.pedagang_tgl_lahir, p.pedagang_alamat, s.pasar_nama, 
-			s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama 
+$sqla 		= "SELECT d.*, p.pedagang_nik, p.pedagang_nama, p.pedagang_tgl_lahir, p.pedagang_alamat, p.pedagang_foto,
+		 	s.pasar_nama, s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama 
 			FROM sipp_dasar d JOIN sipp_pedagang p ON d.pedagang_id = p.pedagang_id
 			JOIN sipp_pasar s ON d.pasar_id = s.pasar_id
 			JOIN sipp_jenis j ON d.jenis_id = j.jenis_id
@@ -26,6 +26,7 @@ $xnik		= strtoupper(trim($rowrsa['pedagang_nik']));
 $xnama		= strtoupper(trim($rowrsa['pedagang_nama']));
 $xumur		= age($rowrsa['pedagang_tgl_lahir']);
 $xalamat	= ucwords(strtolower(trim($rowrsa['pedagang_alamat']).', '.trim($rowrsa['kabupaten_nama']).' - '.trim($rowrsa['provinsi_nama'])));
+$xfoto 		= trim($rowrsa['pedagang_foto']); // Foto
 $xtempat	= strtoupper(trim($rowrsa['tempat_nama']));
 $xpasar		= strtoupper(trim($rowrsa['pasar_nama']));
 $xblok		= strtoupper(trim($rowrsa['dasar_blok']));
