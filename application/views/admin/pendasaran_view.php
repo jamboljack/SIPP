@@ -72,12 +72,12 @@ if ($this->session->flashdata('notification')) { ?>
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
-                                <th width="12%">No. Surat</th>
+                                <th width="15%">No. Surat</th>
                                 <th width="10%">Tanggal</th>
                                 <th width="8%">NPWRD</th>
                                 <th>Nama Pedagang</th>
-                                <th width="15%">Nama Pasar</th>
-                                <th width="15%">Keterangan</th>
+                                <th width="20%">Nama Pasar</th>
+                                <th width="10%">Status</th>
                                 <th width="10%">Aksi</th>
                             </tr>
                         </thead>
@@ -101,19 +101,42 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $tanggal_srt; ?></td>
                                 <td><?php echo $r->dasar_npwrd; ?></td>
                                 <td><?php echo $r->pedagang_nama; ?></td>
-                                <td><?php echo $r->pasar_nama; ?></td>
-                                <td><?php echo 'Blok '.$r->dasar_blok.', Nomor '.$r->dasar_nomor."<br>".'Luas '.$r->dasar_luas.' m2'; ?></td>
+                                <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>                                
                                 <td>
-                                    <a href="<?php echo site_url('admin/dasar/editdata/'.$r->dasar_id); ?>">
-                                        <button class="btn btn-primary btn-xs" title="Edit Data">
-                                            <i class="icon-pencil"></i>
-                                        </button>
-                                    </a>
-                                    <a onclick="hapusData(<?php echo $dasar_id; ?>)">
-                                        <button class="btn btn-danger btn-xs" title="Hapus Data">
-                                            <i class="icon-trash"></i>
-                                        </button>
-                                    </a>
+                                    <?php if ($r->dasar_status=='Baru') { ?>
+                                        <span class="label label-sm label-success"><?php echo $r->dasar_status; ?></span>
+                                    <?php } else { ?>
+                                        <span class="label label-sm label-warning"><?php echo $r->dasar_status; ?></span>
+                                    <?php } ?>
+                                    <br>
+                                    <?php if ($r->dasar_st_print == 1) { ?>
+                                        <span class="label label-sm label-warning"><?php echo 'Di Cetak'; ?></span>
+                                    <?php } else { ?>
+                                        <span class="label label-sm label-danger"><?php echo 'Belum Cetak'; ?></span>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php if ($r->dasar_perpanjang == 0) { ?>
+                                        <?php if ($r->dasar_st_print == 0) { ?>
+                                        <a href="<?php echo site_url('admin/pendasaran/editdata/'.$r->dasar_id); ?>">
+                                            <button class="btn btn-primary btn-xs" title="Edit Data">
+                                                <i class="icon-pencil"></i>
+                                            </button>
+                                        </a>
+                                        <?php } ?>
+                                        <a href="<?php echo site_url('admin/pendasaran/printdata/'.$r->dasar_id); ?>">
+                                            <button class="btn btn-default btn-xs" title="Cetak Surat Pendasaran">
+                                                <i class="icon-printer"></i>
+                                            </button>
+                                        </a>
+                                        <?php if ($r->dasar_st_print == 1) { ?>
+                                        <a href="<?php echo site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id); ?>">
+                                            <button class="btn btn-danger btn-xs" title="Perpanjangan Surat">
+                                                <i class="icon-docs"></i>
+                                            </button>
+                                        </a>
+                                        <?php } ?>
+                                    <?php } else { ?>
                                 </td>
                             </tr>
                             <?php

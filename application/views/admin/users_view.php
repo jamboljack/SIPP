@@ -74,7 +74,7 @@ if ($this->session->flashdata('notification')) { ?>
                                         <span class="label label-sm label-success"><?php echo $r->user_status; ?></span>
                                     <?php } else { ?>
                                         <span class="label label-sm label-danger"><?php echo $r->user_status; ?></span>
-                                    <?php } ?>                                
+                                    <?php } ?>
                                 </td>
                                 <td>
                                 <?php if (empty($r->user_avatar)) { ?>

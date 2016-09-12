@@ -158,18 +158,18 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Tanggal Surat</label>
                                     <div class="col-md-3">
-                                        <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" name="tgl_surat" value="<?php echo set_value('tgl_surat', date('d-m-Y')); ?>" placeholder="DD-MM-YYYY" autocomplete="off" required />
+                                        <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" name="tgl_surat" value="<?php echo set_value('tgl_surat', date('d-m-Y')); ?>" placeholder="DD-MM-YYYY" autocomplete="off" required autofocus/>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Periode Berlaku</label>
                                     <div class="col-md-9">                                
-                                        <div class="input-group input-large" data-date="<? echo date('Y-m-d'); ?>" data-date-format="yyyy-mm-dd">
-                                            <input type="text" class="form-control default-date-picker" name="tgl1" placeholder="DD-MM-YYYY" required autofocus>
+                                        <div class="input-group input-large" data-date="<?php echo date('Y-m-d'); ?>" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control default-date-picker" name="tgl1" placeholder="DD-MM-YYYY" value="<?php echo set_value('tgl1', date('d-m-Y')); ?>" required>
                                             <div class="form-control-focus"></div>
                                             <span class="input-group-addon"><b>s/d</b></span>
-                                            <input type="text" class="form-control default-date-picker" name="tgl2" placeholder="DD-MM-YYYY" required>
+                                            <input type="text" class="form-control default-date-picker" name="tgl2" placeholder="DD-MM-YYYY" value="<?php echo set_value('tgl2', date('d-m-Y')); ?>" required>
                                             <div class="form-control-focus"></div>
                                         </div>                                        
                                     </div> 
@@ -274,14 +274,14 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Panjang</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Panjang Tempat" name="panjang" id="panjang" value="<?php echo set_value('panjang'); ?>" onkeydown="HitungLuas()" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Panjang Tempat" name="panjang" id="panjang" value="<?php echo set_value('panjang', 0); ?>" onkeydown="HitungLuas()" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Lebar</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo set_value('lebar'); ?>" onkeydown="HitungLuas()" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo set_value('lebar', 0); ?>" onkeydown="HitungLuas()" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
