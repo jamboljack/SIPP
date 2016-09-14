@@ -6,10 +6,14 @@ class Pasar_model extends CI_Model {
 	}
 
 	function select_all() {
+		$user_username = $this->session->userdata('username');
+		
 		$this->db->select('p.*, k.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_pasar p');
 		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
+		$this->db->where('a.user_username', $user_username);
 		$this->db->order_by('p.pasar_nama','asc');
 		
 		return $this->db->get();

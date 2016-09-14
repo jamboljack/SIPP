@@ -55,7 +55,7 @@ if ($this->session->flashdata('notification')) { ?>
                         
         <div class="row">
             <div class="col-md-12">
-                <a href="<?php echo site_url('admin/pendasaran/adddata'); ?>">
+                <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
                 </a>
                 <br><br>
@@ -100,8 +100,9 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $r->dasar_no; ?></td>                                
                                 <td><?php echo $tanggal_srt; ?></td>
                                 <td><?php echo $r->dasar_npwrd; ?></td>
-                                <td><?php echo $r->pedagang_nama; ?></td>
-                                <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>                                
+                                <td><?php echo $r->penduduk_nama; ?></td>
+                                <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?>
+                                </td>                                
                                 <td>
                                     <?php if ($r->dasar_status=='Baru') { ?>
                                         <span class="label label-info"><i class="fa fa-plus-circle"></i> <?php echo $r->dasar_status; ?></span>

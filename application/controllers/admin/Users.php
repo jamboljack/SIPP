@@ -98,15 +98,32 @@ class Users extends CI_Controller {
  		redirect(site_url('admin/users'));
 	}
 	
-	public function deletedata($kode) {
-		$kode = $this->security->xss_clean($this->uri->segment(3));
+	public function aksespasar($user_username) {		
+		$data['listAkses'] = $this->users_model->select_akses($user_username)->result();
+		$this->template->display('admin/users_akses_view', $data);
+	}
+
+	public function adddataakses() {
+		$data['listPasar'] = $this->users_model->select_pasar()->result();
+		$this->template->display('admin/users_add_akses_view', $data);
+	}
+
+	public function savedataakses() {
+		$this->users_model->insert_data_akses();
+		$this->session->set_flashdata('notification','Simpan Data Sukses.');
+ 		redirect(site_url('admin/users/aksespasar/'.$this->uri->segment(4)));
+	}
+
+	public function deletedataakses($kode) {
+		$kode = $this->security->xss_clean($this->uri->segment(5));
 		
 		if ($kode == null) {
-			redirect(site_url('sistem/users'));
+			redirect(site_url('admin/users/aksespasar/'.$this->uri->segment(4)));
 		} else {
-			$this->users_model->delete_data($kode);
-			echo "<meta http-equiv=refresh content=0;url=\"".site_url()."sistem/users\">";
+			$this->users_model->delete_data_akses($kode);
+			$this->session->set_flashdata('notification','Hapus Data Sukses.');
+			redirect(site_url('admin/users/aksespasar/'.$this->uri->segment(4)));
 		}
-	}	
+	}
 }
 /* Location: ./application/controller/admin/Users.php */

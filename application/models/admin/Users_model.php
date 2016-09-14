@@ -102,6 +102,38 @@ class Users_model extends CI_Model {
 
 		$this->db->where('user_username', $user_username);
 		$this->db->update('sipp_users', $data);
-	}	
+	}
+
+	function select_akses($user_username) {
+		$this->db->select('a.*, p.pasar_nama');
+		$this->db->from('sipp_akses a');
+		$this->db->join('sipp_pasar p', 'a.pasar_id = p.pasar_id');
+		$this->db->where('a.user_username', $user_username);
+		$this->db->order_by('a.pasar_id', 'asc');
+		
+		return $this->db->get();
+	}
+
+	function select_pasar() {
+		$this->db->select('*');
+		$this->db->from('sipp_pasar');
+		$this->db->order_by('pasar_nama', 'asc');
+		
+		return $this->db->get();
+	}
+
+	function insert_data_akses() {
+		$data = array(		
+	    		'user_username' 	=> trim($this->uri->segment(4)),
+	    		'pasar_id' 			=> trim($this->input->post('lstPasar'))
+			);
+		
+		$this->db->insert('sipp_akses', $data);
+	}
+
+	function delete_data_akses($kode) {
+		$this->db->where('akses_id', $kode);
+		$this->db->delete('sipp_akses');
+	}
 }
 /* Location: ./application/model/admin/Users_model.php */

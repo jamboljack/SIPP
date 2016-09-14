@@ -12,11 +12,7 @@ class Login extends CI_Controller {
 		if ($session == FALSE) {
 			$this->load->view('login_view');
 		} else {						
-			if ($this->session->userdata('level') == 'Admin') {
-				redirect(site_url('admin/home'));
-			} elseif ($this->session->userdata('level') == 'Operator') {
-				redirect(site_url('operator/home'));
-			}
+			redirect(site_url('admin/home'));
 		}
 	}
 
@@ -49,12 +45,7 @@ class Login extends CI_Controller {
 										);
 					
 					$this->session->set_userdata($array_item);
-
-					if ($this->session->userdata('level') == 'Admin') {
-						redirect(site_url('admin/home'));
-					} elseif ($this->session->userdata('level') == 'Operator') {
-						redirect(site_url('operator/home'));
-					}
+					redirect(site_url('admin/home'));
 				} else {
 					$this->session->set_flashdata('notification','<b>Login Gagal, Username atau Password Salah.</b>');
 					redirect(site_url('login'));					

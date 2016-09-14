@@ -125,7 +125,7 @@ function HitungLuas(){
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Surat Pendasaran
+            Transaksi <small>Surat Pendasaran</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    

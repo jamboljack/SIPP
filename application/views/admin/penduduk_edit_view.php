@@ -1,69 +1,7 @@
-<script type="text/javascript">
-$(function() {
-    $(document).on("click",'.pilih_alamat', function(e) {        
-        var provinsi_id     = $(this).data('pid');
-        var provinsi_nama   = $(this).data('pname');
-        var kab_id          = $(this).data('kid');
-        var kab_nama        = $(this).data('kname');        
-        $(".provinsi_id").val(provinsi_id);
-        $(".provinsi_nama").val(provinsi_nama);
-        $(".kab_id").val(kab_id);
-        $(".kabupaten_nama").val(kab_nama);
-    })
-});
-</script>
-
-<!-- List Provinsi, Kab, Kec, Desa -->
-<div class="modal bs-modal-lg" id="carialamat" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
-                <div class="modal-header">                      
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Alamat</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped table-bordered table-hover" id="sample_1">
-                        <thead>
-                            <tr>
-                                <th width="8%">Pilih</th>                                
-                                <th>Kabupaten</th>
-                                <th>Provinsi</th>
-                            </tr>
-                        </thead>
-                            
-                        <tbody>
-                        <?php 
-                            $no = 1;
-                            foreach($listAlamat as $a) {                            
-                            ?>
-                            <tr>
-                                <td align="center">
-                                    <button type="button" class="btn btn-success btn-xs pilih_alamat" data-toggle="modal" data-pid="<?php echo $a->provinsi_id; ?>" data-pname="<?php echo $a->provinsi_nama; ?>" data-kid="<?php echo $a->kabupaten_id; ?>" data-kname="<?php echo $a->kabupaten_nama; ?>" title="Pilih Alamat" data-dismiss="modal"><i class="icon-check"></i> Pilih
-                                    </button>
-                                </td>
-                                <td><?php echo $a->kabupaten_nama; ?></td>
-                                <td><?php echo $a->provinsi_nama; ?></td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">                    
-                    <button type="button" class="btn yellow" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
-                </div>
-            </form>
-        </div>        
-    </div>    
-</div>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Data Pedagang
+            Data <small>Data Penduduk</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -77,11 +15,11 @@ $(function() {
                     <i class="fa fa-angle-right"></i>
                 </li>
                  <li>
-                    <a href="<?php echo site_url('admin/pedagang'); ?>">Data Pedagang</a>
+                    <a href="<?php echo site_url('admin/penduduk'); ?>">Data Penduduk</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Edit Data Pasar</a>
+                    <a href="#">Edit Data Penduduk</a>
                 </li>
             </ul>                
         </div>            
@@ -92,7 +30,7 @@ $(function() {
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-edit"></i> Form Edit Pasar
+                            <i class="fa fa-edit"></i> Form Edit Penduduk
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse"></a>
@@ -100,9 +38,9 @@ $(function() {
                     </div>
                     
                     <div class="portlet-body form">
-                        <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pedagang/updatedata'); ?>" method="post" enctype="multipart/form-data">
+                        <form role="form" class="form-horizontal" action="<?php echo site_url('admin/penduduk/updatedata'); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                        <input type="hidden" value="<?php echo $detail->pedagang_id; ?>" name="id">
+                        <input type="hidden" value="<?php echo $detail->penduduk_id; ?>" name="id">
                         <input type="hidden" class="provinsi_id" name="provinsi_id" value="<?php echo $detail->provinsi_id; ?>">
                         <input type="hidden" class="kab_id" name="kab_id" value="<?php echo $detail->kabupaten_id; ?>">
 
@@ -111,19 +49,26 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I K</label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->pedagang_nik; ?>" pattern="^[0-9]*" title="Harus Angka" autocomplete="off" maxlength="16" required autofocus>
+                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->penduduk_nik; ?>" pattern="^[0-9]*" title="Harus Angka" autocomplete="off" maxlength="16" required autofocus>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
+                                    <label class="col-md-3 control-label" for="form_control_1">No. KK</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" placeholder="Enter No. KK" name="no_kk" value="<?php echo $detail->penduduk_no_kk; ?>" pattern="^[0-9]*" title="Harus Angka" autocomplete="off" maxlength="16" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Nama Penduduk</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Pasar" name="nama" value="<?php echo $detail->pedagang_nama; ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pasar" name="nama" value="<?php echo $detail->penduduk_nama; ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <?php 
-                                $tgl_lahir      = $detail->pedagang_tgl_lahir;
+                                $tgl_lahir      = $detail->penduduk_tgl_lahir;
                                 $xtgl           = explode("-",$tgl_lahir);
                                 $thn            = $xtgl[0];
                                 $bln            = $xtgl[1];
@@ -137,33 +82,63 @@ $(function() {
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
+                                <div class="form-group form-md-checkboxes"">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
+                                    <div class="md-radio-inline col-md-9">
+                                        <div class="md-radio">
+                                            <?php 
+                                            if ($detail->penduduk_jk == 'Laki-Laki') {
+                                                $checkL = 'checked';
+                                                $checkP = '';
+                                            } elseif ($detail->penduduk_jk == 'Perempuan') {
+                                                $checkL = '';
+                                                $checkP = 'checked';
+                                            } else {
+                                                $checkL = '';
+                                                $checkP = '';
+                                            }
+                                            ?>
+                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk1" value="Laki-Laki" <?php echo $checkL; ?> required>
+                                            <label for="Jk1">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> Laki-Laki
+                                            </label>
+                                        </div>
+                                        <div class="md-radio">
+                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk2" value="Perempuan" <?php echo $checkP; ?>>
+                                            <label for="Jk2">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> Perempuan
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Area</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="alamat" value="<?php echo 'DESA '.$detail->desa_nama.', KEC.'.$detail->kecamatan_nama.', KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?>" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Alamat" name="alamat" value="<?php echo $detail->pedagang_alamat; ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter Alamat" name="alamat" value="<?php echo $detail->penduduk_alamat; ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Kabupaten</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control kabupaten_nama" placeholder="Enter Kabupaten" name="kabupaten" value="<?php echo $detail->kabupaten_nama; ?>" autocomplete="off" required>
-                                        <div class="form-control-focus"></div>
-                                    </div>
+                                    <label class="col-md-3 control-label" for="form_control_1">Rt</label>
                                     <div class="col-md-2">
-                                        <span class="input-group-btn btn-right">
-                                            <a data-toggle="modal" href="#carialamat" title="Klik untuk Cari Data">
-                                                <button class="btn blue-madison" type="button">
-                                                <i class="fa fa-search"></i>
-                                                </button>
-                                            </a>
-                                        </span>
+                                        <input type="text" class="form-control" placeholder="Enter Rt" name="rt" value="<?php echo $detail->penduduk_rt; ?>" pattern="^[0-9]*" title="Harus Angka" maxlength="3" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Provinsi</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control desa_nama" placeholder="Enter Provinsi" name="provinsi" value="<?php echo $detail->provinsi_nama; ?>" autocomplete="off" readonly>
+                                    <label class="col-md-3 control-label" for="form_control_1">Rw</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" placeholder="Enter Rw" name="rw" value="<?php echo $detail->penduduk_rw; ?>" pattern="^[0-9]*" title="Harus Angka" maxlength="3"  autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -171,8 +146,8 @@ $(function() {
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Foto</label>
                                     <div class="col-md-9">
-                                        <?php if (!empty($detail->pedagang_foto)) { ?>
-                                        <img src="<?php echo base_url(); ?>pedagang_image/<?php echo $detail->pedagang_foto; ?>" width="20%">
+                                        <?php if (!empty($detail->penduduk_foto)) { ?>
+                                        <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detail->penduduk_foto; ?>" width="20%">
                                         <?php } else { ?>
                                         <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
                                         <?php }?>
@@ -206,7 +181,7 @@ $(function() {
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-9">
                                         <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Update</button>
-                                        <a href="<?php echo site_url('admin/pedagang'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
+                                        <a href="<?php echo site_url('admin/penduduk'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
                                         </a>
                                     </div>
                                 </div>

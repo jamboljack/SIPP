@@ -212,7 +212,9 @@ if (!empty($tgl_sampai)) {
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
             <td width="15%" align="center" valign="top">
-                <img src="<?php echo base_url(); ?>pedagang_image/<?php echo $detail->pedagang_foto; ?>" width="100%">
+                <?php if (!empty($detail->pedagang_foto)) { ?>
+                    <img src="<?php echo base_url(); ?>pedagang_image/<?php echo $detail->pedagang_foto; ?>" width="100%">
+                <?php } ?>
             </td>
             <td width="40%" align="center" valign="top">Pemegang Izin<br>
             <br>

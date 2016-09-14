@@ -75,7 +75,7 @@ $(function() {
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Data Pasar
+            Data <small>Data Pasar</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    

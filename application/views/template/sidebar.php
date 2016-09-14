@@ -16,7 +16,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -39,7 +39,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -62,7 +62,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -85,7 +85,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -108,7 +108,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -131,7 +131,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -154,7 +154,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -177,7 +177,7 @@ if ($uri == 'home') {
     $span_data_1    = '<span class="selected"></span>';
     $span_data_2    = 'open';
     $pasar          = 'active';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -185,7 +185,7 @@ if ($uri == 'home') {
     $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
-} elseif ($uri == 'pedagang') {
+} elseif ($uri == 'penduduk') {
     $dashboard      = '';
     $master         = '';
     $span_master_1  = '';
@@ -200,7 +200,7 @@ if ($uri == 'home') {
     $span_data_1    = '<span class="selected"></span>';
     $span_data_2    = 'open';
     $pasar          = '';
-    $pedagang       = 'active';
+    $penduduk       = 'active';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -223,12 +223,35 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = 'active open';
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
     $pendasaran     = 'active';
     $baliknama      = '';
+    $retribusi      = '';    
+    $users          = '';
+} elseif ($uri == 'baliknama') {
+    $dashboard      = '';
+    $master         = '';
+    $span_master_1  = '';
+    $span_master_2  = '';
+    $tempat         = '';
+    $kelas          = '';
+    $bentuk         = '';
+    $kondisi        = '';
+    $kepemilikan    = '';
+    $jenis          = '';
+    $data           = '';
+    $span_data_1    = '';
+    $span_data_2    = '';
+    $pasar          = '';
+    $penduduk       = '';
+    $trans          = 'active open';
+    $span_trans_1   = '<span class="selected"></span>';
+    $span_trans_2   = 'open';
+    $pendasaran     = '';
+    $baliknama      = 'active';
     $retribusi      = '';    
     $users          = '';
 } elseif ($uri == 'retribusi') {
@@ -246,7 +269,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';    
+    $penduduk       = '';    
     $trans          = 'active open';
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
@@ -269,7 +292,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';    
+    $penduduk       = '';    
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -292,7 +315,7 @@ if ($uri == 'home') {
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $pedagang       = '';
+    $penduduk       = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -331,6 +354,7 @@ if ($uri == 'home') {
                     </span>
                 </a>
             </li>
+            <?php if ($this->session->userdata('level') == 'Admin') { ?>
             <li class="<?php echo $master; ?>">
                 <a href="javascript:;">
                     <i class="fa fa-list"></i>
@@ -377,6 +401,7 @@ if ($uri == 'home') {
                     </li>
                 </ul>
             </li>
+            <?php } ?>
             <li class="<?php echo $data; ?>">
                 <a href="javascript:;">
                     <i class="fa fa-tasks"></i>
@@ -391,10 +416,10 @@ if ($uri == 'home') {
                             Data Pasar
                         </a>
                     </li>
-                    <li class="<?php echo $pedagang; ?>">
-                        <a href="<?php echo site_url('admin/pedagang'); ?>">
+                    <li class="<?php echo $penduduk; ?>">
+                        <a href="<?php echo site_url('admin/penduduk'); ?>">
                             <i class="fa fa-check-square-o"></i>
-                            Data Pedagang
+                            Data Penduduk
                         </a>
                     </li>
                 </ul>
@@ -427,6 +452,7 @@ if ($uri == 'home') {
                     </li>
                 </ul>
             </li>
+            <?php if ($this->session->userdata('level') == 'Admin') { ?>
             <li class="tooltips <?php echo $users; ?>" data-container="body" data-placement="right" data-html="true" data-original-title="Users">
                 <a href="<?php echo site_url('admin/users'); ?>">
                     <i class="fa fa-users"></i>
@@ -434,7 +460,8 @@ if ($uri == 'home') {
                     Users
                     </span>
                 </a>
-            </li>            
+            </li>
+            <?php } ?>
         </ul>        
     </div>
 </div>

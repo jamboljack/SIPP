@@ -9,7 +9,7 @@
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Surat Pendasaran
+            Transaksi <small>Surat Pendasaran</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -131,7 +131,7 @@
                                     <label class="col-md-3 control-label" for="form_control_1">Periode Berlaku</label>
                                     <div class="col-md-3">                                
                                         <input type="text" class="form-control" name="tgl_berlaku" value="<?php echo $tanggal_dari.' s/d '.$tanggal_sampai; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>                                        
+                                        <div class="form-control-focus"></div>
                                     </div> 
                                 </div>                                
                                 <!--
@@ -203,7 +203,7 @@
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Lebar</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo $detail->dasar_lebar ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo $detail->dasar_lebar; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>

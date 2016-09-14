@@ -6,21 +6,29 @@ class Pendasaran_model extends CI_Model {
 	}
 
 	function select_all() {
-		$this->db->select('d.*, p.pedagang_nama, s.pasar_nama, t.tempat_nama');
+		$user_username = $this->session->userdata('username');
+
+		$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
-		$this->db->join('sipp_pedagang p', 'd.pedagang_id = p.pedagang_id');
+		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
 		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+		$this->db->join('sipp_akses a', 's.pasar_id = a.pasar_id');
+		$this->db->where('a.user_username', $user_username);
 		$this->db->order_by('d.dasar_id','desc');
 		
 		return $this->db->get();
 	}	
 
 	function select_pasar() {
+		$user_username = $this->session->userdata('username');
+
 		$this->db->select('p.*, k.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_pasar p');
 		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
+		$this->db->where('a.user_username', $user_username);
 		$this->db->order_by('p.pasar_nama', 'asc');
 		
 		return $this->db->get();
@@ -34,10 +42,25 @@ class Pendasaran_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	function select_pedagang() {
-		$this->db->select('*');
-		$this->db->from('sipp_pedagang');		
-		$this->db->order_by('pedagang_nama', 'asc');
+	function select_penduduk_cari($nama) {
+		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama');
+		$this->db->from('sipp_penduduk p');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
+		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
+		$this->db->like('p.penduduk_nama', $nama);
+		$this->db->order_by('p.penduduk_nama', 'asc');
+		
+		return $this->db->get();
+	}
+
+	function select_penduduk($penduduk_id) {
+		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
+		$this->db->from('sipp_penduduk p');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
+		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
+		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
+		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		$this->db->where('p.penduduk_id', $penduduk_id);
 		
 		return $this->db->get();
 	}
@@ -150,7 +173,7 @@ class Pendasaran_model extends CI_Model {
 		$data = array(
 				'dasar_no'				=> strtoupper(trim($No_Surat)),
 				'dasar_npwrd'			=> strtoupper(trim($No_NPWRD)),
-				'pedagang_id'			=> $this->input->post('pedagang_id'),
+				'penduduk_id'			=> $this->input->post('penduduk_id'),
 				'pasar_id'				=> $this->input->post('lstPasar'),
 				'jenis_id'				=> $this->input->post('lstJenis'),
 				'tempat_id'				=> $this->input->post('rdTempat'),
@@ -171,10 +194,10 @@ class Pendasaran_model extends CI_Model {
 	}
 
 	function select_detail_by_id($dasar_id) {
-		$this->db->select('d.*, p.pedagang_id, p.pedagang_nik, p.pedagang_nama, s.pasar_inisial, 
+		$this->db->select('d.*, p.penduduk_id, p.penduduk_nik, p.penduduk_nama, s.pasar_inisial, 
 							s.pasar_kode, s.pasar_alamat, k.kecamatan_nama, e.desa_nama, j.jenis_kode');
 		$this->db->from('sipp_dasar d');
-		$this->db->join('sipp_pedagang p', 'd.pedagang_id = p.pedagang_id');
+		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
 		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_jenis j', 'd.jenis_id = j.jenis_id');
 		$this->db->join('sipp_kecamatan k', 's.kecamatan_id = k.kecamatan_id');
@@ -203,7 +226,7 @@ class Pendasaran_model extends CI_Model {
 		$tanggal_sampai	= $thns.'-'.$blns.'-'.$tgls;
 		
 		$data = array(
-				'pedagang_id'			=> $this->input->post('pedagang_id'),
+				'penduduk_id'			=> $this->input->post('penduduk_id'),
 				'jenis_id'				=> $this->input->post('lstJenis'),
 				'tempat_id'				=> $this->input->post('rdTempat'),				
 				'dasar_dari'			=> $tanggal_dari,
@@ -238,10 +261,9 @@ class Pendasaran_model extends CI_Model {
 	}
 
 	function select_detail_preview($dasar_id) {
-		$this->db->select('d.*, p.pedagang_nik, p.pedagang_nama, p.pedagang_tgl_lahir, p.pedagang_alamat, p.pedagang_foto,
-		 	s.pasar_nama, s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama');
+		$this->db->select('d.*, p.penduduk_nik, p.penduduk_nama, p.penduduk_tgl_lahir, p.penduduk_alamat, p.penduduk_foto, s.pasar_nama, s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
-		$this->db->join('sipp_pedagang p', 'd.pedagang_id = p.pedagang_id');
+		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
 		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_jenis j', 'd.jenis_id = j.jenis_id');
 		$this->db->join('sipp_provinsi e', 'p.provinsi_id = e.provinsi_id');
@@ -323,7 +345,7 @@ class Pendasaran_model extends CI_Model {
 				'dasar_npwrd'			=> $this->input->post('npwrd'),
 				'dasar_no_lama'			=> $this->input->post('no_surat_lama'),
 				'dasar_status'			=> 'Perpanjangan',
-				'pedagang_id'			=> $this->input->post('pedagang_id'),
+				'penduduk_id'			=> $this->input->post('penduduk_id'),
 				'pasar_id'				=> $this->input->post('lstPasar'),
 				'jenis_id'				=> $this->input->post('lstJenis'),
 				'tempat_id'				=> $this->input->post('rdTempat'),
