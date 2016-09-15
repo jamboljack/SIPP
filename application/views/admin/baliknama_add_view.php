@@ -15,33 +15,45 @@ if ($this->session->flashdata('notification')) { ?>
 
 <script type="text/javascript">
 $(function() {
-    $(document).on("click",'.pilih_pedagang', function(e) {
-        var pedagang_id     = $(this).data('id');
-        var pedagang_nik     = $(this).data('nik');
-        var pedagang_nama   = $(this).data('nama');        
-        $(".pedagang_id").val(pedagang_id);
-        $(".pedagang_nik").val(pedagang_nik);
-        $(".pedagang_nama").val(pedagang_nama);
+    $(document).on("click",'.pilih_penduduk', function(e) {
+        var penduduk_id         = $(this).data('id');
+        var penduduk_nik        = $(this).data('nik');
+        var penduduk_nama       = $(this).data('nama');
+        var tgl_lahir           = $(this).data('tgl');
+        var penduduk_tgl_lahir  = tgl_lahir.split("-").reverse().join("-");
+        var alamat              = $(this).data('alamat');
+        var rt                  = $(this).data('rt');
+        var rw                  = $(this).data('rw');
+        var provinsi            = $(this).data('provinsi');
+        var kabupaten           = $(this).data('kabupaten');
+        var kecamatan           = $(this).data('kecamatan');
+        var desa                = $(this).data('desa');
+        $(".penduduk_id").val(penduduk_id);
+        $(".penduduk_nik").val(penduduk_nik);
+        $(".penduduk_nama").val(penduduk_nama);
+        $(".penduduk_tgl_lahir").val(penduduk_tgl_lahir);
+        $(".penduduk_alamat").val(alamat+' RT. '+rt+'/'+rw+' DESA '+desa+' KEC. '+kecamatan+' KAB. '+kabupaten+' PROVINSI '+provinsi);
     })
 });
 </script>
 
-<!-- List Pedagang -->
-<div class="modal bs-modal-lg" id="caripedagang" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- List Penduduk -->
+<div class="modal bs-modal-lg" id="caripenduduk" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
                 <div class="modal-header">                      
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Pedagang</h4>
+                    <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Penduduk</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-striped table-bordered table-hover" id="sample_1">
                         <thead>
                             <tr>
-                                <th width="8%">Pilih</th>
+                                <th width="5%">Pilih</th>
                                 <th width="12%">N I K</th>
-                                <th>Nama Pedagang</th>
+                                <th width="15%">Nama Penduduk</th>
+                                <th width="10%">Tgl. Lahir</th>
                                 <th>Alamat</th>
                             </tr>
                         </thead>
@@ -49,16 +61,23 @@ $(function() {
                         <tbody>
                         <?php 
                             $no = 1;
-                            foreach($listPedagang as $p) {                            
+                            foreach($listPenduduk as $p) {
+                                $tgl_lhr      = $p->penduduk_tgl_lahir;
+                                $xtgl           = explode("-",$tgl_lhr);
+                                $thn            = $xtgl[0];
+                                $bln            = $xtgl[1];
+                                $tgl            = $xtgl[2];
+                                $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;                            
                             ?>
                             <tr>
                                 <td align="center">
-                                    <button type="button" class="btn btn-success btn-xs pilih_pedagang" data-toggle="modal" data-id="<?php echo $p->pedagang_id; ?>" data-nik="<?php echo $p->pedagang_nik; ?>" data-nama="<?php echo $p->pedagang_nama; ?>" title="Pilih Alamat" data-dismiss="modal"><i class="icon-check"></i> Pilih
+                                    <button type="button" class="btn btn-success btn-xs pilih_penduduk" data-toggle="modal" data-id="<?php echo $p->penduduk_id; ?>" data-nik="<?php echo $p->penduduk_nik; ?>" data-nama="<?php echo $p->penduduk_nama; ?>" data-tgl="<?php echo $p->penduduk_tgl_lahir; ?>" data-alamat="<?php echo $p->penduduk_alamat; ?>" data-rt="<?php echo $p->penduduk_rt; ?>" data-rw="<?php echo $p->penduduk_rw; ?>" data-provinsi="<?php echo $p->provinsi_nama; ?>" data-kabupaten="<?php echo $p->kabupaten_nama; ?>" data-kecamatan="<?php echo $p->kecamatan_nama; ?>" data-desa="<?php echo $p->desa_nama; ?>" title="Pilih Data" data-dismiss="modal"><i class="icon-check"></i>
                                     </button>
                                 </td>
-                                <td><?php echo $p->pedagang_nik; ?></td>
-                                <td><?php echo $p->pedagang_nama; ?></td>
-                                <td><?php echo $p->pedagang_alamat; ?></td>
+                                <td><?php echo $p->penduduk_nik; ?></td>
+                                <td><?php echo $p->penduduk_nama; ?></td>
+                                <td><?php echo $tanggal_lhr; ?></td>
+                                <td><?php echo $p->penduduk_alamat.' RT. '.$p->penduduk_rt.'/'.$p->penduduk_rw.' DESA '.$p->desa_nama.' KEC. '.$p->kecamatan_nama.'<br> KAB. '.$p->kabupaten_nama.' PROVINSI '.$p->provinsi_nama; ?></td>
                             </tr>
                             <?php
                                 $no++;
@@ -120,8 +139,8 @@ $(function() {
                         <input type="hidden" name="id" value="<?php echo $detail->dasar_id; ?>">
                         <input type="hidden" name="dasar_no" value="<?php echo $detail->dasar_no; ?>">
                         <input type="hidden" name="dasar_npwrd" value="<?php echo $detail->dasar_npwrd; ?>">
-                        <input type="hidden" name="pedagang_id_lama" value="<?php echo $detail->pedagang_id; ?>">
-                        <input type="hidden" class="pedagang_id" name="pedagang_id" value="<?php echo set_value('pedagang_id'); ?>">
+                        <input type="hidden" name="penduduk_id_lama" value="<?php echo $detail->penduduk_id; ?>">
+                        <input type="hidden" class="penduduk_id" name="penduduk_id" value="<?php echo set_value('penduduk_id'); ?>">
                         <input type="hidden" name="pasar_id" value="<?php echo $detail->pasar_id; ?>">
                         <input type="hidden" name="pasar_inisial" value="<?php echo $detail->pasar_inisial; ?>">
                         <input type="hidden" name="pasar_kode" value="<?php echo $detail->pasar_kode; ?>">
@@ -219,15 +238,35 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I K</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->pedagang_nik; ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->penduduk_nik; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>                                
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->pedagang_nama; ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->penduduk_nama; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <?php
+                                    $tgl_lahir      = $detail->penduduk_tgl_lahir;
+                                    $xtgl           = explode("-",$tgl_lahir);
+                                    $thn            = $xtgl[0];
+                                    $bln            = $xtgl[1];
+                                    $tgl            = $xtgl[2];
+                                    $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Tanggal Lahir</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="alamat" rows="1" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_lama.' KEC. '.$detail->kecamatan_lama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
@@ -249,12 +288,12 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I K</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control pedagang_nik" placeholder="Enter N I K" name="nik" value="<?php echo set_value('nik'); ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control penduduk_nik" placeholder="Enter N I K" name="nik_baru" value="<?php echo set_value('nik_baru'); ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                     <div class="col-md-2">
                                         <span class="input-group-btn btn-right">
-                                            <a data-toggle="modal" href="#caripedagang" title="Klik untuk Cari Data">
+                                            <a data-toggle="modal" href="#caripenduduk" title="Klik untuk Cari Data">
                                                 <button class="btn blue-madison" type="button">
                                                 <i class="fa fa-search"></i>
                                                 </button>
@@ -265,7 +304,21 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control pedagang_nama" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo set_value('nama'); ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control penduduk_nama" placeholder="Nama Pedagang" name="nama_baru" value="<?php echo set_value('nama_baru'); ?>" autocomplete="off" readonly>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Tanggal Lahir</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control penduduk_tgl_lahir" placeholder="DD-MM-YYYY" name="tgl_lahir_baru" value="<?php echo set_value('tgl_lahir_baru'); ?>" autocomplete="off" readonly>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control penduduk_alamat" placeholder="Alamat" name="alamat_baru" value="<?php echo set_value('alamat_baru'); ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>

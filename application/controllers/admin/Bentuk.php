@@ -43,6 +43,6 @@ class Bentuk extends CI_Controller {
 			$this->session->set_flashdata('notification','Hapus Data Sukses.');
 			redirect(site_url('admin/bentuk'));
 		}
-	}	
+	}
 }
 /* Location: ./application/controller/admin/Bentuk.php */

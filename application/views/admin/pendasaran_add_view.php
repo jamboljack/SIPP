@@ -86,7 +86,7 @@ function HitungLuas(){
                     <div class="portlet-body form">
                         <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/savedata/'.$this->uri->segment(4)); ?>" method="post" enctype="multipart/form-data" name="form1">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                        <input type="hidden" name="pedagang_id" value="<?php echo $detailpedagang->pedagang_id; ?>">
+                        <input type="hidden" name="penduduk_id" value="<?php echo $detailpenduduk->penduduk_id; ?>">
                         <input type="hidden" name="pasar_inisial" id="pasar_inisial" value="<?php echo set_value('pasar_inisial'); ?>">
                         <input type="hidden" name="pasar_kode" id="pasar_kode" value="<?php echo set_value('pasar_kode'); ?>">
                         <input type="hidden" name="jenis_kode" id="jenis_kode" value="<?php echo set_value('jenis_kode'); ?>">
@@ -96,17 +96,17 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I K</label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detailpedagang->pedagang_nik; ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detailpenduduk->penduduk_nik; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detailpedagang->pedagang_nama; ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detailpenduduk->penduduk_nama; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
                                 <?php
-                                    $tgl_lahir      = $detailpedagang->pedagang_tgl_lahir;
+                                    $tgl_lahir      = $detailpenduduk->penduduk_tgl_lahir;
                                     $xtgl           = explode("-",$tgl_lahir);
                                     $thn            = $xtgl[0];
                                     $bln            = $xtgl[1];
@@ -122,7 +122,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="alamat" rows="2" placeholder="Enter Description" required><?php echo $detailpedagang->pedagang_alamat.' RT.'.$detailpedagang->pedagang_rt.'/'.$detailpedagang->pedagang_rw.' KAB. '.$detailpedagang->kabupaten_nama.' PROV. '.$detailpedagang->provinsi_nama; ?></textarea>
+                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detailpenduduk->penduduk_alamat.' RT.'.$detailpenduduk->penduduk_rt.'/'.$detailpenduduk->penduduk_rw.' DESA '.$detailpenduduk->desa_nama.' KEC. '.$detailpenduduk->kecamatan_nama.' KAB. '.$detailpenduduk->kabupaten_nama.' PROV. '.$detailpenduduk->provinsi_nama; ?></textarea>
                                     </div>
                                 </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>
@@ -143,9 +143,8 @@ function HitungLuas(){
                                             <input type="text" class="form-control default-date-picker" name="tgl2" placeholder="DD-MM-YYYY" value="<?php echo set_value('tgl2', date('d-m-Y')); ?>" required>
                                             <div class="form-control-focus"></div>
                                         </div>                                        
-                                    </div> 
+                                    </div>
                                 </div>
-                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Dagangan</label>
                                     <div class="col-md-9">
@@ -160,7 +159,8 @@ function HitungLuas(){
                                             ?>
                                         </select>
                                     </div>
-                                </div>                                
+                                </div>
+                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pasar</label>
                                     <div class="col-md-9">
@@ -235,7 +235,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Luas Lokasi (m2)</label>
                                     <div class="col-md-3">
-                                        <input type="number" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo set_value('luas', 0); ?>" id="luas" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo set_value('luas', 0); ?>" id="luas" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@ function HitungLuas(){
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-9">
                                         <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Simpan</button>
-                                        <a href="<?php echo site_url('admin/pendasaran/pilihpedagang'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
+                                        <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
                                         </a>
                                     </div>
                                 </div>

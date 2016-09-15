@@ -15,19 +15,6 @@ if ($this->session->flashdata('notification')) { ?>
 <? } ?>
 
 <script type="text/javascript">
-$(function() {
-    $(document).on("click",'.pilih_pedagang', function(e) {        
-        var pedagang_id     = $(this).data('id');
-        var pedagang_nik     = $(this).data('nik');
-        var pedagang_nama   = $(this).data('nama');        
-        $(".pedagang_id").val(pedagang_id);
-        $(".pedagang_nik").val(pedagang_nik);
-        $(".pedagang_nama").val(pedagang_nama);
-    })
-});
-</script>
-
-<script type="text/javascript">
     $(document).ready(function () {
         $("#lstPasar").select2({
         });
@@ -73,55 +60,6 @@ function HitungLuas(){
 }
 </script>
 
-<!-- List Pedagang -->
-<div class="modal bs-modal-lg" id="caripedagang" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
-                <div class="modal-header">                      
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Pedagang</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped table-bordered table-hover" id="sample_1">
-                        <thead>
-                            <tr>
-                                <th width="8%">Pilih</th>
-                                <th width="12%">N I K</th>
-                                <th>Nama Pedagang</th>
-                                <th>Alamat</th>
-                            </tr>
-                        </thead>
-                            
-                        <tbody>
-                        <?php 
-                            $no = 1;
-                            foreach($listPedagang as $p) {                            
-                            ?>
-                            <tr>
-                                <td align="center">
-                                    <button type="button" class="btn btn-success btn-xs pilih_pedagang" data-toggle="modal" data-id="<?php echo $p->pedagang_id; ?>" data-nik="<?php echo $p->pedagang_nik; ?>" data-nama="<?php echo $p->pedagang_nama; ?>" title="Pilih Alamat" data-dismiss="modal"><i class="icon-check"></i> Pilih
-                                    </button>
-                                </td>
-                                <td><?php echo $p->pedagang_nik; ?></td>
-                                <td><?php echo $p->pedagang_nama; ?></td>
-                                <td><?php echo $p->pedagang_alamat; ?></td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">                    
-                    <button type="button" class="btn yellow" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
-                </div>
-            </form>
-        </div>        
-    </div>    
-</div>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
@@ -165,13 +103,46 @@ function HitungLuas(){
                         <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/updatedata/'.$this->uri->segment(4)); ?>" method="post" enctype="multipart/form-data" name="form1">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <input type="hidden" name="id" value="<?php echo $detail->dasar_id; ?>">
-                        <input type="hidden" class="pedagang_id" name="pedagang_id" value="<?php echo $detail->pedagang_id; ?>">
+                        <input type="hidden" class="penduduk_id" name="penduduk_id" value="<?php echo $detail->penduduk_id; ?>">
                         <input type="hidden" name="pasar_inisial" id="pasar_inisial" value="<?php echo $detail->pasar_inisial; ?>">
                         <input type="hidden" name="pasar_kode" id="pasar_kode" value="<?php echo $detail->pasar_kode; ?>">
                         <input type="hidden" name="jenis_kode" id="jenis_kode" value="<?php echo $detail->jenis_kode; ?>">
                         <input type="hidden" name="status_print" value="<?php echo $detail->dasar_st_print; ?>">
 
                             <div class="form-body">
+                                <h3 class="form-section">Data Pedagang</h3>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">N I K</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->penduduk_nik; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->penduduk_nama; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <?php
+                                    $tgl_lahir      = $detail->penduduk_tgl_lahir;
+                                    $xtgl           = explode("-",$tgl_lahir);
+                                    $thn            = $xtgl[0];
+                                    $bln            = $xtgl[1];
+                                    $tgl            = $xtgl[2];
+                                    $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Tanggal Lahir</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
+                                    </div>
+                                </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">No Surat</label>
@@ -197,7 +168,7 @@ function HitungLuas(){
                                     $tgl            = $xtgl[2];
                                     $tanggal_srt    = $tgl.'-'.$bln.'-'.$thn;
                                 } else {
-                                    $tanggal_srt    = '';
+                                    $tanggal_srt    = date('d-m-Y');
                                 }
 
                                 $tgl_dari           = $detail->dasar_dari;
@@ -208,7 +179,7 @@ function HitungLuas(){
                                     $tgld           = $xtgld[2];
                                     $tanggal_dari   = $tgld.'-'.$blnd.'-'.$thnd;
                                 } else {
-                                    $tanggal_dari   = '';
+                                    $tanggal_dari   = date('d-m-Y');
                                 }
 
                                 $tgl_sampai         = $detail->dasar_sampai;
@@ -219,7 +190,7 @@ function HitungLuas(){
                                     $tgls           = $xtgls[2];
                                     $tanggal_sampai = $tgls.'-'.$blns.'-'.$thns;
                                 } else {
-                                    $tanggal_sampai = '';
+                                    $tanggal_sampai = date('d-m-Y');
                                 }
                                 ?>
                                 <div class="form-group form-md-line-input">
@@ -241,31 +212,6 @@ function HitungLuas(){
                                         </div>                                        
                                     </div> 
                                 </div>
-                                <h3 class="form-section">Data Pedagang</h3>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">N I K</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control pedagang_nik" placeholder="Enter N I K" name="nik" value="<?php echo $detail->pedagang_nik; ?>" autocomplete="off" required>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span class="input-group-btn btn-right">
-                                            <a data-toggle="modal" href="#caripedagang" title="Klik untuk Cari Data">
-                                                <button class="btn blue-madison" type="button">
-                                                <i class="fa fa-search"></i>
-                                                </button>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control pedagang_nama" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->pedagang_nama; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Dagangan</label>
                                     <div class="col-md-9">
@@ -284,7 +230,8 @@ function HitungLuas(){
                                             ?>
                                         </select>
                                     </div>
-                                </div>                                
+                                </div> 
+                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pasar</label>
                                     <div class="col-md-9">
@@ -307,7 +254,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Alamat Pasar" name="alamat" value="<?php echo $detail->pasar_alamat.', DESA '.$detail->desa_nama.', KECAMATAN '.$detail->kecamatan_nama; ?>" id="alamat" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Alamat Pasar" name="alamat" value="<?php echo $detail->pasar_alamat.', DESA '.$detail->desa_pasar.', KECAMATAN '.$detail->kecamatan_pasar; ?>" id="alamat" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -374,7 +321,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Luas Lokasi (m2)</label>
                                     <div class="col-md-3">
-                                        <input type="number" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo $detail->dasar_luas; ?>" id="luas" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo $detail->dasar_luas; ?>" id="luas" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>

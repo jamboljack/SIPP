@@ -43,10 +43,12 @@ class Pendasaran_model extends CI_Model {
 	}
 
 	function select_penduduk_cari($nama) {
-		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama');
+		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_penduduk p');
 		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
 		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
+		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
+		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
 		$this->db->like('p.penduduk_nama', $nama);
 		$this->db->order_by('p.penduduk_nama', 'asc');
 		
@@ -190,18 +192,35 @@ class Pendasaran_model extends CI_Model {
 		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
 		);
 
-		$this->db->insert('sipp_dasar', $data);		
+		$this->db->insert('sipp_dasar', $data);
+	}
+
+	function update_data_acc() {
+		$dasar_id = $this->uri->segment(4);
+
+		$data = array(
+				'dasar_acc' => 1
+			);
+
+		$this->db->where('dasar_id', $dasar_id);
+		$this->db->update('sipp_dasar', $data);
 	}
 
 	function select_detail_by_id($dasar_id) {
-		$this->db->select('d.*, p.penduduk_id, p.penduduk_nik, p.penduduk_nama, s.pasar_inisial, 
-							s.pasar_kode, s.pasar_alamat, k.kecamatan_nama, e.desa_nama, j.jenis_kode');
+		$this->db->select('d.*, p.*, v.provinsi_nama, b.kabupaten_nama, k.kecamatan_nama, e.desa_nama,
+							s.pasar_inisial, s.pasar_nama, s.pasar_kode, s.pasar_alamat, kc.kecamatan_nama as kecamatan_pasar,
+							ds.desa_nama as desa_pasar, j.jenis_kode, j.jenis_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
 		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
+		$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
+		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+		$this->db->join('sipp_desa e', 'p.desa_id = e.desa_id');
 		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+		$this->db->join('sipp_kecamatan kc', 's.kecamatan_id = kc.kecamatan_id');
+		$this->db->join('sipp_desa ds', 's.desa_id = ds.desa_id');
 		$this->db->join('sipp_jenis j', 'd.jenis_id = j.jenis_id');
-		$this->db->join('sipp_kecamatan k', 's.kecamatan_id = k.kecamatan_id');
-		$this->db->join('sipp_desa e', 'e.kecamatan_id = k.kecamatan_id');
+		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');		
 		$this->db->where('d.dasar_id', $dasar_id);
 		
 		return $this->db->get();
@@ -260,7 +279,7 @@ class Pendasaran_model extends CI_Model {
 		$this->db->update('sipp_dasar', $data);
 	}
 
-	function select_detail_preview($dasar_id) {
+/*	function select_detail_preview($dasar_id) {
 		$this->db->select('d.*, p.penduduk_nik, p.penduduk_nama, p.penduduk_tgl_lahir, p.penduduk_alamat, p.penduduk_foto, s.pasar_nama, s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
 		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
@@ -273,6 +292,7 @@ class Pendasaran_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+*/
 
 	function select_petugas() {
 		$this->db->select('*');
@@ -319,6 +339,7 @@ class Pendasaran_model extends CI_Model {
 		$No_Surat 		= $nosurat.'/'.$nomor.'/'.$kode_pasar.'/'.$tahun; // 511.2/No Urut/Nomor/Kode Pasar/Tahun Surat		
 		// No Urut
 		$no_urut 		= $this->pendasaran_model->getkodeuniknpwrd();
+		$No_NPWRD 		= $this->input->post('npwrd');
 
 		// Update Surat Lama jadi di Perpanjang
 		$data = array(
@@ -346,8 +367,8 @@ class Pendasaran_model extends CI_Model {
 				'dasar_no_lama'			=> $this->input->post('no_surat_lama'),
 				'dasar_status'			=> 'Perpanjangan',
 				'penduduk_id'			=> $this->input->post('penduduk_id'),
-				'pasar_id'				=> $this->input->post('lstPasar'),
-				'jenis_id'				=> $this->input->post('lstJenis'),
+				'pasar_id'				=> $this->input->post('pasar_id'),
+				'jenis_id'				=> $this->input->post('jenis_id'),
 				'tempat_id'				=> $this->input->post('rdTempat'),
 				'dasar_tgl_surat'		=> $tanggal_srt,
 				'dasar_dari'			=> $tanggal_dari,

@@ -165,22 +165,23 @@ if (!empty($tgl_sampai)) {
         <tr>
             <td>N I K</td>
             <td>:</td>
-            <td><b><?php echo $detail->pedagang_nik; ?></b></td>
+            <td><b><?php echo $detail->penduduk_nik; ?></b></td>
         </tr>
         <tr>
             <td>Nama</td>
             <td>:</td>
-            <td><?php echo $detail->pedagang_nama; ?></td>
+            <td><?php echo $detail->penduduk_nama; ?></td>
         </tr>
         <tr>
             <td>Umur</td>
             <td>:</td>
-            <td><?php echo age($detail->pedagang_tgl_lahir); ?> Tahun</td>
+            <td><?php echo age($detail->penduduk_tgl_lahir); ?> Tahun</td>
         </tr>
         <tr>
             <td valign="top">Alamat</td>
             <td valign="top">:</td>
-            <td><?php echo ucwords(strtolower($detail->pedagang_alamat)).', '.ucwords(strtolower($detail->kabupaten_nama)).' - '.ucwords(strtolower($detail->provinsi_nama)); ?></td>
+            <td><?php echo ucwords(strtolower($detail->penduduk_alamat)).' RT. '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' Desa '.ucwords(strtolower($detail->desa_nama)).' Kecamatan '.ucwords(strtolower($detail->kecamatan_nama)).'<br>'.ucwords(strtolower($detail->kabupaten_nama)).' - '.ucwords(strtolower($detail->provinsi_nama)); ?>
+            </td>
         </tr>
     </table>
     </li>
@@ -212,8 +213,8 @@ if (!empty($tgl_sampai)) {
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
             <td width="15%" align="center" valign="top">
-                <?php if (!empty($detail->pedagang_foto)) { ?>
-                    <img src="<?php echo base_url(); ?>pedagang_image/<?php echo $detail->pedagang_foto; ?>" width="100%">
+                <?php if (!empty($detail->penduduk_foto)) { ?>
+                    <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detail->penduduk_foto; ?>" width="100%">
                 <?php } ?>
             </td>
             <td width="40%" align="center" valign="top">Pemegang Izin<br>
@@ -226,7 +227,7 @@ if (!empty($tgl_sampai)) {
             <br>
             <br>
             <br>
-            <b><u><?php echo $detail->pedagang_nama; ?></u></b>
+            <b><u><?php echo $detail->penduduk_nama; ?></u></b>
             </td>
             <td width="45%" align="center" valign="top">
             <?php echo $petugas->petugas_title_kadin; ?><br>

@@ -18,6 +18,24 @@
     }
 </script>
 
+<script>
+    function ACCData(dasar_id) {
+        var id = dasar_id;
+        swal({
+            title: 'ACC Data ?',
+            text: 'ACC Data Surat Ini !',type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: true
+        }, function() {            
+            window.location.href="<?php echo site_url('admin/pendasaran/accdata'); ?>"+"/"+id
+        });
+    }
+</script>
+
 <?php 
 if ($this->session->flashdata('notification')) { ?>
 <script>
@@ -73,7 +91,7 @@ if ($this->session->flashdata('notification')) { ?>
                             <tr>
                                 <th width="5%">No</th>
                                 <th width="15%">No. Surat</th>
-                                <th width="10%">Tanggal</th>
+                                <th width="10%">Tgl. Habis</th>
                                 <th width="8%">NPWRD</th>
                                 <th>Nama Pedagang</th>
                                 <th width="20%">Nama Pasar</th>
@@ -88,7 +106,7 @@ if ($this->session->flashdata('notification')) { ?>
                             foreach($daftarlist as $r) {
                                 $dasar_id       = $r->dasar_id;
 
-                                $tgl_surat      = $r->dasar_tgl_surat;
+                                $tgl_surat      = $r->dasar_sampai;
                                 $xtgl           = explode("-",$tgl_surat);
                                 $thn            = $xtgl[0];
                                 $bln            = $xtgl[1];
@@ -113,10 +131,15 @@ if ($this->session->flashdata('notification')) { ?>
                                     <?php } ?>
                                     <br>
                                     <?php if ($r->dasar_st_print == 1) { ?>
-                                        <span class="label label-default"><i class="fa fa-print"></i> <?php echo 'Di Cetak'; ?></span>
+                                        <span class="label label-default"><i class="fa fa-print"></i> Di Cetak</span>
                                     <?php } else { ?>
-                                        <span class="label label-danger"><i class="fa fa-print"></i> <?php echo 'Belum Cetak'; ?></span>
+                                        <span class="label label-danger"><i class="fa fa-print"></i> Belum Cetak</span>
                                     <?php } ?>
+                                    <?php if ($r->dasar_acc == 0) { ?>
+                                    <span class="label label-warning"><i class="fa fa-times-circle"></i> Belum ACC SPV</span>
+                                    <?php } else { ?>
+                                    <span class="label label-success"><i class="fa fa-check-square"></i> ACC SPV</span>
+                                    <?php }?>
                                 </td>
                                 <td>
                                     <?php if ($r->dasar_data == 0) { ?>
@@ -127,11 +150,20 @@ if ($this->session->flashdata('notification')) { ?>
                                             </button>
                                         </a>
                                         <?php } ?>
+
+                                        <?php if ($r->dasar_acc == 1) { ?>
                                         <a href="<?php echo site_url('admin/pendasaran/printdata/'.$r->dasar_id); ?>">
                                             <button class="btn btn-default btn-xs" title="Cetak Surat Pendasaran">
                                                 <i class="icon-printer"></i>
                                             </button>
                                         </a>
+                                        <?php } ?>
+
+                                        <?php if ($this->session->userdata('level') <> 'Operator' && $r->dasar_acc == 0) { ?>
+                                            <a onclick="ACCData(<?php echo $dasar_id; ?>)"><button class="btn btn-success btn-xs" title="ACC"><i class="icon-check "></i> ACC Data</button>
+                                            </a>
+                                        <?php } ?>
+                                        
                                         <?php if ($r->dasar_st_print == 1) { ?>
                                         <a href="<?php echo site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id); ?>">
                                             <button class="btn btn-danger btn-xs" title="Perpanjangan Surat">

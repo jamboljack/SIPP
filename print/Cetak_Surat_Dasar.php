@@ -7,26 +7,30 @@ $id 		= $_REQUEST['id'];
 $npwrd 		= base64_decode(trim($_REQUEST['npwrd']));
 mysql_select_db($database, $konekdb);
 
-$sqla 		= "SELECT d.*, p.pedagang_nik, p.pedagang_nama, p.pedagang_tgl_lahir, p.pedagang_alamat, p.pedagang_foto,
-		 	s.pasar_nama, s.pasar_alamat, k.kabupaten_nama, e.provinsi_nama, j.jenis_nama, t.tempat_nama 
-			FROM sipp_dasar d JOIN sipp_pedagang p ON d.pedagang_id = p.pedagang_id
-			JOIN sipp_pasar s ON d.pasar_id = s.pasar_id
-			JOIN sipp_jenis j ON d.jenis_id = j.jenis_id
-			JOIN sipp_provinsi e ON p.provinsi_id = e.provinsi_id
-			JOIN sipp_kabupaten k ON p.kabupaten_id = k.kabupaten_id			
-			JOIN sipp_tempat t ON d.tempat_id = t.tempat_id
-			WHERE d.dasar_id = '".$id."'";
+$sqla 		= "SELECT d.*, p.*, e.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, a.desa_nama,
+ 				s.pasar_nama, s.pasar_alamat, j.jenis_nama, t.tempat_nama 
+				FROM sipp_dasar d 
+				JOIN sipp_penduduk p ON d.penduduk_id = p.penduduk_id
+				JOIN sipp_provinsi e ON p.provinsi_id = e.provinsi_id
+				JOIN sipp_kabupaten k ON p.kabupaten_id = k.kabupaten_id
+				JOIN sipp_kecamatan c ON p.kecamatan_id = c.kecamatan_id
+				JOIN sipp_desa a ON p.desa_id = a.desa_id
+				JOIN sipp_pasar s ON d.pasar_id = s.pasar_id
+				JOIN sipp_jenis j ON d.jenis_id = j.jenis_id
+				JOIN sipp_tempat t ON d.tempat_id = t.tempat_id
+				WHERE d.dasar_id = '".$id."'";
 
 $rsa 		= mysql_query($sqla, $konekdb) or die(mysql_error());	
 $rowrsa 	= mysql_fetch_assoc($rsa);
 
 $xno_surat	= strtoupper(trim($rowrsa['dasar_no']));
 $xnpwrd		= strtoupper(trim($rowrsa['dasar_npwrd']));
-$xnik		= strtoupper(trim($rowrsa['pedagang_nik']));
-$xnama		= strtoupper(trim($rowrsa['pedagang_nama']));
-$xumur		= age($rowrsa['pedagang_tgl_lahir']);
-$xalamat	= ucwords(strtolower(trim($rowrsa['pedagang_alamat']).', '.trim($rowrsa['kabupaten_nama']).' - '.trim($rowrsa['provinsi_nama'])));
-$xfoto 		= trim($rowrsa['pedagang_foto']); // Foto
+$xnik		= strtoupper(trim($rowrsa['penduduk_nik']));
+$xnama		= strtoupper(trim($rowrsa['penduduk_nama']));
+$xumur		= age($rowrsa['penduduk_tgl_lahir']);
+$xalamat	= ucwords(strtolower(trim($rowrsa['penduduk_alamat']).' RT. '.$rowrsa['penduduk_rt'].'/'.$rowrsa['penduduk_rw'].' Desa '.trim($rowrsa['desa_nama']).' Kecamatan '.trim($rowrsa['kecamatan_nama'])));
+$xarea		= ucwords(strtolower(trim($rowrsa['kabupaten_nama']).' - '.trim($rowrsa['provinsi_nama'])));
+$xfoto 		= trim($rowrsa['penduduk_foto']); // Foto
 $xtempat	= strtoupper(trim($rowrsa['tempat_nama']));
 $xpasar		= strtoupper(trim($rowrsa['pasar_nama']));
 $xblok		= strtoupper(trim($rowrsa['dasar_blok']));
@@ -67,6 +71,7 @@ $document = preg_replace('[xnik]',$xnik,$document);
 $document = preg_replace('[xnama]',$xnama,$document);
 $document = preg_replace('[xumr]',$xumur,$document);
 $document = preg_replace('[xalamat]',$xalamat,$document);
+$document = preg_replace('[xarea]',$xarea,$document);
 $document = preg_replace('[xtempat]',$xtempat,$document);
 $document = preg_replace('[xpasar]',$xpasar,$document);
 $document = preg_replace('[xblok]',$xblok,$document);

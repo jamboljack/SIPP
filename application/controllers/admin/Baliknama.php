@@ -39,145 +39,131 @@ class Baliknama extends CI_Controller {
 	public function adddata() {
 		$dasar_id 				= $this->uri->segment(4);
 		$data['detail']			= $this->baliknama_model->select_detail_surat($dasar_id)->row();
-		$data['listPedagang'] 	= $this->baliknama_model->select_pedagang()->result();
+		$data['listPenduduk'] 	= $this->baliknama_model->select_penduduk()->result();
 		$data['listJenis'] 		= $this->baliknama_model->select_jenis()->result();
 		$this->template->display('admin/baliknama_add_view', $data);
 	}
 
 	public function savedata() {
-		$id_lama = $this->input->post('pedagang_id_lama');
-		$id_baru = $this->input->post('pedagang_id');
+		$id_lama = $this->input->post('penduduk_id_lama');
+		$id_baru = $this->input->post('penduduk_id');
 		
 		if ($id_baru == $id_lama) {
 			$this->session->set_flashdata('notification','Data Pedagang Tidak Boleh Sama.');
 			redirect(site_url('admin/baliknama/adddata/'.$this->uri->segment(4)));
 		} else {
-			// Tgl. Balik Nama
-			$tgl_surat 		= $this->input->post('tgl_surat');
-			$xtgl 			= explode("-",$tgl_surat);
-			$thn 			= $xtgl[2];
-			$bln 			= $xtgl[1];
-			$tgl 			= $xtgl[0];
-			$tanggal_srt 	= $thn.'-'.$bln.'-'.$tgl;
-
-			// Tahun Pembuatan Surat
-			$tanggal 		= date('Y-m-d');
-			$xtgl1 			= explode("-",$tanggal);
-			$tahun 			= $xtgl1[0];
-			// Nomor
-			$nomor 			= strtoupper(trim($this->input->post('nomor')));
-			// Kode Pasar
-			$kode_pasar		= trim($this->input->post('pasar_kode'));
-			// No Surat Pendasaran
-			$nosurat 		= $this->baliknama_model->getkodeuniksurat();
-			$No_Surat 		= $nosurat.'/'.$nomor.'/'.$kode_pasar.'/'.$tahun;
-			// NPWRD = KodePasar+KodeJenis+Tahun+NoUrut		
-			$kodepasar 		= trim($this->input->post('pasar_inisial'));
-			$jenisdagang 	= trim($this->input->post('jenis_kode'));
-			$no_urut 		= $this->baliknama_model->getkodeuniknpwrd();
-			$No_NPWRD		= $kodepasar.$jenisdagang.$tahun.$no_urut;
-
-			// Update Temporary Surat
-			$data = array(
-					'no_surat'		=> strtoupper(trim($No_Surat)),
-					'no_npwrd'		=> strtoupper(trim($No_NPWRD)),
-					'tahun'			=> $tahun,
-					'no'			=> $no_urut
-				);
-
-			$this->db->where('id', 1);
-			$this->db->update('sipp_tmp_surat', $data);
-
-			// No Surat Balik Nama
-			$no_urut_balik	= $this->baliknama_model->getkodeunikbalikno();
-			$no_balik		= $this->baliknama_model->getkodeunikbalik();
-			$No_BalikNama 	= $no_balik.'/BN/'.$tahun;
-
-			// Insert ke Tabel Balik Nama
-			$data = array(
-					'dasar_id'					=> $this->input->post('id'),
-					'pedagang_id'				=> $this->input->post('pedagang_id'),
-					'jenis_id'					=> $this->input->post('jenis_id'),
-					'pasar_id'					=> $this->input->post('pasar_id'),
-					'tempat_id'					=> $this->input->post('tempat_id'),
-					'baliknama_no'				=> strtoupper(trim($No_BalikNama)), // 511.2/00001/BN/2016
-					'baliknama_npwrd'			=> strtoupper(trim($No_NPWRD)),
-					'baliknama_tgl'				=> $tanggal_srt,
-			   		'user_username' 			=> $this->session->userdata('username'),
-			   		'baliknama_date_update' 	=> date('Y-m-d'),
-			   		'baliknama_time_update' 	=> date('Y-m-d H:i:s')
-			);
-
-			$this->db->insert('sipp_baliknama', $data);
-
-			// Update Temporary Surat Balik
-			$data = array(
-					'no_surat'		=> strtoupper(trim($No_BalikNama)),
-					'tahun'			=> $tahun,
-					'no'			=> $no_urut_balik
-				);
-
-			$this->db->where('id', 1);
-			$this->db->update('sipp_tmp_surat_balik', $data);
-
-			// Update ke Table Dasar = Tidak Berlaku
-			$dasar_id 	= $this->input->post('id');		
-			$data = array(
-					'dasar_data'			=> 1,				
-			   		'user_username' 		=> $this->session->userdata('username'),
-			   		'dasar_date_update' 	=> date('Y-m-d'),
-			   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
-			);
-
-			$this->db->where('dasar_id', $dasar_id);
-			$this->db->update('sipp_dasar', $data);
-
-			// Insert ke Tabel Pendasaran Baru
-			$data = array(
-					'dasar_no'				=> strtoupper(trim($No_Surat)),
-					'dasar_no_lama'			=> $this->input->post('dasar_no'),
-					'dasar_npwrd'			=> strtoupper(trim($No_NPWRD)),
-					'dasar_status'			=> 'Balik Nama',
-					'pedagang_id'			=> $this->input->post('pedagang_id'),
-					'pasar_id'				=> $this->input->post('pasar_id'),
-					'jenis_id'				=> $this->input->post('jenis_id'),
-					'tempat_id'				=> $this->input->post('tempat_id'),
-					'dasar_tgl_surat'		=> $tanggal_srt,
-					'dasar_blok'			=> strtoupper(trim($this->input->post('blok'))),
-					'dasar_nomor'			=> strtoupper(trim($this->input->post('nomor'))),
-					'dasar_panjang'			=> $this->input->post('panjang'),
-					'dasar_lebar'			=> $this->input->post('lebar'),
-					'dasar_luas'			=> $this->input->post('luas'),
-			   		'user_username' 		=> $this->session->userdata('username'),
-			   		'dasar_date_update' 	=> date('Y-m-d'),
-			   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
-			);
-
-			$this->db->insert('sipp_dasar', $data);
-			$id = $this->db->insert_id();
-			$this->session->set_flashdata('notification','Simpan Data Balik Nama Sukses.');
-		 	redirect(site_url('admin/pendasaran/editdata/'.$id));
+			$this->baliknama_model->insert_data();
+			$this->session->set_flashdata('notification','Simpan Data Sukses.');
+		 	redirect(site_url('admin/baliknama'));
 		}
 	}
+
+	public function savedataacc() {
+		$baliknama_id 	= $this->uri->segment(4);
+		$detail			= $this->baliknama_model->select_detail_by_id($baliknama_id)->row();				
+		$dasar_id 		= $detail->dasar_id;
+		$detaillama		= $this->baliknama_model->select_detail_surat($dasar_id)->row();
+
+		// Tahun Pembuatan Surat
+		$tanggal 		= date('Y-m-d');
+		$xtgl1 			= explode("-",$tanggal);
+		$tahun 			= $xtgl1[0];
+		$nomor 			= $detaillama->dasar_nomor;
+		$kode_pasar		= $detaillama->pasar_kode;
+		// No Surat Pendasaran
+		$nosurat 		= $this->baliknama_model->getkodeuniksurat();
+		$No_Surat 		= $nosurat.'/'.$nomor.'/'.$kode_pasar.'/'.$tahun;
+		// NPWRD = KodePasar+KodeJenis+Tahun+NoUrut		
+		$kodepasar 		= $detaillama->pasar_inisial;
+		$jenisdagang 	= $detaillama->jenis_kode;
+		$no_urut 		= $this->baliknama_model->getkodeuniknpwrd();
+		$No_NPWRD		= $kodepasar.$jenisdagang.$tahun.$no_urut;
+
+		// Update Temporary Surat
+		$data = array(
+				'no_surat'		=> strtoupper(trim($No_Surat)),
+				'no_npwrd'		=> strtoupper(trim($No_NPWRD)),
+				'tahun'			=> $tahun,
+				'no'			=> $no_urut
+			);
+
+		$this->db->where('id', 1);
+		$this->db->update('sipp_tmp_surat', $data);		
+
+		// Update NPWRD Pedagang Baru
+		$data = array(
+				'baliknama_npwrd'			=> strtoupper(trim($No_NPWRD)),
+				'baliknama_data'			=> 1, // ACC Status
+		   		'user_username' 			=> $this->session->userdata('username'),
+		   		'baliknama_date_update' 	=> date('Y-m-d'),
+		   		'baliknama_time_update' 	=> date('Y-m-d H:i:s')
+		);
+		$this->db->where('baliknama_id', $baliknama_id);
+		$this->db->update('sipp_baliknama', $data);
+		
+		// Update ke Table Dasar = Tidak Berlaku
+		$data = array(
+				'dasar_data'			=> 1,				
+		   		'user_username' 		=> $this->session->userdata('username'),
+		   		'dasar_date_update' 	=> date('Y-m-d'),
+		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
+		);
+		
+		$this->db->where('dasar_id', $dasar_id);
+		$this->db->update('sipp_dasar', $data);
+
+		// Insert ke Tabel Pendasaran Baru
+		$data = array(
+				'dasar_no'				=> strtoupper(trim($No_Surat)),
+				'dasar_no_lama'			=> $detaillama->dasar_no,
+				'dasar_npwrd'			=> strtoupper(trim($No_NPWRD)),
+				'dasar_status'			=> 'Balik Nama',
+				'penduduk_id'			=> $detail->penduduk_id,
+				'pasar_id'				=> $detail->pasar_id,
+				'jenis_id'				=> $detail->jenis_id,
+				'tempat_id'				=> $detail->tempat_id,
+				'dasar_tgl_surat'		=> date('Y-m-d'),
+				'dasar_blok'			=> $detaillama->dasar_blok,
+				'dasar_nomor'			=> $detaillama->dasar_nomor,
+				'dasar_panjang'			=> $detaillama->dasar_panjang,
+				'dasar_lebar'			=> $detaillama->dasar_lebar,
+				'dasar_luas'			=> $detaillama->dasar_luas,
+		   		'user_username' 		=> $this->session->userdata('username'),
+		   		'dasar_date_update' 	=> date('Y-m-d'),
+		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
+		);
+		
+		$this->db->insert('sipp_dasar', $data);
+		$id = $this->db->insert_id();
+	 	redirect(site_url('admin/pendasaran/editdata/'.$id));
+	}
+
 	
-	public function editdata($dasar_id) {		
-		$data['listTempat']		= $this->baliknama_model->select_tempat()->result();
-		$data['listPasar'] 		= $this->baliknama_model->select_pasar()->result();
-		$data['listPedagang'] 	= $this->baliknama_model->select_pedagang()->result();
+	public function editdata($baliknama_id) {
+		$dasar_id 				= $this->uri->segment(5);
+		$data['detail']			= $this->baliknama_model->select_detail_surat($dasar_id)->row();
+		$data['listPenduduk'] 	= $this->baliknama_model->select_penduduk()->result();
 		$data['listJenis'] 		= $this->baliknama_model->select_jenis()->result();
-		$data['detail'] 		= $this->baliknama_model->select_detail_by_id($dasar_id)->row();
-		$this->template->display('admin/baliknama_edit_view', $data);
+		$data['detailbalik']	= $this->baliknama_model->select_detail_by_id($baliknama_id)->row();
+		$this->template->display('admin/baliknama_edit_view', $data);		
 	}
 
 	public function updatedata() {
-		if ($this->input->post('status_print') == 1) {
-			$this->session->set_flashdata('notification','Surat Pendasaran sudah di Print, Tidak bisa di Edit.');
-			redirect(site_url('admin/baliknama/editdata/'.$this->uri->segment(4)));
+		$this->baliknama_model->update_data();
+		$this->session->set_flashdata('notification','Update Data Sukses.');
+		redirect(site_url('admin/baliknama'));
+	}
+
+	public function deletedata($kode) {
+		$kode = $this->security->xss_clean($this->uri->segment(4));
+		
+		if ($kode == null) {
+			redirect(site_url('admin/baliknama'));
 		} else {
-			$this->baliknama_model->update_data();
-			$this->session->set_flashdata('notification','Update Data Sukses.');
+			$this->baliknama_model->delete_data($kode);
+			$this->session->set_flashdata('notification','Hapus Data Sukses.');
 			redirect(site_url('admin/baliknama'));
 		}
-	}	
+	}
 }
 /* Location: ./application/controller/admin/Baliknama.php */

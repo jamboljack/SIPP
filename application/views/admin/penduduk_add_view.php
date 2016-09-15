@@ -71,7 +71,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Tambah Pedagang</a>
+                    <a href="#">Tambah Penduduk</a>
                 </li>
             </ul>                
         </div>            
@@ -82,7 +82,7 @@
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-plus-square"></i> Form Tambah Pedagang
+                            <i class="fa fa-plus-square"></i> Form Tambah Penduduk
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse"></a>
@@ -90,7 +90,7 @@
                     </div>
                     
                     <div class="portlet-body form">
-                        <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/savedatapedagang'); ?>" method="post" enctype="multipart/form-data">
+                        <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/savedatapenduduk'); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <input type="hidden" class="provinsi_id" name="provinsi_id" value="<?php echo set_value('provinsi_id'); ?>">
                         <input type="hidden" class="kab_id" name="kab_id" value="<?php echo set_value('kab_id'); ?>">                        
@@ -119,9 +119,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
+                                    <label class="col-md-3 control-label" for="form_control_1">Nama Penduduk</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo set_value('nama'); ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter Nama Penduduk" name="nama" value="<?php echo set_value('nama'); ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-9">
                                         <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Simpan</button>
-                                        <a href="<?php echo site_url('admin/pedagang'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
+                                        <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
                                         </a>
                                     </div>
                                 </div>

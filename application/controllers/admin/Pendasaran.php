@@ -70,7 +70,7 @@ class Pendasaran extends CI_Controller {
 				$jam 	= time();
 				$kode 	= seo_title($this->input->post('nama'));
 					
-				$config['file_name']    = 'Pedagang_'.$kode.'_'.$jam.'.jpg';
+				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './penduduk_image/';
 				$config['allowed_types'] = 'jpg|png|gif|jpeg';		
 				$config['overwrite'] = TRUE;
@@ -155,11 +155,16 @@ class Pendasaran extends CI_Controller {
 		$this->session->set_flashdata('notification','Simpan Data Sukses.');
 	 	redirect(site_url('admin/pendasaran'));
 	}
+
+	public function accdata() {
+		$this->pendasaran_model->update_data_acc();
+		$this->session->set_flashdata('notification','Data Telah di ACC.');
+	 	redirect(site_url('admin/pendasaran'));
+	}
 	
 	public function editdata($dasar_id) {		
 		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
 		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
-		$data['listPedagang'] 	= $this->pendasaran_model->select_penduduk()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
 		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$this->template->display('admin/pendasaran_edit_view', $data);
@@ -177,8 +182,9 @@ class Pendasaran extends CI_Controller {
 	}
 	
 	public function printdata($dasar_id) {		
-		$data['detail'] = $this->pendasaran_model->select_detail_preview($dasar_id)->row();
-		$cek 			= $this->pendasaran_model->select_detail_preview($dasar_id)->row();		
+		$data['detail'] = $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
+		$cek 			= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
+		
 		if ($cek->dasar_st_print == 0) {
 			$this->pendasaran_model->update_data_print();
 		}		
@@ -186,13 +192,13 @@ class Pendasaran extends CI_Controller {
 	}
 
 	public function preview($dasar_id) {		
-		$data['detail'] 		= $this->pendasaran_model->select_detail_preview($dasar_id)->row();
+		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$data['petugas'] 		= $this->pendasaran_model->select_petugas()->row();
 		$this->load->view('admin/pendasaran_preview_print', $data);
 	}
 
 	public function exportpdf($dasar_id) {
-		$data['detail'] 		= $this->pendasaran_model->select_detail_preview($dasar_id)->row();
+		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$data['petugas'] 		= $this->pendasaran_model->select_petugas()->row();	
 
 		$time 			= time();
@@ -217,7 +223,6 @@ class Pendasaran extends CI_Controller {
 	public function perpanjangan($dasar_id) {		
 		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
 		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
-		$data['listPedagang'] 	= $this->pendasaran_model->select_penduduk()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
 		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$this->template->display('admin/pendasaran_perpanjangan_view', $data);

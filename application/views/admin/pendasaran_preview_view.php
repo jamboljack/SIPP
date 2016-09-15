@@ -34,7 +34,6 @@
                         
         <div class="row">
             <div class="col-md-12">
-
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
@@ -52,14 +51,14 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="<?php echo site_url('admin/pendasaran/preview/'.$this->uri->segment(4).'/'.$detail->dasar_npwrd); ?>" class="btn blue" target="_blank"><i class="fa fa-search"></i> Preview
+                                        <a href="<?php echo site_url('admin/pendasaran/preview/'.$this->uri->segment(4).'/'.$detail->dasar_npwrd); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print
                                         </a>
                                         <?php
                                             $dasar_id   = trim($this->uri->segment(4));
                                             $npwrd      = trim($detail->dasar_npwrd);
                                             $cetak_surat= "print/Cetak_Surat_Dasar.php?id=".$dasar_id."&npwrd=".$npwrd;
                                         ?>
-                                        <a href="<?php echo base_url().$cetak_surat; ?>" class="btn red" target="_blank"><i class="fa fa-print"></i> Print
+                                        <a href="<?php echo base_url().$cetak_surat; ?>" class="btn red" target="_blank"><i class="fa fa-file-word-o"></i> Save Word
                                         </a>
                                         <a href="<?php echo site_url('admin/pendasaran/exportpdf/'.$this->uri->segment(4).'/'.$detail->dasar_npwrd); ?>" class="btn green" target="_blank"><i class="fa fa-file-pdf-o"></i> Save PDF
                                         </a>                                        
@@ -70,6 +69,39 @@
                             </div>
 
                             <div class="form-body">
+                                <h3 class="form-section">Data Pedagang</h3>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">N I K</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" placeholder="Enter N I K" name="nik" value="<?php echo $detail->penduduk_nik; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->penduduk_nama; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <?php
+                                    $tgl_lahir      = $detail->penduduk_tgl_lahir;
+                                    $xtgl           = explode("-",$tgl_lahir);
+                                    $thn            = $xtgl[0];
+                                    $bln            = $xtgl[1];
+                                    $tgl            = $xtgl[2];
+                                    $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Tanggal Lahir</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="alamat" rows="2" placeholder="Enter Description" required><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
+                                    </div>
+                                </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">No Surat</label>
@@ -133,31 +165,15 @@
                                         <input type="text" class="form-control" name="tgl_berlaku" value="<?php echo $tanggal_dari.' s/d '.$tanggal_sampai; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div> 
-                                </div>                                
-                                <!--
-                                <h3 class="form-section">Data Pedagang</h3>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">N I K</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control pedagang_nik" placeholder="Enter N I K" name="nik" value="<?php echo $detail->pedagang_nik; ?>" autocomplete="off" disabled>
-                                        <div class="form-control-focus"></div>
-                                    </div>
                                 </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Nama Pedagang</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control pedagang_nama" placeholder="Enter Nama Pedagang" name="nama" value="<?php echo $detail->pedagang_nama; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Dagangan</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="Enter Jenis Dagangan" name="jenis" value="<?php echo $detail->jenis_nama; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
-                                </div>                                
+                                </div>
+                                <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pasar</label>
                                     <div class="col-md-9">
@@ -168,53 +184,16 @@
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Alamat Pasar" name="alamat" value="<?php echo $detail->pasar_alamat.', DESA '.$detail->desa_nama.', KECAMATAN '.$detail->kecamatan_nama; ?>" id="alamat" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
+                                        <input type="text" class="form-control" placeholder="Alamat Pasar" name="alamat" value="<?php echo $detail->pasar_alamat.', DESA '.$detail->desa_pasar.', KECAMATAN '.$detail->kecamatan_pasar; ?>" id="alamat" autocomplete="off" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Tempat</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Enter Jenis Tempat" name="tempat_nama" value="<?php echo $detail->tempat_nama; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>                                
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Blok</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Blok Tempat" name="blok" value="<?php echo $detail->dasar_blok; ?>" autocomplete="off" readonly>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Jenis Tempat" name="tempat_nama" value="<?php echo $detail->tempat_nama.' Blok '.$detail->dasar_blok.', Nomor '.$detail->dasar_nomor.', Luas '.$detail->dasar_panjang.'x'.$detail->dasar_lebar.' ('.$detail->dasar_luas.' m2)'; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Nomor</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Nomor Tempat" name="nomor" value="<?php echo $detail->dasar_nomor; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Panjang</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Panjang Tempat" name="panjang" id="panjang" value="<?php echo $detail->dasar_panjang; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Lebar</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo $detail->dasar_lebar; ?>" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Luas Lokasi (m2)</label>
-                                    <div class="col-md-3">
-                                        <input type="number" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo $detail->dasar_luas; ?>" id="luas" autocomplete="off" readonly>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                -->
                             </div>                            
                         </form>
                     </div>
