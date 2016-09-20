@@ -25,7 +25,12 @@
                         <span class="username username-hide-on-mobile"><?php echo $this->session->userdata('nama'); ?></span>
                         <i class="fa fa-angle-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-default">                       
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>
+                            <a href="<?php echo site_url('admin/account'); ?>">
+                                <i class="icon-user"></i> My Account
+                            </a>
+                        </li>
                         <li>
                             <a href="<?php echo site_url('login/logout'); ?>">
                                 <i class="icon-key"></i> Log Out 

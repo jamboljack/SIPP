@@ -27,6 +27,8 @@
 <!-- FILE UPLOAD IMAGE -->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-fileupload/bootstrap-fileupload.css" />
 <link href="<?php echo base_url(); ?>assets/admin/pages/css/invoice.css" rel="stylesheet" type="text/css"/>
+<!-- PROFILE -->
+<link href="<?php echo base_url(); ?>assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
 <!-- BEGIN THEME STYLES -->
 <link href="<?php echo base_url(); ?>assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo base_url(); ?>assets/global/css/components-md.css" id="style_components" rel="stylesheet" type="text/css"/>
@@ -40,7 +42,7 @@
 <!-- END GLOBAL MANDATORY STYLES -->
 </head>
 <!-- END HEAD -->
-<body class="page-md page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo ">
+<body class="page-md page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
 
 <!-- BEGIN HEADER -->
 <?php echo $_header; ?>
@@ -96,13 +98,17 @@
 <script src="<?php echo base_url(); ?>assets/admin/pages/scripts/table-advanced.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/pages/scripts/form-samples.js"></script>
 
+<script src="<?php echo base_url(); ?>assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
+
+
 <script>
 jQuery(document).ready(function() {    
    Metronic.init();
    Layout.init();
    ComponentsPickers.init();   
    TableAdvanced.init();
-   FormSamples.init();   
+   FormSamples.init();
+   Profile.init();
 });
 </script>
 <!-- END JAVASCRIPTS -->
