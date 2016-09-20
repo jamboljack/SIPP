@@ -98,7 +98,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $r->komponen_kode; ?></td>
                                 <td><?php echo $r->komponen_uraian; ?></td>
                                 <td><?php echo $type; ?></td>
-                                <td><?php echo number_format($r->komponen_tarif, 0, '.', ','); ?></td>
+                                <td><?php echo 'Rp. '.number_format($r->komponen_tarif, 0, '.', ','); ?></td>
                                 <td>
                                     <?php if ($r->komponen_type == 'S') { ?>
                                     <a href="<?php echo site_url('admin/komponen/rincian/'.$r->komponen_id); ?>">
