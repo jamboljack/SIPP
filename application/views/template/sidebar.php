@@ -12,11 +12,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -35,11 +39,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';    
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -58,11 +66,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';    
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -81,11 +93,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -104,11 +120,15 @@ if ($uri == 'home') {
     $kondisi        = 'active';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -127,11 +147,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = 'active';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -150,11 +174,42 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = 'active';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
+    $trans          = '';
+    $span_trans_1   = '';
+    $span_trans_2   = '';
+    $pendasaran     = '';
+    $baliknama      = '';
+    $retribusi      = '';    
+    $users          = '';
+} elseif ($uri == 'komponen') {
+    $dashboard      = '';
+    $master         = '';
+    $span_master_1  = '';
+    $span_master_2  = '';
+    $tempat         = '';
+    $kelas          = '';
+    $bentuk         = '';
+    $kondisi        = '';
+    $kepemilikan    = '';
+    $jenis          = '';
+    $setting        = 'active open';
+    $span_setting_1 = '<span class="selected"></span>';
+    $span_setting_2 = 'open';
+    $komponen       = 'active';
+    $data           = '';
+    $span_data_1    = '';
+    $span_data_2    = '';
+    $pasar          = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -173,11 +228,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = 'active open';
     $span_data_1    = '<span class="selected"></span>';
     $span_data_2    = 'open';
     $pasar          = 'active';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -185,7 +244,7 @@ if ($uri == 'home') {
     $baliknama      = '';
     $retribusi      = '';    
     $users          = '';
-} elseif ($uri == 'penduduk') {
+} elseif ($uri == 'petugas') {
     $dashboard      = '';
     $master         = '';
     $span_master_1  = '';
@@ -196,11 +255,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = 'active open';
     $span_data_1    = '<span class="selected"></span>';
     $span_data_2    = 'open';
     $pasar          = '';
-    $penduduk       = 'active';
+    $petugas        = 'active';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -219,11 +282,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = 'active open';
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
@@ -242,11 +309,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = 'active open';
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
@@ -265,11 +336,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';    
+    $petugas        = '';
     $trans          = 'active open';
     $span_trans_1   = '<span class="selected"></span>';
     $span_trans_2   = 'open';
@@ -288,11 +363,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';    
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -311,11 +390,15 @@ if ($uri == 'home') {
     $kondisi        = '';
     $kepemilikan    = '';
     $jenis          = '';
+    $setting        = '';
+    $span_setting_1 = '';
+    $span_setting_2 = '';
+    $komponen       = '';
     $data           = '';
     $span_data_1    = '';
     $span_data_2    = '';
     $pasar          = '';
-    $penduduk       = '';
+    $petugas        = '';
     $trans          = '';
     $span_trans_1   = '';
     $span_trans_2   = '';
@@ -401,6 +484,22 @@ if ($uri == 'home') {
                     </li>
                 </ul>
             </li>
+            <li class="<?php echo $setting; ?>">
+                <a href="javascript:;">
+                    <i class="fa fa-cogs"></i>
+                    <span class="title">Setting</span>
+                    <?php echo $span_setting_1; ; ?>
+                    <span class="arrow <?php echo $span_setting_2; ?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="<?php echo $komponen; ?>">
+                        <a href="<?php echo site_url('admin/komponen'); ?>">
+                            <i class="fa fa-check-square-o"></i>
+                            Komponen Retribusi
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <?php } ?>
             <li class="<?php echo $data; ?>">
                 <a href="javascript:;">
@@ -416,10 +515,10 @@ if ($uri == 'home') {
                             Data Pasar
                         </a>
                     </li>
-                    <li class="<?php echo $penduduk; ?>">
-                        <a href="<?php echo site_url('admin/penduduk'); ?>">
+                    <li class="<?php echo $petugas; ?>">
+                        <a href="<?php echo site_url('admin/petugas'); ?>">
                             <i class="fa fa-check-square-o"></i>
-                            Data Penduduk
+                            Data Petugas
                         </a>
                     </li>
                 </ul>

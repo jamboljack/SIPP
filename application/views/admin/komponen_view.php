@@ -1,8 +1,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
 <script>
-    function hapusData(pasar_id) {
-        var id = pasar_id;
+    function hapusData(komponen_id) {
+        var id = komponen_id;
         swal({
             title: 'Anda Yakin ?',
             text: 'Data ini Akan di Hapus !',type: 'warning',
@@ -13,7 +13,7 @@
             cancelButtonText: 'No',
             closeOnConfirm: true
         }, function() {
-            window.location.href="<?php echo site_url('admin/pasar/deletedata'); ?>"+"/"+id
+            window.location.href="<?php echo site_url('admin/komponen/deletedata'); ?>"+"/"+id
         });
     }
 </script>
@@ -34,7 +34,7 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Data <small>Data Pasar</small>
+            Setting <small>Komponen Retribusi</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -44,25 +44,25 @@ if ($this->session->flashdata('notification')) { ?>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Data</a>
+                    <a href="#">Setting</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Data Pasar</a>
+                    <a href="#">Komponen Retribusi</a>
                 </li>
             </ul>                
         </div>            
                         
         <div class="row">
             <div class="col-md-12">
-                <a href="<?php echo site_url('admin/pasar/adddata'); ?>">
+                <a href="<?php echo site_url('admin/komponen/adddata'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
                 </a>
                 <br><br>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-list"></i> Daftar Data Pasar
+                            <i class="fa fa-list"></i> Daftar Komponen Retribusi
                         </div>
                         <div class="tools"></div>
                     </div>
@@ -72,11 +72,11 @@ if ($this->session->flashdata('notification')) { ?>
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
-                                <th width="8%">Kode</th>
-                                <th>Nama Pasar</th>
-                                <th width="8%">Tahun</th>
-                                <th width="30%">Alamat</th>
-                                <th width="20%">Koordinator</th>                                
+                                <th width="10%">Kode Rekening</th>
+                                <th>Uraian</th>
+                                <th width="10%">Type</th>
+                                <th width="15%">Tarif</th>                                
+                                <th width="10%">Rincian</th>
                                 <th width="10%">Aksi</th>
                             </tr>
                         </thead>
@@ -85,30 +85,36 @@ if ($this->session->flashdata('notification')) { ?>
                             <?php 
                             $no = 1;
                             foreach($daftarlist as $r) {
-                                $pasar_id = $r->pasar_id;
+                                $komponen_id = $r->komponen_id;
                                 
-                                if ($r->pasar_jenis == 'T') {
-                                    $jenis = '(Pasar Tradisional)';
+                                if ($r->komponen_type == 'M') {
+                                    $type = 'Menu';
                                 } else {
-                                    $jenis = '(Pasar Hewan)';
+                                    $type = 'Sub Menu';
                                 }
-
-                                $nama = '<b>'.$r->pasar_nama.'</b>';
                             ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
-                                <td><?php echo $r->pasar_inisial.'-'.$r->pasar_kode; ?></td>
-                                <td><?php echo $nama.'<br>'.$jenis; ?></td>
-                                <td><?php echo $r->pasar_thn_berdiri; ?></td>
-                                <td><?php echo $r->pasar_alamat; ?><br><?php echo 'DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama; ?></td>
-                                <td><?php echo $r->pasar_nip.'<br>'.$r->pasar_koordinator; ?></td>
+                                <td><?php echo $r->komponen_kode; ?></td>
+                                <td><?php echo $r->komponen_uraian; ?></td>
+                                <td><?php echo $type; ?></td>
+                                <td><?php echo number_format($r->komponen_tarif, 0, '.', ','); ?></td>
                                 <td>
-                                    <a href="<?php echo site_url('admin/pasar/editdata/'.$r->pasar_id); ?>">
+                                    <?php if ($r->komponen_type == 'S') { ?>
+                                    <a href="<?php echo site_url('admin/komponen/rincian/'.$r->komponen_id); ?>">
+                                        <button class="btn btn-primary btn-xs" title="Rincian Tarif">
+                                            <i class="icon-list"></i> Rincian
+                                        </button>
+                                    </a>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <a href="<?php echo site_url('admin/komponen/editdata/'.$r->komponen_id); ?>">
                                         <button class="btn btn-primary btn-xs" title="Edit Data">
                                             <i class="icon-pencil"></i>
                                         </button>
                                     </a>
-                                    <a onclick="hapusData(<?php echo $pasar_id; ?>)">
+                                    <a onclick="hapusData(<?php echo $komponen_id; ?>)">
                                         <button class="btn btn-danger btn-xs" title="Hapus Data">
                                             <i class="icon-trash"></i>
                                         </button>

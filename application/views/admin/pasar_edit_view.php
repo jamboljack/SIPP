@@ -246,6 +246,39 @@ $(function() {
                                     </div>
                                 </div>
                                 <h3 class="form-section">Pendukung</h3>
+                                <div class="form-group form-md-checkboxes"">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Pasar</label>
+                                    <div class="md-radio-inline col-md-9">
+                                        <?php 
+                                            if ($detail->pasar_jenis == 'T') { // Tradisional
+                                                $checkT = 'checked';
+                                                $checkR = '';
+                                            } elseif ($detail->pasar_jenis == 'H') { // Hewan
+                                                $checkT = '';
+                                                $checkR = 'checked';
+                                            } else {
+                                                $checkT = '';
+                                                $checkR = '';
+                                            }
+                                        ?>
+                                        <div class="md-radio">
+                                            <input type="radio" id="radio15" name="rdJenis" class="md-radiobtn" value="T" <?php echo $checkT; ?> required>
+                                            <label for="radio15">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> PASAR TRADISIONAL
+                                            </label>
+                                        </div>
+                                        <div class="md-radio">
+                                            <input type="radio" id="radio16" name="rdJenis" class="md-radiobtn" value="H" <?php echo $checkR; ?>>
+                                            <label for="radio16">
+                                                <span></span>
+                                                <span class="check"></span>
+                                                <span class="box"></span> PASAR HEWAN
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Kelas Pasar</label>
                                     <div class="col-md-3">
