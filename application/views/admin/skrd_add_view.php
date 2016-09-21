@@ -61,7 +61,7 @@ function myTempat() {
                 <li>
                     <a href="#">Buat SKRD</a>
                 </li>
-            </ul>                
+            </ul>
         </div>            
                         
         <div class="row">

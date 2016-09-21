@@ -638,7 +638,7 @@ if ($uri == 'home') {
             </li>
             <li class="<?php echo $retri; ?>">
                 <a href="javascript:;">
-                    <i class="fa fa-exchange"></i>
+                    <i class="fa fa-refresh"></i>
                     <span class="title">Transaksi Retribusi</span>
                     <?php echo $span_retri_1; ; ?>
                     <span class="arrow <?php echo $span_retri_2; ; ?>"></span>

@@ -30,7 +30,7 @@ class Skrd extends CI_Controller {
 		$this->template->display('admin/skrd_add_view', $data);
 	}
 
-	public function savedata() {		
+	public function savedata() {
 		$pasar_id	= $this->input->post('lstPasar');
 		// Cari Data Pedagang by Pasar		
 		$pedagang 	= $this->skrd_model->select_pedagang($pasar_id)->result();
@@ -48,7 +48,14 @@ class Skrd extends CI_Controller {
 	
 	public function editdata($skrd_id) {
 		$data['detail'] 		= $this->skrd_model->select_detail_by_id($skrd_id)->row();
+		$data['daftarItem'] 	= $this->skrd_model->select_list_item($skrd_id)->result();
 		$this->template->display('admin/skrd_edit_view', $data);
+	}
+
+	public function updatedataitem() {
+		$this->skrd_model->update_data_item();
+		$this->session->set_flashdata('notification','Update Data Item Sukses.');
+		redirect(site_url('admin/skrd/editdata/'.$this->uri->segment(4)));
 	}
 
 	public function updatedata() {

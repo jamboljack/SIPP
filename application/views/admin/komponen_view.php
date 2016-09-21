@@ -75,7 +75,8 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th width="10%">Kode Rekening</th>
                                 <th>Uraian</th>
                                 <th width="10%">Type</th>
-                                <th width="15%">Tarif</th>                                
+                                <th width="15%">Tarif</th>
+                                <th width="5%">Satuan</th>
                                 <th width="10%">Rincian</th>
                                 <th width="10%">Aksi</th>
                             </tr>
@@ -99,6 +100,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $r->komponen_uraian; ?></td>
                                 <td><?php echo $type; ?></td>
                                 <td><?php echo 'Rp. '.number_format($r->komponen_tarif, 0, '.', ','); ?></td>
+                                <td><?php echo $r->komponen_satuan; ?></td>
                                 <td>
                                     <?php if ($r->komponen_type == 'S') { ?>
                                     <a href="<?php echo site_url('admin/komponen/rincian/'.$r->komponen_id); ?>">

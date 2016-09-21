@@ -155,9 +155,9 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th width="10%">Periode</th>
                                 <th>NPWRD</th>
                                 <th width="20%">Pasar</th>
-                                <th width="8%">Total</th>
+                                <th width="9%">Total</th>
                                 <th width="10%">Status</th>
-                                <th width="15%">Aksi</th>
+                                <th width="14%">Aksi</th>
                             </tr>
                         </thead>
                         
@@ -207,7 +207,8 @@ if ($this->session->flashdata('notification')) { ?>
                                         break;
                                 }
 
-                                $total = '<b>Rp. '.number_format($r->skrd_total, 0, '.', ',').'</b>';
+                                $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
+                                $total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
 
                                 if ($r->skrd_status == 0) {
                                     $status = '<span class="label label-danger">BELUM BAYAR</span>';

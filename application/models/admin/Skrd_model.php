@@ -100,16 +100,10 @@ class Skrd_model extends CI_Model {
 	}		
 
 	function no_urut() {
-		// Tahun Pembuatan Surat
-		$tanggal 		= date('Y-m-d');
-		$xtgl1 			= explode("-",$tanggal);
-		$thn1 			= $xtgl1[0];
-
-		$this->db->select('RIGHT(no, 5) as kode', FALSE);
+		$this->db->select('MAX(no) as kode', FALSE);
 		$this->db->where('id', 1);
-		$this->db->where('tahun', $thn1);
-
 		$query = $this->db->get('sipp_tmp_skrd');
+
 		if ($query->num_rows() <> 0) {
 			$data = $query->row();
 			$kode = intval($data->kode) + 1;
@@ -117,7 +111,7 @@ class Skrd_model extends CI_Model {
 			$kode = 1;
 		}
 
-		$nourut = str_pad($kode, 5, "0", STR_PAD_LEFT);		
+		$nourut = $kode;
 		return $nourut;
    	}
 
@@ -220,7 +214,7 @@ class Skrd_model extends CI_Model {
 								AND kelas_id = '$kelas_id' AND tempat_id = '$tempat_id'";
 				$hasil 		= $this->db->query($sql)->row();
 				$harga  	= $hasil->tarif_harga;
-				$subtotal 	= ($harga*$jumHari);
+				$subtotal 	= ($harga*$jumHari*$luas);
 			} elseif ($r->komponen_uraian == 'Sampah') { // Jika Sampah
 				$harga  	= $hasil->tarif_harga;
 				$luas 		= 1;
@@ -239,6 +233,8 @@ class Skrd_model extends CI_Model {
 				'item_uraian'			=> $r->komponen_uraian,
 				'item_luas'				=> $luas,
 				'item_tarif'			=> $harga,
+				'item_satuan'			=> $r->komponen_satuan,
+				'item_hari'				=> $jumHari,
 				'item_subtotal'			=> $subtotal,
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'item_date_update' 		=> date('Y-m-d'),
@@ -277,6 +273,19 @@ class Skrd_model extends CI_Model {
 	}
 
 	function select_detail_by_id($skrd_id) {
+		$this->db->select('s.*, p.penduduk_nik, p.penduduk_nama, p.penduduk_alamat, p.penduduk_rt, p.penduduk_rw,
+							k.kabupaten_nama, d.dasar_npwrd, r.pasar_nama');
+		$this->db->from('sipp_skrd s');
+		$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
+		$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
+		$this->db->where('s.skrd_id', $skrd_id);
+		
+		return $this->db->get();
+	}
+
+	function select_list_item($skrd_id) {
 		$this->db->select('*');
 		$this->db->from('sipp_skrd_item');
 		$this->db->where('skrd_id', $skrd_id);
@@ -284,21 +293,49 @@ class Skrd_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	function update_data() {
-		$komponen_id     = $this->input->post('id');
+	function update_data_item() {
+		$item_id     = $this->input->post('id');
 		
 		$data = array(				
-				'komponen_kode'			=> trim($this->input->post('kode')),
-				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian')))),
-				'komponen_type'			=> trim($this->input->post('rdType')),
-				'komponen_tarif'		=> $this->input->post('tarif'),
+				'item_luas'				=> $this->input->post('luas'),
+				'item_tarif'			=> $this->input->post('harga'),
+				'item_satuan'			=> $this->input->post('satuan'),
+				'item_hari'				=> $this->input->post('hari'),
+				'item_subtotal'			=> $this->input->post('subtotal'),
 			   	'user_username' 		=> $this->session->userdata('username'),
-			   	'komponen_date_update' 	=> date('Y-m-d'),
-			   	'komponen_time_update' 	=> date('Y-m-d H:i:s')
+			   	'item_date_update' 		=> date('Y-m-d'),
+			   	'item_time_update' 		=> date('Y-m-d H:i:s')
 		);
 
-		$this->db->where('komponen_id', $komponen_id);
-		$this->db->update('sipp_komponen', $data);
+		$this->db->where('item_id', $item_id);
+		$this->db->update('sipp_skrd_item', $data);
+
+		//Total Retribusi
+		$skrd_id 	= $this->input->post('skrd_id');
+		$Total  	= $this->skrd_model->select_total($skrd_id)->row();
+		$Total  	= $Total->total;
+
+		$data = array(
+				'skrd_total'	=> $Total
+			);
+
+		$this->db->where('skrd_id', $skrd_id);
+		$this->db->update('sipp_skrd', $data);
+	}
+
+	function update_data() {
+		$skrd_id     = $this->input->post('id');
+		
+		$data = array(				
+				'skrd_bunga'		=> $this->input->post('bunga'),
+				'skrd_kenaikan'		=> $this->input->post('kenaikan'),
+			   	'user_username' 	=> $this->session->userdata('username'),
+			   	'skrd_date_update' 	=> date('Y-m-d'),
+			   	'skrd_time_update' 	=> date('Y-m-d H:i:s')
+		);
+
+		$this->db->where('skrd_id', $skrd_id);
+		$this->db->update('sipp_skrd', $data);
 	}
 
 	function delete_data($kode) {		

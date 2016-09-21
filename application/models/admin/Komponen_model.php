@@ -19,6 +19,7 @@ class Komponen_model extends CI_Model {
 				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian')))),
 				'komponen_type'			=> trim($this->input->post('rdType')),
 				'komponen_tarif'		=> $this->input->post('tarif'),
+				'komponen_satuan'		=> $this->input->post('satuan'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'komponen_date_update' 	=> date('Y-m-d'),
 			   	'komponen_time_update' 	=> date('Y-m-d H:i:s')
@@ -43,6 +44,7 @@ class Komponen_model extends CI_Model {
 				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian')))),
 				'komponen_type'			=> trim($this->input->post('rdType')),
 				'komponen_tarif'		=> $this->input->post('tarif'),
+				'komponen_satuan'		=> $this->input->post('satuan'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'komponen_date_update' 	=> date('Y-m-d'),
 			   	'komponen_time_update' 	=> date('Y-m-d H:i:s')
