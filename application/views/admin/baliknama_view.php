@@ -52,7 +52,7 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Transaksi <small>Balik Nama</small>
+            Transaksi Pendasaran <small>Balik Nama</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -62,7 +62,7 @@ if ($this->session->flashdata('notification')) { ?>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Transaksi</a>
+                    <a href="#">Transaksi Pendasaran</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>

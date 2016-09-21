@@ -8,30 +8,51 @@ class Pendasaran_model extends CI_Model {
 	function select_all() {
 		$user_username = $this->session->userdata('username');
 
-		$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
-		$this->db->from('sipp_dasar d');
-		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
-		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-		$this->db->join('sipp_akses a', 's.pasar_id = a.pasar_id');
-		$this->db->where('a.user_username', $user_username);
-		$this->db->order_by('d.dasar_id','desc');
-		
-		return $this->db->get();
+		if ($this->session->userdata('level') == 'Admin') {
+			$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');			
+			$this->db->order_by('d.dasar_id','desc');
+			
+			return $this->db->get();
+		} else {
+			$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+			$this->db->join('sipp_akses a', 's.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+			$this->db->order_by('d.dasar_id','desc');
+			
+			return $this->db->get();
+		}
 	}	
 
 	function select_pasar() {
 		$user_username = $this->session->userdata('username');
 
-		$this->db->select('p.*, k.kecamatan_nama, d.desa_nama');
-		$this->db->from('sipp_pasar p');
-		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
-		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
-		$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
-		$this->db->where('a.user_username', $user_username);
-		$this->db->order_by('p.pasar_nama', 'asc');
-		
-		return $this->db->get();
+		if ($this->session->userdata('level') == 'Admin') {
+			$this->db->select('p.*, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+			$this->db->order_by('p.pasar_nama', 'asc');
+			
+			return $this->db->get();
+		} else {
+			$this->db->select('p.*, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+			$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+			$this->db->order_by('p.pasar_nama', 'asc');
+			
+			return $this->db->get();
+		}
 	}
 
 	function select_tempat() {

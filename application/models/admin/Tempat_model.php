@@ -13,9 +13,13 @@ class Tempat_model extends CI_Model {
 		return $this->db->get();
 	}
 	
-	function insert_data() {		
+	function insert_data() {
+		$nama 	= strtoupper(trim($this->input->post('nama')));
+		$kode 	= substr($nama, 0, 1);
+		
 		$data = array(
-				'tempat_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'tempat_kode'			=> $kode,
+				'tempat_nama'			=> $nama,
 		   		'tempat_date_update' 	=> date('Y-m-d'),
 		   		'tempat_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -25,9 +29,13 @@ class Tempat_model extends CI_Model {
 
 	function update_data() {
 		$tempat_id     = $this->input->post('id');
+
+		$nama 	= strtoupper(trim($this->input->post('nama')));
+		$kode 	= substr($nama, 0, 1);		
 		
 		$data = array(
-				'tempat_nama'			=> strtoupper(trim($this->input->post('nama'))),				
+				'tempat_kode'			=> $kode,
+				'tempat_nama'			=> $nama,
 		   		'tempat_date_update' 	=> date('Y-m-d'),
 		   		'tempat_time_update' 	=> date('Y-m-d H:i:s')
 		);

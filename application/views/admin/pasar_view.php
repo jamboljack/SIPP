@@ -55,10 +55,12 @@ if ($this->session->flashdata('notification')) { ?>
                         
         <div class="row">
             <div class="col-md-12">
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
                 <a href="<?php echo site_url('admin/pasar/adddata'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
                 </a>
                 <br><br>
+                <?php } ?>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
@@ -98,7 +100,7 @@ if ($this->session->flashdata('notification')) { ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
                                 <td><?php echo $r->pasar_inisial.'-'.$r->pasar_kode; ?></td>
-                                <td><?php echo $nama.'<br>'.$jenis; ?></td>
+                                <td><?php echo $nama. ' ('.$r->kelas_nama.')'.'<br>'.$jenis; ?></td>
                                 <td><?php echo $r->pasar_thn_berdiri; ?></td>
                                 <td><?php echo $r->pasar_alamat; ?><br><?php echo 'DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama; ?></td>
                                 <td><?php echo $r->pasar_nip.'<br>'.$r->pasar_koordinator; ?></td>

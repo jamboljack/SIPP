@@ -8,7 +8,7 @@
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Transaksi <small>Balik Nama</small>
+            Transaksi Pendasaran <small>Balik Nama</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -18,7 +18,7 @@
                     <i class="fa fa-angle-right"></i>
                 </li>                
                 <li>
-                    <a href="#">Transaksi</a>
+                    <a href="#">Transaksi Pendasaran</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                  <li>
@@ -34,55 +34,44 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="portlet box red-intense">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <i class="fa fa-search"></i> Pilih Pasar
-                        </div>
-                        <div class="tools">
-                            <a href="javascript:;" class="collapse"></a>
-                        </div>
-                    </div>
-                    
-                    <div class="portlet-body form">
-                        <form role="form" class="form-horizontal" action="<?php echo site_url('admin/baliknama/caridatapasar'); ?>" method="post" enctype="multipart/form-data" name="form1">
-                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                <div class="portlet-body form">
+                    <form role="form" class="form-horizontal" action="<?php echo site_url('admin/baliknama/caridatapasar'); ?>" method="post" enctype="multipart/form-data" name="form1">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
-                            <div class="form-body">
-                                <h3 class="form-section">Data Pasar</h3>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-2 control-label" for="form_control_1">Nama Pasar</label>
-                                    <div class="col-md-4">
-                                        <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" required>
-                                            <option value="">- Pilih Nama Pasar -</option>
-                                            <?php
-                                            foreach($listPasar as $p) {
-                                            ?>php
-                                            <option value="<?php echo $p->pasar_id; ?>" <?php echo set_select('lstPasar', $p->pasar_id); ?>><?php echo $p->pasar_inisial.' - '.$p->pasar_nama; ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="col-md-2 control-label">Pasar</label>
+                                        <div class="col-md-8">
+                                            <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" required>
+                                                <option value="">- Pilih Nama Pasar -</option>
+                                                <?php
+                                                foreach($listPasar as $p) {
+                                                ?>php
+                                                <option value="<?php echo $p->pasar_id; ?>" <?php echo set_select('lstPasar', $p->pasar_id); ?>><?php echo $p->pasar_nama; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span class="input-group-btn btn-right">    
+                                                <button class="btn blue-madison" type="submit" name="cari">
+                                                    <i class="fa fa-search"></i> Cari
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="col-md-1">
-                                        <span class="input-group-btn btn-right">    
-                                            <button class="btn blue-madison" type="submit" name="cari">
-                                                <i class="fa fa-search"></i> Cari
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span class="input-group-btn btn-right">
-                                            <a href="<?php echo site_url('admin/baliknama'); ?>" class="btn yellow">
-                                                <i class="fa fa-times"></i> Kembali
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>                                
-                            </div>
-                        </form>
-                    </div>
-
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="<?php echo site_url('admin/baliknama'); ?>" class="btn yellow">
+                                        <i class="fa fa-times"></i> Kembali
+                                    </a>                                    
+                                </div>
+                            </div>                                
+                        </div>
+                    </form>
                 </div>
 
             </div>

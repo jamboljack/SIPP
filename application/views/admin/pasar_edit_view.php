@@ -125,7 +125,7 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Kode Pasar</label>
                                     <div class="col-md-2">
-                                        <input type="text" class="form-control" placeholder="Enter Kode Pasar" name="kode" value="<?php echo $detail->pasar_kode; ?>" autocomplete="off" required autofocus>
+                                        <input type="text" class="form-control" placeholder="Enter Kode Pasar" name="kode" value="<?php echo $detail->pasar_kode; ?>" maxlength="3" autocomplete="off" required autofocus>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -262,16 +262,16 @@ $(function() {
                                             }
                                         ?>
                                         <div class="md-radio">
-                                            <input type="radio" id="radio15" name="rdJenis" class="md-radiobtn" value="T" <?php echo $checkT; ?> required>
-                                            <label for="radio15">
+                                            <input type="radio" id="radio16" name="rdJenis" class="md-radiobtn" value="T" <?php echo $checkT; ?> required>
+                                            <label for="radio16">
                                                 <span></span>
                                                 <span class="check"></span>
                                                 <span class="box"></span> PASAR TRADISIONAL
                                             </label>
                                         </div>
                                         <div class="md-radio">
-                                            <input type="radio" id="radio16" name="rdJenis" class="md-radiobtn" value="H" <?php echo $checkR; ?>>
-                                            <label for="radio16">
+                                            <input type="radio" id="radio17" name="rdJenis" class="md-radiobtn" value="H" <?php echo $checkR; ?>>
+                                            <label for="radio17">
                                                 <span></span>
                                                 <span class="check"></span>
                                                 <span class="box"></span> PASAR HEWAN

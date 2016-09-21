@@ -647,7 +647,7 @@ if ($uri == 'home') {
                     <li class="<?php echo $skrd; ?>">
                         <a href="<?php echo site_url('admin/skrd'); ?>">
                             <i class="fa fa-check-square-o"></i>
-                            Pembuatan SKRD
+                            SKRD
                         </a>
                     </li>
                     <li class="<?php echo $retribusi; ?>">

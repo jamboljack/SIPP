@@ -63,7 +63,7 @@ function HitungLuas(){
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Transaksi <small>Surat Pendasaran</small>
+            Transaksi Pendasaran <small>Surat Pendasaran</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -73,7 +73,7 @@ function HitungLuas(){
                     <i class="fa fa-angle-right"></i>
                 </li>                
                 <li>
-                    <a href="#">Transaksi</a>
+                    <a href="#">Transaksi Pendasaran</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                  <li>

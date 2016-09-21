@@ -23,7 +23,7 @@ class Baliknama extends CI_Controller {
 
 	public function pilihpasar() {
 		$data['tampil']		= 'tidak';
-		$data['listPasar'] 	= $this->baliknama_model->select_pasar()->result();		
+		$data['listPasar'] 	= $this->baliknama_model->select_pasar()->result();
 		$this->template->display('admin/baliknama_pilih_view', $data);
 	}
 
