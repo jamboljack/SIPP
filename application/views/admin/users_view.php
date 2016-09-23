@@ -84,8 +84,10 @@ if ($this->session->flashdata('notification')) { ?>
                                 <?php } ?>
                                 </td>                               
                                 <td>
+                                    <?php if ($r->user_level <> 'Admin') { ?>
                                     <a href="<?php echo site_url('admin/users/aksespasar/'.$r->user_username); ?>"><button class="btn btn-danger btn-xs" title="Hak Akses Pasar"><i class="icon-list"></i> Akses Pasar</button>
                                     </a>
+                                    <?php } ?>
                                     <a href="<?php echo site_url('admin/users/editdata/'.$r->user_username); ?>"><button class="btn btn-primary btn-xs" title="Edit Data"><i class="icon-pencil"></i> Edit</button>
                                     </a>
                                 </td>

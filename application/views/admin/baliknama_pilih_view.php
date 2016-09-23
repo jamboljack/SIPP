@@ -134,7 +134,7 @@
                                     <?php } ?>
                                 </td>                              
                                 <td>                                    
-                                    <a href="<?php echo site_url('admin/baliknama/adddata/'.$r->dasar_id); ?>">
+                                    <a href="<?php echo site_url('admin/baliknama/pilihpenduduk/'.$r->dasar_id); ?>">
                                         <button class="btn btn-primary btn-xs" title="Edit Data">
                                             <i class="icon-pencil"></i> Balik Nama
                                         </button>

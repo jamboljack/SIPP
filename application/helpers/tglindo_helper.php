@@ -10,40 +10,40 @@ function tgl_indo($tgl){
 function getBulan($bln){
 	switch ($bln) {
 		case 1: 
-			return "Jan";
+			return "Januari";
 			break;
 		case 2:
-			return "Feb";
+			return "Februari";
 			break;
 		case 3:
-			return "Mar";
+			return "Maret";
 			break;
 		case 4:
-			return "Apr";
+			return "April";
 			break;
 		case 5:
 			return "Mei";
 			break;
 		case 6:
-			return "Jun";
+			return "Juni";
 			break;
 		case 7:
-			return "Jul";
+			return "Juli";
 			break;
 		case 8:
-			return "Aug";
+			return "Agustus";
 			break;
 		case 9:
-			return "Sep";
+			return "September";
 			break;
 		case 10:
-			return "Oct";
+			return "Oktober";
 			break;
 		case 11:
-			return "Nov";
+			return "November";
 			break;
 		case 12:
-			return "Dec";
+			return "Desember";
 			break;
 	}
 }

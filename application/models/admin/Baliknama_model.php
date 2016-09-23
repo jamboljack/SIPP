@@ -44,6 +44,31 @@ class Baliknama_model extends CI_Model {
 		return $this->db->get();
 	}
 
+	function select_penduduk_baru($penduduk_id) {
+		$this->db->select('p.*, v.provinsi_nama, b.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
+		$this->db->from('sipp_penduduk p');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
+		$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
+		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
+		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		$this->db->where('p.penduduk_id', $penduduk_id);
+		
+		return $this->db->get();
+	}
+
+	function select_penduduk_cari($nama) {
+		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
+		$this->db->from('sipp_penduduk p');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
+		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
+		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
+		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		$this->db->like('p.penduduk_nama', $nama);
+		$this->db->order_by('p.penduduk_nama', 'asc');
+		
+		return $this->db->get();
+	}
+
 	function select_jenis() {
 		$this->db->select('*');
 		$this->db->from('sipp_jenis');		
@@ -226,7 +251,7 @@ class Baliknama_model extends CI_Model {
 		// Insert ke Tabel Balik Nama
 		$data = array(
 				'dasar_id'					=> $this->input->post('id'),
-				'penduduk_id'				=> $this->input->post('penduduk_id'),
+				'penduduk_id'				=> $this->uri->segment(5),
 				'jenis_id'					=> $this->input->post('jenis_id'),
 				'pasar_id'					=> $this->input->post('pasar_id'),
 				'tempat_id'					=> $this->input->post('tempat_id'),

@@ -13,6 +13,22 @@ if ($this->session->flashdata('notification')) { ?>
 </script>
 <? } ?>
 
+<script type="text/javascript">
+function HitungKembalian(){
+    var myForm1     = document.form1;
+    var Total       = parseFloat(myForm1.totaltagih.value);
+    var JumlahBayar = parseFloat(myForm1.jumlahbayar.value);    
+    console.log(Total, JumlahBayar);
+
+    var Kembalian   = (JumlahBayar - Total);
+    if (Kembalian > 0) {
+        myForm1.kembalian.value = Kembalian; 
+    } else {
+        myForm1.kembalian.value = 0;
+    }       
+}
+</script>
+
 <?php
 $bln        = $detail->skrd_bulan;
 switch ($bln) {
@@ -55,121 +71,10 @@ switch ($bln) {
 }
 ?>
 
-<script type="text/javascript">
-    $(function() {
-        $(document).on("click",'.edit_item', function(e) {
-            var id          = $(this).data('id');
-            var skrd_id     = $(this).data('skrd');
-            var kode        = $(this).data('kode');
-            var nama        = $(this).data('nama');
-            var luas        = $(this).data('luas');
-            var satuan      = $(this).data('satuan');
-            var hari        = $(this).data('hari');
-            var harga       = $(this).data('harga');
-            var subtotal    = $(this).data('subtotal');
-            $(".item_id").val(id);
-            $(".item_skrd").val(skrd_id);
-            $(".item_kode").val(kode);
-            $(".item_nama").val(nama);
-            $(".item_luas").val(luas);
-            $(".item_satuan").val(satuan);
-            $(".item_hari").val(hari);
-            $(".item_harga").val(harga);
-            $(".item_subtotal").val(subtotal);
-        })
-    });
-</script>
-
-<script type="text/javascript">
-function HitungSubTotalItem(){
-    var myForm2     = document.form2;
-    var Luas        = parseFloat(myForm2.item_luas.value);
-    var Harga       = parseFloat(myForm2.item_harga.value);
-    var Hari        = parseFloat(myForm2.item_hari.value);
-
-    var SubTotal    = (Luas*Harga*Hari);
-    if (SubTotal > 0) {
-        myForm2.item_subtotal.value = SubTotal; 
-    } else {
-        myForm2.item_subtotal.value = 0;
-    }       
-}
-</script>
-
-<!-- Edit Item Form -->
-<div class="modal bs-modal-lg" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="<?php echo site_url('admin/skrd/updatedataitem/'.$this->uri->segment(4)); ?>" class="form-horizontal" method="post" enctype="multipart/form-data" name="form2">
-            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-            <input type="hidden" class="form-control item_id" name="id">
-            <input type="hidden" class="form-control item_skrd" name="skrd_id">
-                        
-            <div class="modal-header">                      
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title"><i class="fa fa-edit"></i> Form Edit Item Retribusi</h4>
-            </div>
-            <div class="modal-body">              
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Kode Rekening</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control item_kode" name="kode" autocomplete="off" readonly>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Uraian Retribusi</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control item_nama" name="nama" autocomplete="off" readonly>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Luas</label>
-                    <div class="col-md-2">
-                        <input type="number" class="form-control item_luas" name="luas" id="item_luas" onkeydown="HitungSubTotalItem()" autocomplete="off" required>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Satuan</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control item_satuan" name="satuan" autocomplete="off" required>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Tarif/Hari</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control item_harga" name="harga" id="item_harga" onkeydown="HitungSubTotalItem()" autocomplete="off" required>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Jumlah Hari</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control item_hari" name="hari" id="item_hari" onkeydown="HitungSubTotalItem()" autocomplete="off" required>
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-                <div class="form-group form-md-line-input">
-                    <label class="col-md-3 control-label">Sub Total</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control item_subtotal" name="subtotal" id="item_subtotal" autocomplete="off" readonly>
-                    </div>
-                </div>
-            </div>
-                        
-            <div class="modal-footer">
-                <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Update</button>
-                <button type="button" class="btn yellow" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-            </div>
-            </form>
-        </div>        
-    </div>    
-</div>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Transaksi Retribusi <small>SKRD</small>
+            Transaksi Retribusi <small>Pembayaran Retribusi</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -183,11 +88,11 @@ function HitungSubTotalItem(){
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="<?php echo site_url('admin/skrd'); ?>">SKRD</a>
+                    <a href="<?php echo site_url('admin/retribusi'); ?>">Pembayaran Retribusi</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">Edit Item SKRD</a>
+                    <a href="#">Proses Pembayaran Retribusi</a>
                 </li>
             </ul>               
         </div>            
@@ -296,6 +201,10 @@ function HitungSubTotalItem(){
                                     } else {
                                         echo '<b>BAYAR</b>';
                                     }
+
+                                    if ($detail->skrd_status == 1) {
+                                        echo " / ".tgl_indo($detail->skrd_tgl_bayar)." / Kasir : ".$detail->user_username;
+                                    }                                    
                                     ?>
                                     </span>
                                     </p>
@@ -331,7 +240,6 @@ function HitungSubTotalItem(){
                                 <th width="10%">Tarif/Hari</th>
                                 <th width="10%">Jml. Hari</th>
                                 <th width="10%">Sub Total</th>
-                                <th width="5%">Aksi</th>
                             </tr>
                         </thead>
                         
@@ -349,10 +257,6 @@ function HitungSubTotalItem(){
                                 <td align="right"><?php echo $r->item_tarif; ?></td>
                                 <td align="right"><?php echo $r->item_hari; ?></td>
                                 <td align="right"><?php echo number_format($r->item_subtotal, 0, '.', ','); ?></td>
-                                <td align="center">
-                                    <button type="button" class="btn btn-primary btn-xs edit_item" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->item_id; ?>" data-skrd="<?php echo $r->skrd_id; ?>" data-kode="<?php echo $r->item_kode; ?>" data-nama="<?php echo $r->item_uraian; ?>" data-luas="<?php echo $r->item_luas; ?>" data-harga="<?php echo $r->item_tarif; ?>" data-satuan="<?php echo $r->item_satuan; ?>" data-hari="<?php echo $r->item_hari; ?>" data-subtotal="<?php echo $r->item_subtotal; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
-                                    </button>
-                                </td>
                             </tr>
                             <?php
                                 $no++;
@@ -367,9 +271,10 @@ function HitungSubTotalItem(){
         </div>
         
         <div class="row">
-            <form role="form" action="<?php echo site_url('admin/skrd/updatedata'); ?>" method="post">
+            <form role="form" action="<?php echo site_url('admin/retribusi/updatedata/'.$this->uri->segment(4)); ?>" method="post" name="form1">
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-            <input type="hidden" name="id" value="<?php echo $detail->skrd_id; ?>">
+            <input type="hidden" name="id" value="<?php echo $detail->skrd_id; ?>">            
+            <input type="hidden" id="totaltagih" value="<?php echo $total; ?>">
 
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
@@ -377,26 +282,43 @@ function HitungSubTotalItem(){
                         <div class="row static-info align-reverse">
                             <div class="col-md-7 name">Total :</div>
                             <div class="col-md-4 value">
-                                <input type="text" class="form-control" name="tahun" value="<?php echo number_format($detail->skrd_total, 0, '.', ','); ?>" autocomplete="off" readonly>
+                                <input type="text" class="form-control" name="total" value="<?php echo number_format($detail->skrd_total, 0, '.', ','); ?>" autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="row static-info align-reverse">
                             <div class="col-md-7 name">Bunga :</div>
                             <div class="col-md-4 value">
-                                <input type="text" class="form-control" name="bunga" value="<?php echo $detail->skrd_bunga; ?>" autocomplete="off">
+                                <input type="text" class="form-control" name="bunga" value="<?php echo number_format($detail->skrd_bunga, 0, '.', ','); ?>" autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="row static-info align-reverse">
                             <div class="col-md-7 name">Kenaikan :</div>
                             <div class="col-md-4 value">
-                                <input type="text" class="form-control" name="kenaikan" value="<?php echo $detail->skrd_kenaikan; ?>" autocomplete="off">
+                                <input type="text" class="form-control" name="kenaikan" value="<?php echo number_format($detail->skrd_kenaikan, 0, '.', ','); ?>" autocomplete="off" readonly>
+                            </div>
+                        </div>
+                        <div class="row static-info align-reverse">
+                            <div class="col-md-7 name"><b>Jumlah Bayar :</b></div>
+                            <div class="col-md-4 value">
+                                <input type="text" class="form-control" name="jumlahbayar" id="jumlahbayar" value="<?php echo $detail->skrd_bayar; ?>" onkeydown="HitungKembalian()" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row static-info align-reverse">
+                            <div class="col-md-7 name"><b>Kembalian :</b></div>
+                            <div class="col-md-4 value">
+                                <input type="text" class="form-control" name="kembalian" id="kembalian" value="<?php echo $detail->skrd_kembali; ?>" autocomplete="off" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Update</button>
-                    <a href="<?php echo site_url('admin/skrd'); ?>" class="btn yellow">
+                    <?php if ($detail->skrd_status == 0) { ?>
+                    <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Bayar</button>
+                    <?php } else { ?>
+                    <a href="<?php echo site_url('admin/retribusi/printdata/'.$this->uri->segment(4)); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print
+                    </a>
+                    <?php } ?>
+                    <a href="<?php echo site_url('admin/retribusi'); ?>" class="btn yellow">
                         <i class="fa fa-times"></i> Batal
                     </a>
                 </div>

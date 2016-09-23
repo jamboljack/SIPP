@@ -13,24 +13,6 @@ if ($this->session->flashdata('notification')) { ?>
 </script>
 <? } ?>
 
-<script>
-    function hapusData(skrd_id) {
-        var id = skrd_id;
-        swal({
-            title: 'Anda Yakin ?',
-            text: 'Data ini Akan di Hapus !',type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-            closeOnConfirm: true
-        }, function() {
-            window.location.href="<?php echo site_url('admin/skrd/deletedata'); ?>"+"/"+id
-        });
-    }
-</script>
-
 <script type="text/javascript">
     $(document).ready(function () {        
         $("#lstPasar").select2({
@@ -41,7 +23,7 @@ if ($this->session->flashdata('notification')) { ?>
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
-            Transaksi Retribusi <small>SKRD</small>
+            Transaksi Retribusi <small>Pembayaran Retribusi</small>
         </h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">                    
@@ -55,7 +37,7 @@ if ($this->session->flashdata('notification')) { ?>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">SKRD</a>
+                    <a href="#">Pembayaran Retribusi</a>
                 </li>
             </ul>                
         </div>            
@@ -63,7 +45,7 @@ if ($this->session->flashdata('notification')) { ?>
         <div class="row">
             <div class="col-md-12">                
                 <div class="portlet-body form">
-                    <form role="form" class="form-horizontal" action="<?php echo site_url('admin/skrd/caridataskrd'); ?>" method="post" enctype="multipart/form-data">
+                    <form role="form" class="form-horizontal" action="<?php echo site_url('admin/retribusi/caridataskrd'); ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                         <div class="form-body">
@@ -152,10 +134,6 @@ if ($this->session->flashdata('notification')) { ?>
 
         <div class="row">
             <div class="col-md-12">
-                <a href="<?php echo site_url('admin/skrd/adddata'); ?>">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Buat SKRD</button>
-                </a>
-                <br><br>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
@@ -175,7 +153,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th width="20%">Pasar</th>
                                 <th width="9%">Total</th>
                                 <th width="10%">Status</th>
-                                <th width="14%">Aksi</th>
+                                <th width="10%">Aksi</th>
                             </tr>
                         </thead>
                         
@@ -242,23 +220,16 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo $r->pasar_nama.' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>
                                 <td><?php echo $total; ?></td>
                                 <td><?php echo $status; ?></td>
-                                <td>
-                                    <?php if ($r->skrd_status==0) { ?>
-                                    <a href="<?php echo site_url('admin/skrd/editdata/'.$r->skrd_id); ?>">
-                                        <button class="btn btn-primary btn-xs" title="Edit Data">
+                                <td>                                    
+                                    <a href="<?php echo site_url('admin/retribusi/editdata/'.$r->skrd_id); ?>">
+                                        <button class="btn btn-primary btn-xs" title="Pembayaran">
                                             <i class="icon-pencil"></i>
                                         </button>
-                                    </a>
-                                    <a href="<?php echo site_url('admin/skrd/printdata/'.$r->skrd_id); ?>" target="_blank">
+                                    </a> 
+                                    <?php if ($r->skrd_status == 1) { ?>                                   
+                                    <a href="<?php echo site_url('admin/retribusi/printdata/'.$r->skrd_id); ?>" target="_blank">
                                         <button class="btn btn-default btn-xs" title="Cetak Surat Tagihan">
                                             <i class="icon-printer"></i>
-                                        </button>
-                                    </a>
-                                    <?php } ?>
-                                    <?php if ($this->session->userdata('level')<>'Operator' && $r->skrd_status==0) { ?>
-                                    <a onclick="hapusData(<?php echo $skrd_id; ?>)">
-                                        <button class="btn btn-danger btn-xs" title="Hapus Data">
-                                            <i class="icon-trash"></i>
                                         </button>
                                     </a>
                                     <?php } ?>

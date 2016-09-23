@@ -22,6 +22,13 @@ class Skrd extends CI_Controller {
 			redirect(base_url());
 		} 
 	}
+	
+	public function caridataskrd() {
+		$data['listPasar'] 	= $this->skrd_model->select_pasar()->result();
+		$data['listTempat'] = $this->skrd_model->select_tempat()->result();
+		$data['daftarlist'] = $this->skrd_model->select_by_criteria()->result();
+		$this->template->display('admin/skrd_view', $data);
+	}
 
 	public function adddata() {
 		$data['error'] 		= 'false';
@@ -76,36 +83,41 @@ class Skrd extends CI_Controller {
 		}
 	}
 
-	public function rincian($skrd_id) {		
-		$data['listTarif'] 		= $this->skrd_model->select_tarif($skrd_id)->result();
-		$data['detail'] 		= $this->skrd_model->select_detail_by_id($skrd_id)->row();
-		$data['listKelas'] 		= $this->skrd_model->select_kelas()->result();
-		$data['listTempat'] 	= $this->skrd_model->select_tempat()->result();
-		$this->template->display('admin/skrd_tarif_view', $data);
-	}
-
-	public function savedatatarif() {
-		$this->skrd_model->insert_data_tarif();
-		$this->session->set_flashdata('notification','Simpan Data Sukses.');
-	 	redirect(site_url('admin/skrd/rincian/'.$this->uri->segment(4)));
-	}
-
-	public function updatedatatarif() {
-		$this->skrd_model->update_data_tarif();
-		$this->session->set_flashdata('notification','Update Data Sukses.');
-		redirect(site_url('admin/skrd/rincian/'.$this->uri->segment(4)));
-	}
-
-	public function deletedatatarif($kode) {
-		$kode = $this->security->xss_clean($this->uri->segment(5));
+	public function printdata($skrd_id) {		
+		$data['detail'] 	= $this->skrd_model->select_detail_by_id($skrd_id)->row();
+		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();
+		$data['petugas'] 	= $this->skrd_model->select_petugas($skrd_id)->row();
+		$data['kadin'] 		= $this->skrd_model->select_kadin()->row();
+		$cek 				= $this->skrd_model->select_detail_by_id($skrd_id)->row();
 		
-		if ($kode == null) {
-			redirect(site_url('admin/skrd/rincian/'.$this->uri->segment(4)));
-		} else {
-			$this->skrd_model->delete_data_tarif($kode);
-			$this->session->set_flashdata('notification','Hapus Data Tarif Sukses.');
-			redirect(site_url('admin/skrd/rincian/'.$this->uri->segment(4)));
+		if ($cek->skrd_st_print == 0) {
+			$this->skrd_model->update_data_print();
+		}		
+		$this->load->view('admin/surat_tagihan_skrd_view', $data);
+	}
+
+	public function printdatapdf($skrd_id) {
+		$data['detail'] 	= $this->skrd_model->select_detail_by_id($skrd_id)->row();
+		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();
+		$data['petugas'] 	= $this->skrd_model->select_petugas($skrd_id)->row();
+		$data['kadin'] 		= $this->skrd_model->select_kadin()->row();
+
+		$time 			= time();		
+		$filename 		= 'Surat_Tagihan_'.$time;
+		$pdfFilePath 	= FCPATH."download/$filename.pdf";
+			
+		if (file_exists($pdfFilePath) == FALSE){
+			ini_set('memory_limit','50M');
+			$html = $this->load->view('admin/surat_tagihan_skrd_pdf', $data, true);
+			$this->load->library('pdf');
+			$param = '"en-GB-x","A4","","",10,10,10,10,6,3,"L"'; // Landscape		
+			$pdf = $this->pdf->load($param);
+			$pdf->SetHeader(''); 
+			$pdf->SetFooter('');
+			$pdf->WriteHTML($html); // write the HTML into the PDF
+			$pdf->Output($pdfFilePath, 'F'); // save to file because we can
 		}
+		redirect("download/$filename.pdf");
 	}	
 }
 /* Location: ./application/controller/admin/Skrd.php */
