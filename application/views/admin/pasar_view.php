@@ -78,8 +78,8 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th>Nama Pasar</th>
                                 <th width="8%">Tahun</th>
                                 <th width="30%">Alamat</th>
-                                <th width="20%">Koordinator</th>                                
-                                <th width="10%">Aksi</th>
+                                <th width="15%">Koordinator</th>                                
+                                <th width="14%">Aksi</th>
                             </tr>
                         </thead>
                         
@@ -100,7 +100,7 @@ if ($this->session->flashdata('notification')) { ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
                                 <td><?php echo $r->pasar_inisial.'-'.$r->pasar_kode; ?></td>
-                                <td><?php echo $nama. ' ('.$r->kelas_nama.')'.'<br>'.$jenis; ?></td>
+                                <td><?php echo $nama.'<br>'.$jenis. ' ('.$r->kelas_nama.')'; ?></td>
                                 <td><?php echo $r->pasar_thn_berdiri; ?></td>
                                 <td><?php echo $r->pasar_alamat; ?><br><?php echo 'DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama; ?></td>
                                 <td><?php echo $r->pasar_nip.'<br>'.$r->pasar_koordinator; ?></td>
@@ -113,6 +113,11 @@ if ($this->session->flashdata('notification')) { ?>
                                     <a onclick="hapusData(<?php echo $pasar_id; ?>)">
                                         <button class="btn btn-danger btn-xs" title="Hapus Data">
                                             <i class="icon-trash"></i>
+                                        </button>
+                                    </a>
+                                    <a href="<?php echo site_url('admin/pasar/printdata/'.$r->pasar_id); ?>">
+                                        <button class="btn btn-warning btn-xs" title="Print">
+                                            <i class="icon-printer"></i>
                                         </button>
                                     </a>
                                 </td>

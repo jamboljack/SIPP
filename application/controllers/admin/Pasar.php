@@ -122,6 +122,15 @@ class Pasar extends CI_Controller {
 			$this->session->set_flashdata('notification','Hapus Data Sukses.');
 			redirect(site_url('admin/pasar'));
 		}
-	}	
+	}
+
+	public function printdata($pasar_id) {
+		$data['listKelas'] 		= $this->pasar_model->select_kelas()->result();
+		$data['listBentuk'] 	= $this->pasar_model->select_bentuk_bangunan()->result();
+		$data['listKondisi'] 	= $this->pasar_model->select_kondisi_bangunan()->result();
+		$data['listSurat'] 		= $this->pasar_model->select_surat_kepemilikan()->result();
+		$data['detail'] 		= $this->pasar_model->select_detail_by_id($pasar_id)->row();
+		$this->load->view('admin/pasar_print_view', $data);
+	}
 }
 /* Location: ./application/controller/admin/Pasar.php */

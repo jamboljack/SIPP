@@ -3079,7 +3079,7 @@ System feeds
 }
 .feeds li .col1 {
   float: left;
-  width: 100%;
+  width: 85%;
   clear: both;
 }
 .feeds li .col1 > .cont {
@@ -3113,8 +3113,8 @@ System feeds
 }
 .feeds li .col2 {
   float: left;
-  width: 75px;
-  margin-left: -75px;
+  width: 100px;
+  margin-left: -50px;
 }
 .feeds li .col2 > .date {
   padding: 4px 9px 5px 4px;

@@ -315,7 +315,7 @@ switch ($bln) {
                     <?php if ($detail->skrd_status == 0) { ?>
                     <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Bayar</button>
                     <?php } else { ?>
-                    <a href="<?php echo site_url('admin/retribusi/printdata/'.$this->uri->segment(4)); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print
+                    <a href="<?php echo site_url('admin/retribusi/printdata/'.$this->uri->segment(4)); ?>" class="btn blue"><i class="fa fa-print"></i> Print
                     </a>
                     <?php } ?>
                     <a href="<?php echo site_url('admin/retribusi'); ?>" class="btn yellow">

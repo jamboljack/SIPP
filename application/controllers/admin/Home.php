@@ -14,9 +14,12 @@ class Home extends CI_Controller{
 		if($this->session->userdata('logged_in_sipp'))
 		{
 			$data['TotalPasar'] 	= $this->home_model->select_count_pasar()->result();
-			//$data['TotalProduk'] 	= $this->home_model->select_count_produk()->result();
-			//$data['TotalDokter'] 	= $this->home_model->select_count_dokter()->result();
-			//$data['TotalPerawat']   = $this->home_model->select_count_perawat()->result();
+			$data['TotalPedagang'] 	= $this->home_model->select_count_pedagang()->result();
+			$data['tagihan'] 		= $this->home_model->select_sum_tagihan()->row();
+			$data['bayar']   		= $this->home_model->select_sum_tagihan_bayar()->row();
+			$data['ListDasar'] 		= $this->home_model->select_pendasaran()->result();
+			$data['ListSKRD'] 		= $this->home_model->select_pembayaran()->result();
+						
 			$this->template->display('admin/home_view', $data);
 		}
 		else
