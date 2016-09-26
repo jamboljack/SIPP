@@ -370,7 +370,7 @@ $config['encryption_key'] = 'jdhfjdh643743JGHG&^%^$%$%$%';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'semar_session';
+$config['sess_cookie_name'] = 'sipp_session';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;

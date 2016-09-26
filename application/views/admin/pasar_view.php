@@ -100,7 +100,7 @@ if ($this->session->flashdata('notification')) { ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
                                 <td><?php echo $r->pasar_inisial.'-'.$r->pasar_kode; ?></td>
-                                <td><?php echo $nama.'<br>'.$jenis. ' ('.$r->kelas_nama.')'; ?></td>
+                                <td><?php echo $nama.'<br>'.$jenis; ?></td>
                                 <td><?php echo $r->pasar_thn_berdiri; ?></td>
                                 <td><?php echo $r->pasar_alamat; ?><br><?php echo 'DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama; ?></td>
                                 <td><?php echo $r->pasar_nip.'<br>'.$r->pasar_koordinator; ?></td>

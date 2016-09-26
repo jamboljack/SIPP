@@ -100,7 +100,6 @@
 
 <script src="<?php echo base_url(); ?>assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
 
-
 <script>
 jQuery(document).ready(function() {    
    Metronic.init();
@@ -111,7 +110,6 @@ jQuery(document).ready(function() {
    Profile.init();
 });
 </script>
-<!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>
