@@ -22,91 +22,39 @@ class Lap1 extends CI_Controller{
 	}
 
 	public function caridata() {
+		$pasar_id	= trim($this->input->post('lstPasar'));
+		$tempat_id 	= trim($this->input->post('lstTempat'));
+
+		if ($tempat_id == 'all') { 
+			$data = array(
+				'Pasar' 	=> $pasar_id,
+				'Tempat' 	=> 'all'
+			);
+		} else {
+			$data = array(
+				'Pasar' 	=> $pasar_id,
+				'Tempat' 	=> $tempat_id
+			);
+		}
+
+		$data['Report'] 	= $data;
 		$data['tampil']		= 'ya';
 		$data['listPasar'] 	= $this->lap1_model->select_pasar()->result();
 		$data['listTempat'] = $this->lap1_model->select_tempat()->result();			
-		$data['daftarlist'] = $this->skrd_model->select_by_criteria()->result();
+		$data['daftarlist'] = $this->lap1_model->select_by_criteria()->result();
 		$this->template->display('admin/lap1_view', $data);
 	}	
 	
-	public function preview($master = '') {  
-		$master 	= trim($this->input->post('lstMaster'));
+	public function preview($pasar_id = '', $tempat_id = '') {  
+		$pasar_id 	= $this->uri->segment(4);
+		$tempat_id 	= $this->uri->segment(5);
 
-		switch ($master) {
-		    case "blood":
-		    	$data = array(
-					'Master' => 'blood'					
-				);
-				$data['Report'] 	= $data;
-		       	$data['daftarlist'] = $this->listmaster_model->select_blood()->result();
-				$this->template->display('report/master/listmasterblood_view', $data);
-		        break;
-		    case "marriage":
-		    	$data = array(
-					'Master' => 'marriage'					
-				);
-				$data['Report'] 	= $data;
-		    	$data['daftarlist'] = $this->listmaster_model->select_marriage()->result();
-				$this->template->display('report/master/listmastermarriage_view', $data);
-		        break;
-		    case "religion":
-		    	$data = array(
-					'Master' => 'religion'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_religion()->result();
-				$this->template->display('report/master/listmasterreligion_view', $data);
-		        break;
-			case "education":
-				$data = array(
-					'Master' => 'education'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_education()->result();
-				$this->template->display('report/master/listmastereducation_view', $data);
-		        break;
-		    case "relation":
-		    	$data = array(
-					'Master' => 'relation'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_relation()->result();
-				$this->template->display('report/master/listmasterrelation_view', $data);
-		        break;
-		    case "status":
-		    	$data = array(
-					'Master' => 'status'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_status()->result();
-				$this->template->display('report/master/listmasterstatus_view', $data);
-		        break;
-		    case "deparment":
-		    	$data = array(
-					'Master' => 'deparment'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_department()->result();
-				$this->template->display('report/master/listmasterdepartment_view', $data);
-		        break;
-		    case "position":
-		    	$data = array(
-					'Master' => 'position'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_position()->result();
-				$this->template->display('report/master/listmasterposition_view', $data);
-		        break;
-		    case "absent":
-		    	$data = array(
-					'Master' => 'absent'					
-				);
-				$data['Report'] 	= $data;
-		        $data['daftarlist'] = $this->listmaster_model->select_absent()->result();
-				$this->template->display('report/master/listmasterabsent_view', $data);
-		        break;		       
-		    default:
-		       redirect(site_url('report/listmaster'));
+		if ($tempat_id == 'all') {
+			$data['daftarlist'] = $this->lap1_model->select_by_criteria()->result();
+			$this->load->view('admin/lap1_preview_all', $data);
+		} else {
+			$data['daftarlist'] = $this->lap1_model->select_by_criteria()->result();
+			$this->load->view('admin/lap1_preview_by_id', $data);
 		}
 	}
 	

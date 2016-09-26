@@ -68,6 +68,7 @@
 	h1{
         font-size:15px
     }
+    
 	.page {
 		width: 21cm;
 		min-height: 29.7cm;
