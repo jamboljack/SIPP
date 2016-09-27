@@ -44,9 +44,9 @@
                             <div class="form-body">
                                 <h3 class="form-section">Data Penduduk</h3>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-2 control-label" for="form_control_1">Nama Penduduk</label>
+                                    <label class="col-md-2 control-label" for="form_control_1">NIK atau Nama</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Penduduk" name="nama" value="<?php echo set_value('nama'); ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter NIK atau Nama Penduduk" name="nama" value="<?php echo set_value('nama'); ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                     <div class="col-md-1">

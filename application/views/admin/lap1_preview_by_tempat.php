@@ -67,12 +67,8 @@
 </a>
 <div class="page">
 <div align="center">LAPORAN PEDAGANG</div>
-<div align="center">
-<?php 
-echo $detailpasar->pasar_nama;
-?>
-</div>
-<div align="center">SEMUA TEMPAT</div>
+<div align="center"><?php echo $detailpasar->pasar_nama; ?></div>
+<div align="center">TEMPAT : <?php echo $detailtempat->tempat_nama; ?></div>
 <br>
 <table align="center">
     <tr>
@@ -84,19 +80,8 @@ echo $detailpasar->pasar_nama;
         <th width="10%">Status</th>
     </tr>
     <?php
-    foreach($listTempat as $d) {
-        $tempat_id  = $d->tempat_id;
-        $cekdata    = $this->lap1_model->select_detail_by_tempat($tempat_id)->result(); 
-
-        if (count($cekdata) > 0) {
-    ?>
-    <tr>
-        <td colspan='6'><b>Tempat : <?php echo $d->tempat_nama; ?></b></td>
-    </tr>
-    <?php
-        $daftardetail = $this->lap1_model->select_detail_by_tempat($tempat_id)->result(); 
     	$no = 1; 
-    	foreach($daftardetail as $r) {
+    	foreach($daftarlist as $r) {
     ?>
     <tr>
         <td valign="top"><?php echo $no; ?></td>                                
@@ -108,8 +93,6 @@ echo $detailpasar->pasar_nama;
     </tr>
     <?php 
         $no++;
-        }
-        }
     }
     ?>
   </table>

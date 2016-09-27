@@ -16,7 +16,11 @@ if ($this->session->flashdata('notification')) { ?>
 <script type="text/javascript">
     $(document).ready(function () {        
         $("#lstPasar").select2({
-        });        
+        });
+        $("#lstBulan").select2({
+        });
+        $("#lstTempat").select2({
+        });         
     });
 </script>
 
@@ -52,9 +56,9 @@ if ($this->session->flashdata('notification')) { ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <label class="control-label col-md-2">Periode</label>
-                                        <div class="col-md-4">
-                                            <select class="form-control" name="lstBulan" required autofocus>
+                                        <label class="control-label col-md-3">Periode</label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="lstBulan" id="lstBulan" required autofocus>
                                                 <option value="">- Pilih Bulan -</option>
                                                 <option value="1" <?php echo set_select('lstBulan', 1); ?>>Januari</option>
                                                 <option value="2" <?php echo set_select('lstBulan', 2); ?>>Februari</option>
@@ -81,8 +85,8 @@ if ($this->session->flashdata('notification')) { ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <label class="control-label col-md-2">Pasar</label>
-                                        <div class="col-md-10">
+                                        <label class="control-label col-md-3">Pasar</label>
+                                        <div class="col-md-9">
                                             <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" required>
                                                 <option value="">- Pilih Nama Pasar -</option>
                                                 <?php
@@ -101,8 +105,8 @@ if ($this->session->flashdata('notification')) { ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group form-md-line-input">
-                                        <label class="control-label col-md-2">Tempat</label>
-                                        <div class="col-md-5">
+                                        <label class="control-label col-md-3">Tempat</label>
+                                        <div class="col-md-6">
                                             <select class="select2_category form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" required>
                                                 <option value="all">Semua</option>
                                                 <?php

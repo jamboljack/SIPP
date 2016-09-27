@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Lap1_model extends CI_Model {
+class Lap2_model extends CI_Model {
 	function __construct() {
 		parent::__construct();	
 	}
@@ -34,22 +34,20 @@ class Lap1_model extends CI_Model {
 	}
 
 	function select_by_criteria() {
+		$bulan 		= $this->input->post('lstBulan');
+		$tahun 		= $this->input->post('tahun');
 		$pasar_id	= trim($this->input->post('lstPasar'));
 		$tempat_id 	= trim($this->input->post('lstTempat'));
 		
 		if ($tempat_id == 'all') {
-			$this->db->select('d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, d.dasar_status, 
-				p.penduduk_nama, p.penduduk_alamat, v.provinsi_nama, b.kabupaten_nama, 
-				k.kecamatan_nama, s.desa_nama, r.pasar_nama, t.tempat_nama');
+			$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_dasar d');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-			$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
-			$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
-			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
-			$this->db->join('sipp_desa s', 'p.desa_id = s.desa_id');
 			$this->db->where('d.pasar_id', $pasar_id);
+			$this->db->where('MONTH(dasar_sampai)', $bulan);
+			$this->db->where('YEAR(dasar_sampai)', $tahun);
 			$this->db->where('d.dasar_data', 0);
 			$this->db->order_by('d.pasar_id','asc');
 			$this->db->order_by('d.tempat_id','asc');
@@ -57,18 +55,14 @@ class Lap1_model extends CI_Model {
 				
 			return $this->db->get();
 		} else {
-			$this->db->select('d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, d.dasar_status, 
-				p.penduduk_nama, p.penduduk_alamat, v.provinsi_nama, b.kabupaten_nama, 
-				k.kecamatan_nama, s.desa_nama, r.pasar_nama, t.tempat_nama');
+			$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_dasar d');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-			$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
-			$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
-			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
-			$this->db->join('sipp_desa s', 'p.desa_id = s.desa_id');
 			$this->db->where('d.pasar_id', $pasar_id);
+			$this->db->where('MONTH(dasar_sampai)', $bulan);
+			$this->db->where('YEAR(dasar_sampai)', $tahun);
 			$this->db->where('d.tempat_id', $tempat_id);
 			$this->db->where('d.dasar_data', 0);
 			$this->db->order_by('d.pasar_id','asc');
@@ -81,19 +75,17 @@ class Lap1_model extends CI_Model {
 
 	function select_detail_by_tempat($tempat_id) {
 		$pasar_id	= $this->uri->segment(4);
+		$bulan 		= $this->uri->segment(6);
+		$tahun 		= $this->uri->segment(7);
 
-		$this->db->select('d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, d.dasar_status, 
-			p.penduduk_nama, p.penduduk_alamat, v.provinsi_nama, b.kabupaten_nama, 
-			k.kecamatan_nama, s.desa_nama, r.pasar_nama, t.tempat_nama');
+		$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
 		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-		$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
-		$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
-		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
-		$this->db->join('sipp_desa s', 'p.desa_id = s.desa_id');
 		$this->db->where('d.pasar_id', $pasar_id);
+		$this->db->where('MONTH(dasar_sampai)', $bulan);
+		$this->db->where('YEAR(dasar_sampai)', $tahun);
 		$this->db->where('d.tempat_id', $tempat_id);
 		$this->db->where('d.dasar_data', 0);
 		$this->db->order_by('d.pasar_id','asc');
@@ -106,19 +98,17 @@ class Lap1_model extends CI_Model {
 	function select_by_id() {
 		$pasar_id	= $this->uri->segment(4);
 		$tempat_id 	= $this->uri->segment(5);
+		$bulan 		= $this->uri->segment(6);
+		$tahun 		= $this->uri->segment(7);
 
-		$this->db->select('d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, d.dasar_status, 
-			p.penduduk_nama, p.penduduk_alamat, v.provinsi_nama, b.kabupaten_nama, 
-			k.kecamatan_nama, s.desa_nama, r.pasar_nama, t.tempat_nama');
+		$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 		$this->db->from('sipp_dasar d');
 		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-		$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id');
-		$this->db->join('sipp_kabupaten b', 'p.kabupaten_id = b.kabupaten_id');
-		$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
-		$this->db->join('sipp_desa s', 'p.desa_id = s.desa_id');
 		$this->db->where('d.pasar_id', $pasar_id);
+		$this->db->where('MONTH(dasar_sampai)', $bulan);
+		$this->db->where('YEAR(dasar_sampai)', $tahun);
 		$this->db->where('d.tempat_id', $tempat_id);
 		$this->db->where('d.dasar_data', 0);
 		$this->db->order_by('d.pasar_id','asc');
@@ -144,4 +134,4 @@ class Lap1_model extends CI_Model {
 		return $this->db->get();
 	}			
 }
-/* Location: ./application/model/admin/Lap1_model.php */
+/* Location: ./application/model/admin/Lap2_model.php */

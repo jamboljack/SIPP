@@ -63,7 +63,8 @@ class Baliknama_model extends CI_Model {
 		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
 		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
-		$this->db->like('p.penduduk_nama', $nama);
+		$this->db->or_like('p.penduduk_nik', $nama);
+		$this->db->or_like('p.penduduk_nama', $nama);
 		$this->db->order_by('p.penduduk_nama', 'asc');
 		
 		return $this->db->get();
