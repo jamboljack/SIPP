@@ -134,7 +134,7 @@ SURAT KETETAPAN RETRIBUSI DAERAH
                     <td></td>
                     <td>Alamat</td>
                     <td colspan="3">
-                    : <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' '.$detail->kabupaten_nama)); ?>
+                    : <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->kabupaten_nama)); ?>
                     </td>
                 </tr>
                 <tr>

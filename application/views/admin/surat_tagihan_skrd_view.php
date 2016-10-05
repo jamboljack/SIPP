@@ -90,7 +90,7 @@ switch ($bln) {
 ?>
 <body>
 <a href="#Print">
-<img src="<?php echo base_url(); ?>img/print_icon.gif" height="25" width="23" title="Print" id="print-link" onClick="window.print(); return false;" />
+<img src="<?php echo base_url(); ?>img/print_icon.gif" height="28" width="25" title="Print" id="print-link" onClick="window.print(); return false;" />
 </a>
 <div class="page">
 <table width="100%" border="1" align="center">
@@ -124,7 +124,7 @@ switch ($bln) {
             </tr>
             <tr>
                 <td colspan="2">Alamat</td>
-                <td colspan="3">: <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' '.$detail->kabupaten_nama)); ?></td>
+                <td colspan="3">: <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->kabupaten_nama)); ?></td>
             </tr>
             <tr>
                 <td colspan="2">Nomor Pokok Wajib Retribusi Daerah (NPWRD)</td>
@@ -231,7 +231,7 @@ switch ($bln) {
        	        </tr>
            	    <tr>
            	        <td>&nbsp;</td>
-           	        <td align="center"><?php echo $kadin->petugas_title_kadin; ?></td>
+           	        <td align="center"><?php echo $petugas->petugas_title_skrd; ?></td>
        	        </tr>
            	    <tr>
                	    <td>&nbsp;</td>
@@ -247,15 +247,15 @@ switch ($bln) {
        	        </tr>
            	    <tr>
            	        <td>&nbsp;</td>
-           	        <td align="center"><b><u><?php echo $kadin->petugas_nama_kadin; ?></u></b></td>
+           	        <td align="center"><b><u><?php echo $petugas->petugas_nama_skrd; ?></u></b></td>
        	        </tr>
            	    <tr>
            	        <td>&nbsp;</td>
-           	        <td align="center"><?php echo $kadin->petugas_jab_kadin; ?></td>
+           	        <td align="center"><?php echo $petugas->petugas_jab_skrd; ?></td>
        	        </tr>
            	    <tr>
            	        <td>&nbsp;</td>
-           	        <td align="center">NIP. <?php echo $kadin->petugas_nik_kadin; ?></td>
+           	        <td align="center">NIP. <?php echo $petugas->petugas_nik_skrd; ?></td>
        	        </tr>
             </table>
         </td>

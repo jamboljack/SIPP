@@ -225,33 +225,33 @@ switch ($bln) {
            	        <td align="center">KUDUS, <?php echo tgl_indo(date('Y-m-d')); ?></td>
        	        </tr>
            	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td align="center"><?php echo $kadin->petugas_title_kadin; ?></td>
-       	        </tr>
-           	    <tr>
-               	    <td>&nbsp;</td>
-           	        <td>&nbsp;</td>
-       	        </tr>
-           	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td>&nbsp;</td>
-       	        </tr>
-           	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td>&nbsp;</td>
-       	        </tr>
-           	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td align="center"><b><u><?php echo $kadin->petugas_nama_kadin; ?></u></b></td>
-       	        </tr>
-           	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td align="center"><?php echo $kadin->petugas_jab_kadin; ?></td>
-       	        </tr>
-           	    <tr>
-           	        <td>&nbsp;</td>
-           	        <td align="center">NIP. <?php echo $kadin->petugas_nik_kadin; ?></td>
-       	        </tr>
+                    <td>&nbsp;</td>
+                    <td align="center"><?php echo $petugas->petugas_title_skrd; ?></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td align="center"><b><u><?php echo $petugas->petugas_nama_skrd; ?></u></b></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td align="center"><?php echo $petugas->petugas_jab_skrd; ?></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td align="center">NIP. <?php echo $petugas->petugas_nik_skrd; ?></td>
+                </tr>
             </table>
         </td>
     </tr>

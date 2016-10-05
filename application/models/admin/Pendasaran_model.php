@@ -62,7 +62,7 @@ class Pendasaran_model extends CI_Model {
 		
 		return $this->db->get();
 	}
-
+	
 	function select_penduduk_cari($nama) {
 		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_penduduk p');
@@ -71,11 +71,31 @@ class Pendasaran_model extends CI_Model {
 		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
 		$this->db->or_like('p.penduduk_nik', $nama);
-		$this->db->or_like('p.penduduk_nama', $nama);
-		$this->db->order_by('p.penduduk_nama', 'asc');
+		$this->db->or_like('p.penduduk_nama', $nama);		
+		$this->db->limit(20);
 		
 		return $this->db->get();
 	}
+
+	/*function select_penduduk_cari($nama) {
+		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
+		$this->db->from('sipp_penduduk p');
+		$this->db->join('sipp_provinsi v', 'p.provinsi_id = v.provinsi_id', 'left');
+		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id=k.kabupaten_id', 'left');
+		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id=c.kecamatan_id', 'left');
+		$this->db->join('sipp_desa d', 'p.desa_id=d.desa_id', 'left');
+		$this->db->or_like('p.penduduk_nik', $nama);
+		$this->db->or_like('p.penduduk_nama', $nama);
+		$this->db->where('k.provinsi_id = v.provinsi_id');
+		$this->db->where('c.provinsi_id = v.provinsi_id');
+		$this->db->where('c.kabupaten_id= k.kabupaten_id');
+		$this->db->where('d.provinsi_id = v.provinsi_id');
+		$this->db->where('d.kabupaten_id= k.kabupaten_id');
+		$this->db->where('d.kecamatan_id= c.kecamatan_id');		
+		$this->db->limit(20);
+		
+		return $this->db->get();
+	}*/
 
 	function select_penduduk($penduduk_id) {
 		$this->db->select('p.*, v.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
@@ -84,7 +104,7 @@ class Pendasaran_model extends CI_Model {
 		$this->db->join('sipp_kabupaten k', 'p.kabupaten_id = k.kabupaten_id');
 		$this->db->join('sipp_kecamatan c', 'p.kecamatan_id = c.kecamatan_id');
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
-		$this->db->where('p.penduduk_id', $penduduk_id);
+		$this->db->where('p.penduduk_id', $penduduk_id);		
 		
 		return $this->db->get();
 	}
@@ -143,6 +163,25 @@ class Pendasaran_model extends CI_Model {
    	}
 	
 	function insert_data() {
+		// Update Foto
+		if (!empty($_FILES['userfile']['name'])) {
+			$data = array(
+					'penduduk_foto' 		=> $this->upload->file_name,
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		} else {		
+			$data = array(
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		}
+		$penduduk_id = $this->input->post('penduduk_id');
+		$this->db->where('penduduk_id', $penduduk_id);
+		$this->db->update('sipp_penduduk', $data);
+
 		// Tgl. Surat
 		$tgl_surat 		= $this->input->post('tgl_surat');
 		$xtgl 			= explode("-",$tgl_surat);
@@ -249,6 +288,25 @@ class Pendasaran_model extends CI_Model {
 	}
 
 	function update_data() {
+		// Update Foto
+		if (!empty($_FILES['userfile']['name'])) {
+			$data = array(
+					'penduduk_foto' 		=> $this->upload->file_name,
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		} else {		
+			$data = array(
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		}
+		$penduduk_id = $this->input->post('penduduk_id');
+		$this->db->where('penduduk_id', $penduduk_id);
+		$this->db->update('sipp_penduduk', $data);
+		
 		$dasar_id    	= $this->input->post('id');
 
 		// Dari Tanggal

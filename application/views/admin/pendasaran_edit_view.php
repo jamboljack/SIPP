@@ -103,7 +103,7 @@ function HitungLuas(){
                         <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/updatedata/'.$this->uri->segment(4)); ?>" method="post" enctype="multipart/form-data" name="form1">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <input type="hidden" name="id" value="<?php echo $detail->dasar_id; ?>">
-                        <input type="hidden" class="penduduk_id" name="penduduk_id" value="<?php echo $detail->penduduk_id; ?>">
+                        <input type="hidden" name="penduduk_id" value="<?php echo $detail->penduduk_id; ?>">
                         <input type="hidden" name="pasar_inisial" id="pasar_inisial" value="<?php echo $detail->pasar_inisial; ?>">
                         <input type="hidden" name="pasar_kode" id="pasar_kode" value="<?php echo $detail->pasar_kode; ?>">
                         <input type="hidden" name="jenis_kode" id="jenis_kode" value="<?php echo $detail->jenis_kode; ?>">
@@ -137,11 +137,57 @@ function HitungLuas(){
                                         <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
+                                <?php 
+                                if ($detail->penduduk_jk == 1) {
+                                    $jk = 'Laki-Laki';
+                                } else {
+                                    $jk = 'Perempuan';
+                                }
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="jk" value="<?php echo $jk; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
+                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama; ?></textarea>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Foto</label>
+                                    <div class="col-md-9">
+                                        <?php if (!empty($detail->penduduk_foto)) { ?>
+                                        <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detail->penduduk_foto; ?>" width="15%">
+                                        <?php } else { ?>
+                                        <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
+                                        <?php }?>
+                                    </div>                                    
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Upload Foto</label>
+                                    <div class="col-md-9 has-success">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                            </div>
+                                            <div>
+                                                <span class="btn btn-blue btn-file">
+                                                <span class="fileupload-new"><i class="icon-paper-clip"></i> Browse</span>
+                                                <span class="fileupload-exists"><i class="icon-undo"></i> Change</span>
+                                                    <input type="file" class="default" name="userfile" />
+                                                </span>                                             
+                                            </div>
+                                        </div>
+                                        <div class="clearfix margin-top-10">
+                                            <span class="label label-danger">NOTE !</span>
+                                            <span>Resolution : 500 x 750 pixel</span>
+                                        </div>
+                                    </div>                                    
                                 </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>
                                 <div class="form-group form-md-line-input">

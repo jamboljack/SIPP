@@ -96,10 +96,23 @@
                                         <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
+                                <?php 
+                                if ($detail->penduduk_jk == 1) {
+                                    $jk = 'Laki-Laki';
+                                } else {
+                                    $jk = 'Perempuan';
+                                }
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="jk" value="<?php echo $jk; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="alamat" rows="2" placeholder="Enter Description" required><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
+                                        <textarea class="form-control" name="alamat" rows="2" placeholder="Enter Description" required><?php echo $detail->penduduk_alamat.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama; ?></textarea>
                                     </div>
                                 </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>

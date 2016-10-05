@@ -115,7 +115,7 @@ if ($this->session->flashdata('notification')) { ?>
                                             <i class="icon-trash"></i>
                                         </button>
                                     </a>
-                                    <a href="<?php echo site_url('admin/pasar/printdata/'.$r->pasar_id); ?>">
+                                    <a href="<?php echo site_url('admin/pasar/printdata/'.$r->pasar_id); ?>" target="_blank">
                                         <button class="btn btn-warning btn-xs" title="Print">
                                             <i class="icon-printer"></i>
                                         </button>

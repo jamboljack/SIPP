@@ -102,6 +102,7 @@ class Pendasaran extends CI_Controller {
 						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
 						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
 						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
 						'penduduk_jk'			=> $this->input->post('rdJk'),
 						'provinsi_id'			=> $this->input->post('lstProvinsi'),
@@ -109,8 +110,6 @@ class Pendasaran extends CI_Controller {
 						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
 						'desa_id'				=> $this->input->post('lstKelurahan'),
 						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
-						'penduduk_rt'			=> $this->input->post('rt'),
-						'penduduk_rw'			=> $this->input->post('rw'),
 						'penduduk_foto' 		=> $this->upload->file_name,
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
@@ -121,6 +120,7 @@ class Pendasaran extends CI_Controller {
 						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
 						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
 						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
 						'penduduk_jk'			=> $this->input->post('rdJk'),
 						'provinsi_id'			=> $this->input->post('lstProvinsi'),
@@ -128,8 +128,6 @@ class Pendasaran extends CI_Controller {
 						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
 						'desa_id'				=> $this->input->post('lstKelurahan'),
 						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
-						'penduduk_rt'			=> $this->input->post('rt'),
-						'penduduk_rw'			=> $this->input->post('rw'),
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
 				   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
@@ -150,7 +148,30 @@ class Pendasaran extends CI_Controller {
 		$this->template->display('admin/pendasaran_add_view', $data);
 	}
 
-	public function savedata() {		
+	public function savedata() {
+		if (!empty($_FILES['userfile']['name'])) {
+			$jam 	= time();
+			$kode 	= $this->input->post('penduduk_id');
+					
+			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
+			$config['upload_path'] = './penduduk_image/';
+			$config['allowed_types'] = 'jpg|png|gif|jpeg';		
+			$config['overwrite'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->do_upload('userfile');
+			$config['image_library'] = 'gd2';
+			$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
+			$config['maintain_ratio'] = TRUE;
+											
+			$config['width'] = 500;
+			$config['height'] = 750;
+			$this->load->library('image_lib',$config);
+				 
+			$this->image_lib->resize();
+		} elseif (empty($_FILES['userfile']['name'])){
+			$config['file_name'] = '';
+		}
+
 		$this->pendasaran_model->insert_data();
 		$this->session->set_flashdata('notification','Simpan Data Sukses.');
 	 	redirect(site_url('admin/pendasaran'));
@@ -175,6 +196,29 @@ class Pendasaran extends CI_Controller {
 			$this->session->set_flashdata('notification','Surat Pendasaran sudah di Print, Tidak bisa di Edit.');
 			redirect(site_url('admin/pendasaran/editdata/'.$this->uri->segment(4)));
 		} else {
+			if (!empty($_FILES['userfile']['name'])) {
+				$jam 	= time();
+				$kode 	= $this->input->post('penduduk_id');
+						
+				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
+				$config['upload_path'] = './penduduk_image/';
+				$config['allowed_types'] = 'jpg|png|gif|jpeg';		
+				$config['overwrite'] = TRUE;
+				$this->load->library('upload', $config);
+				$this->upload->do_upload('userfile');
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
+				$config['maintain_ratio'] = TRUE;
+												
+				$config['width'] = 500;
+				$config['height'] = 750;
+				$this->load->library('image_lib',$config);
+					 
+				$this->image_lib->resize();
+			} elseif (empty($_FILES['userfile']['name'])){
+				$config['file_name'] = '';
+			}
+
 			$this->pendasaran_model->update_data();
 			$this->session->set_flashdata('notification','Update Data Sukses.');
 			redirect(site_url('admin/pendasaran'));

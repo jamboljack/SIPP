@@ -116,17 +116,21 @@
                                 $bln            = $xtgl[1];
                                 $tgl            = $xtgl[2];
                                 $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;
+
+
                             ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
                                 <td><?php echo $r->penduduk_nik; ?></td>                                
                                 <td><?php echo $r->penduduk_nama; ?></td>
-                                <td><?php echo $tanggal_lhr; ?></td>
-                                <td><?php echo $r->penduduk_alamat.' RT. '.$r->penduduk_rt.'/'.$r->penduduk_rw.'<br> DESA '.$r->desa_nama.', KECAMATAN '.$r->kecamatan_nama.'<br>KAB. '.$r->kabupaten_nama.' PROV. '.$r->provinsi_nama; ?></td>
+                                <td><?php echo $tanggal_lhr; ?></td>                                
+                                <td>
+                                    <?php echo $r->penduduk_alamat.'<br> DESA '.$r->desa_nama.', KECAMATAN '.$r->kecamatan_nama.'<br>'.$r->kabupaten_nama.' PROV. '.$r->provinsi_nama; ?>
+                                    </td>
                                 <td>                                    
                                     <a href="<?php echo site_url('admin/pendasaran/adddata/'.$r->penduduk_id); ?>">
-                                        <button class="btn btn-primary btn-xs" title="Edit Data">
-                                            <i class="icon-pencil"></i> Buat Surat Pendasaran
+                                        <button class="btn btn-primary btn-xs" title="Create">
+                                            <i class="icon-plus"></i> Buat Surat Pendasaran
                                         </button>
                                     </a>                                    
                                 </td>

@@ -65,7 +65,7 @@ class Baliknama_model extends CI_Model {
 		$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
 		$this->db->or_like('p.penduduk_nik', $nama);
 		$this->db->or_like('p.penduduk_nama', $nama);
-		$this->db->order_by('p.penduduk_nama', 'asc');
+		$this->db->limit(20);
 		
 		return $this->db->get();
 	}
@@ -222,6 +222,25 @@ class Baliknama_model extends CI_Model {
    	}
 
 	function insert_data() {
+		// Update Foto
+		if (!empty($_FILES['userfile']['name'])) {
+			$data = array(
+					'penduduk_foto' 		=> $this->upload->file_name,
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		} else {		
+			$data = array(
+			   		'user_username' 		=> $this->session->userdata('username'),
+			   		'penduduk_date_update' 	=> date('Y-m-d'),
+			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
+			);
+		}
+		$penduduk_id = $this->uri->segment(5);
+		$this->db->where('penduduk_id', $penduduk_id);
+		$this->db->update('sipp_penduduk', $data);		
+
 		// Tgl. Balik Nama
 		$tgl_surat 		= $this->input->post('tgl_surat');
 		$xtgl 			= explode("-",$tgl_surat);
@@ -268,7 +287,7 @@ class Baliknama_model extends CI_Model {
 
 	function select_detail_by_id($baliknama_id) {
 		$this->db->select('b.*, p.penduduk_nik, p.penduduk_nama, p.penduduk_tgl_lahir, p.penduduk_alamat,
-						p.penduduk_rt, p.penduduk_rw, v.provinsi_nama, k.kabupaten_nama, 
+						p.penduduk_jk, p.penduduk_foto, v.provinsi_nama, k.kabupaten_nama, 
 						c.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_baliknama b');
 		$this->db->join('sipp_penduduk p', 'b.penduduk_id = p.penduduk_id');
@@ -294,7 +313,6 @@ class Baliknama_model extends CI_Model {
 		
 		// Insert ke Tabel Balik Nama
 		$data = array(
-				'penduduk_id'				=> $this->input->post('penduduk_id'),
 				'baliknama_tgl'				=> $tanggal_srt,
 		   		'user_username' 			=> $this->session->userdata('username'),
 		   		'baliknama_date_update' 	=> date('Y-m-d'),

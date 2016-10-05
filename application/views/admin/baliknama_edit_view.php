@@ -37,63 +37,6 @@ $(function() {
 });
 </script>
 
-<!-- List Penduduk -->
-<div class="modal bs-modal-lg" id="caripenduduk" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
-                <div class="modal-header">                      
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Penduduk</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped table-bordered table-hover" id="sample_1">
-                        <thead>
-                            <tr>
-                                <th width="5%">Pilih</th>
-                                <th width="12%">N I K</th>
-                                <th width="15%">Nama Penduduk</th>
-                                <th width="10%">Tgl. Lahir</th>
-                                <th>Alamat</th>
-                            </tr>
-                        </thead>
-                            
-                        <tbody>
-                        <?php 
-                            $no = 1;
-                            foreach($listPenduduk as $p) {
-                                $tgl_lhr      = $p->penduduk_tgl_lahir;
-                                $xtgl           = explode("-",$tgl_lhr);
-                                $thn            = $xtgl[0];
-                                $bln            = $xtgl[1];
-                                $tgl            = $xtgl[2];
-                                $tanggal_lhr    = $tgl.'-'.$bln.'-'.$thn;                            
-                            ?>
-                            <tr>
-                                <td align="center">
-                                    <button type="button" class="btn btn-success btn-xs pilih_penduduk" data-toggle="modal" data-id="<?php echo $p->penduduk_id; ?>" data-nik="<?php echo $p->penduduk_nik; ?>" data-nama="<?php echo $p->penduduk_nama; ?>" data-tgl="<?php echo $p->penduduk_tgl_lahir; ?>" data-alamat="<?php echo $p->penduduk_alamat; ?>" data-rt="<?php echo $p->penduduk_rt; ?>" data-rw="<?php echo $p->penduduk_rw; ?>" data-provinsi="<?php echo $p->provinsi_nama; ?>" data-kabupaten="<?php echo $p->kabupaten_nama; ?>" data-kecamatan="<?php echo $p->kecamatan_nama; ?>" data-desa="<?php echo $p->desa_nama; ?>" title="Pilih Data" data-dismiss="modal"><i class="icon-check"></i>
-                                    </button>
-                                </td>
-                                <td><?php echo $p->penduduk_nik; ?></td>
-                                <td><?php echo $p->penduduk_nama; ?></td>
-                                <td><?php echo $tanggal_lhr; ?></td>
-                                <td><?php echo $p->penduduk_alamat.' RT. '.$p->penduduk_rt.'/'.$p->penduduk_rw.' DESA '.$p->desa_nama.' KEC. '.$p->kecamatan_nama.'<br> KAB. '.$p->kabupaten_nama.' PROVINSI '.$p->provinsi_nama; ?></td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">                    
-                    <button type="button" class="btn yellow" data-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
-                </div>
-            </form>
-        </div>        
-    </div>    
-</div>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
@@ -230,7 +173,7 @@ $(function() {
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Tempat</label>
-                                    <div class="col-md-3">
+                                    <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="Enter Jenis Tempat" name="namapasar" value="<?php echo $detail->tempat_nama.' Blok '.$detail->dasar_blok.', Nomor '.$detail->dasar_nomor.', Luas '.$detail->dasar_luas.' m2'; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
@@ -264,11 +207,34 @@ $(function() {
                                         <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
+                                <?php 
+                                if ($detail->penduduk_jk == 1) {
+                                    $jk = 'Laki-Laki';
+                                } else {
+                                    $jk = 'Perempuan';
+                                }
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="jk" value="<?php echo $jk; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="alamat" rows="1" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_lama.' KEC. '.$detail->kecamatan_lama.' KAB. '.$detail->kabupaten_nama.' PROV. '.$detail->provinsi_nama; ?></textarea>
+                                        <textarea class="form-control" name="alamat" rows="1" readonly><?php echo $detail->penduduk_alamat.' DESA '.$detail->desa_lama.' KEC. '.$detail->kecamatan_lama; ?></textarea>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Foto</label>
+                                    <div class="col-md-9">
+                                        <?php if (!empty($detail->penduduk_foto)) { ?>
+                                        <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detail->penduduk_foto; ?>" width="15%">
+                                        <?php } else { ?>
+                                        <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
+                                        <?php }?>
+                                    </div>                                    
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Dagang</label>
@@ -296,17 +262,8 @@ $(function() {
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I K</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control penduduk_nik" placeholder="Enter N I K" name="nik_baru" value="<?php echo $detailbalik->penduduk_nik; ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control penduduk_nik" placeholder="Enter N I K" name="nik_baru" value="<?php echo $detailbalik->penduduk_nik; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span class="input-group-btn btn-right">
-                                            <a data-toggle="modal" href="#caripenduduk" title="Klik untuk Cari Data">
-                                                <button class="btn blue-madison" type="button">
-                                                <i class="fa fa-search"></i>
-                                                </button>
-                                            </a>
-                                        </span>
                                     </div>
                                 </div>                                
                                 <div class="form-group form-md-line-input">
@@ -331,12 +288,35 @@ $(function() {
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
+                                <?php 
+                                if ($detailbalik->penduduk_jk == 1) {
+                                    $jk1 = 'Laki-Laki';
+                                } else {
+                                    $jk1 = 'Perempuan';
+                                }
+                                ?>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Pedagang" name="jk" value="<?php echo $jk1; ?>" autocomplete="off" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control penduduk_alamat" placeholder="Alamat" name="alamat_baru" value="<?php echo $detailbalik->penduduk_alamat.' RT.'.$detailbalik->penduduk_rt.'/'.$detailbalik->penduduk_rw.' DESA '.$detailbalik->desa_nama.' KEC. '.$detailbalik->kecamatan_nama.' KAB. '.$detailbalik->kabupaten_nama.' PROV. '.$detailbalik->provinsi_nama; ?>" autocomplete="off" readonly>
+                                        <input type="text" class="form-control penduduk_alamat" placeholder="Alamat" name="alamat_baru" value="<?php echo $detailbalik->penduduk_alamat.' DESA '.$detailbalik->desa_nama.' KEC. '.$detailbalik->kecamatan_nama; ?>" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Foto</label>
+                                    <div class="col-md-9">
+                                        <?php if (!empty($detailbalik->penduduk_foto)) { ?>
+                                        <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detailbalik->penduduk_foto; ?>" width="15%">
+                                        <?php } else { ?>
+                                        <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
+                                        <?php }?>
+                                    </div>                                    
                                 </div>
                             </div>
                             <div class="form-actions">

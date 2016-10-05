@@ -70,8 +70,8 @@ class Pasar_model extends CI_Model {
 		$this->db->join('sipp_kabupaten k', 'k.provinsi_id = p.provinsi_id');
 		$this->db->join('sipp_kecamatan c', 'c.kabupaten_id = k.kabupaten_id');
 		$this->db->join('sipp_desa d', 'd.kecamatan_id = c.kecamatan_id');
-		$this->db->where('c.kabupaten_id', '3319');
-		$this->db->order_by('d.desa_nama', 'asc');
+		$this->db->where('p.provinsi_id', '33');
+		$this->db->where('c.kabupaten_id', '3319');		
 		
 		return $this->db->get();
 	}

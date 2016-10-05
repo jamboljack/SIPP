@@ -407,15 +407,6 @@ class Skrd_model extends CI_Model {
 		$this->db->update('sipp_skrd', $data);
 	}
 
-	function select_petugas($skrd_id) {
-		$this->db->select('p.pasar_nip, p.pasar_koordinator');
-		$this->db->from('sipp_skrd s');
-		$this->db->join('sipp_pasar p', 's.pasar_id = p.pasar_id');
-		$this->db->where('s.skrd_id', $skrd_id);
-		
-		return $this->db->get();
-	}
-
 	function select_kadin() {
 		$this->db->select('*');
 		$this->db->from('sipp_petugas');		

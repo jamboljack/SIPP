@@ -85,11 +85,9 @@ class Skrd extends CI_Controller {
 
 	public function printdata($skrd_id) {		
 		$data['detail'] 	= $this->skrd_model->select_detail_by_id($skrd_id)->row();
-		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();
-		$data['petugas'] 	= $this->skrd_model->select_petugas($skrd_id)->row();
-		$data['kadin'] 		= $this->skrd_model->select_kadin()->row();
-		$cek 				= $this->skrd_model->select_detail_by_id($skrd_id)->row();
-		
+		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();		
+		$data['petugas'] 	= $this->skrd_model->select_kadin()->row();
+		$cek 				= $this->skrd_model->select_detail_by_id($skrd_id)->row();		
 		if ($cek->skrd_st_print == 0) {
 			$this->skrd_model->update_data_print();
 		}		
@@ -98,9 +96,8 @@ class Skrd extends CI_Controller {
 
 	public function printdatapdf($skrd_id) {
 		$data['detail'] 	= $this->skrd_model->select_detail_by_id($skrd_id)->row();
-		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();
-		$data['petugas'] 	= $this->skrd_model->select_petugas($skrd_id)->row();
-		$data['kadin'] 		= $this->skrd_model->select_kadin()->row();
+		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();		
+		$data['petugas'] 	= $this->skrd_model->select_kadin()->row();
 
 		$time 			= time();		
 		$filename 		= 'Surat_Tagihan_'.$time;

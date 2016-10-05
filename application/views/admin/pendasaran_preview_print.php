@@ -181,7 +181,7 @@ if (!empty($tgl_sampai)) {
         <tr>
             <td valign="top">Alamat</td>
             <td valign="top">:</td>
-            <td><?php echo ucwords(strtolower($detail->penduduk_alamat)).' RT. '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' Desa '.ucwords(strtolower($detail->desa_nama)).' Kecamatan '.ucwords(strtolower($detail->kecamatan_nama)).'<br>'.ucwords(strtolower($detail->kabupaten_nama)).' - '.ucwords(strtolower($detail->provinsi_nama)); ?>
+            <td><?php echo ucwords(strtolower($detail->penduduk_alamat)).' Desa '.ucwords(strtolower($detail->desa_nama)).' Kecamatan '.ucwords(strtolower($detail->kecamatan_nama)).'<br>'.ucwords(strtolower($detail->kabupaten_nama)).' - '.ucwords(strtolower($detail->provinsi_nama)); ?>
             </td>
         </tr>
     </table>

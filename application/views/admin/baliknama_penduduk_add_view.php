@@ -130,6 +130,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Tempat Lahir</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter Tempat Lahir" name="tmpt_lahir" value="<?php echo set_value('tmpt_lahir'); ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Tanggal Lahir</label>
                                     <div class="col-md-3">
                                         <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" name="tgl_lahir" value="<?php echo set_value('tgl_lahir'); ?>" placeholder="DD-MM-YYYY" autocomplete="off" required />
@@ -140,7 +147,7 @@
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Kelamin</label>
                                     <div class="md-radio-inline col-md-9">
                                         <div class="md-radio">
-                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk1" value="Laki-Laki" <?php echo set_checkbox('rdJk', 'Laki-Laki'); ?> required>
+                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk1" value="1" <?php echo set_checkbox('rdJk', 1); ?> required>
                                             <label for="Jk1">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -148,7 +155,7 @@
                                             </label>
                                         </div>
                                         <div class="md-radio">
-                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk2" value="Perempuan" <?php echo set_checkbox('rdJk', 'Perempuan'); ?> required>
+                                            <input type="radio" name="rdJk" class="md-radiobtn" id="Jk2" value="2" <?php echo set_checkbox('rdJk', 2); ?> required>
                                             <label for="Jk2">
                                                 <span></span>
                                                 <span class="check"></span>
@@ -198,20 +205,7 @@
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" placeholder="Enter Alamat" name="alamat" value="<?php echo set_value('alamat'); ?>" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Rt</label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" placeholder="Enter Rt" name="rt" value="<?php echo set_value('rt'); ?>" pattern="^[0-9]*" title="Harus Angka" maxlength="3" autocomplete="off" required>
-                                        <div class="form-control-focus"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Rw</label>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" placeholder="Enter Rw" name="rw" value="<?php echo set_value('rw'); ?>" pattern="^[0-9]*" title="Harus Angka" maxlength="3"  autocomplete="off" required>
-                                        <div class="form-control-focus"></div>
+                                        <span class="help-block">SAMPLE : NAMA ALAMAT RT : 999 RW : 999</span>
                                     </div>
                                 </div>
                                 <h3 class="form-section">Foto</h3>

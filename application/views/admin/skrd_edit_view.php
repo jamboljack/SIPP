@@ -197,7 +197,7 @@ function HitungSubTotalItem(){
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-list"></i> Data Pedagang
+                            <i class="fa fa-list"></i> Data Detail
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse"></a>
@@ -218,34 +218,8 @@ function HitungSubTotalItem(){
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input"> 
                                             <div class="input-group-control">
-                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_nik.' - '.$detail->penduduk_nama; ?>" readonly>
-                                                <label for="form_control_1">Nama Pedagang</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
-                                            <div class="input-group-control">
-                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_alamat.' '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' '.$detail->kabupaten_nama; ?>" readonly>
-                                                <label for="form_control_1">Alamat</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
-                                            <div class="input-group-control">
-                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->dasar_npwrd; ?>" readonly>
-                                                <label for="form_control_1">NPWRD</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
-                                            <div class="input-group-control">
-                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $bulan.' '.$detail->skrd_tahun; ?>" readonly>
-                                                <label for="form_control_1">Periode</label>
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->dasar_npwrd.' / '.$bulan.' '.$detail->skrd_tahun; ?>" readonly>
+                                                <label for="form_control_1">NPWRD / Periode</label>
                                             </div>
                                         </div>
                                     </div>
@@ -256,7 +230,33 @@ function HitungSubTotalItem(){
                                                 <label for="form_control_1">Pasar</label>
                                             </div>
                                         </div>
+                                    </div>                                    
+                                </div>
+                                <div class="row">                                    
+                                    <div class="col-md-2">
+                                        <div class="form-group form-md-line-input"> 
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_nik; ?>" readonly>
+                                                <label for="form_control_1">N I K</label>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-md-line-input"> 
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_nama; ?>" readonly>
+                                                <label for="form_control_1">Nama Pedagang</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-md-line-input"> 
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_alamat.' '.$detail->kabupaten_nama; ?>" readonly>
+                                                <label for="form_control_1">Alamat</label>
+                                            </div>
+                                        </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </form>

@@ -22,7 +22,11 @@ class Petugas_model extends CI_Model {
 					'petugas_nik_kadin' 		=> trim($this->input->post('nip_kadin')),
 	    			'petugas_nama_kadin' 		=> trim($this->input->post('nama_kadin')),
 	    			'petugas_jab_kadin' 		=> trim($this->input->post('jab_kadin')),
-	    			'petugas_title_kadin' 		=> trim($this->input->post('title_kadin'))
+	    			'petugas_title_kadin' 		=> trim($this->input->post('title_kadin')),
+	    			'petugas_nik_skrd' 			=> trim($this->input->post('nip_skrd')),
+	    			'petugas_nama_skrd' 		=> trim($this->input->post('nama_skrd')),
+	    			'petugas_jab_skrd' 			=> trim($this->input->post('jab_skrd')),
+	    			'petugas_title_skrd' 		=> trim($this->input->post('title_skrd'))
 				);
 
 		$this->db->where('petugas_id', 1);

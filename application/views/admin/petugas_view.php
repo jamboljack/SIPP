@@ -87,6 +87,35 @@ if ($this->session->flashdata('notification')) { ?>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
+                                <h3 class="form-section">Data Petugas SKRD</h3>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">N I P</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Enter N I P" name="nip_skrd" value="<?php echo $detail->petugas_nik_skrd; ?>" autocomplete="off" maxlength="21" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Nama Petugas</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Nama Petugas" name="nama_skrd" value="<?php echo $detail->petugas_nama_skrd; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Jabatan</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Jabatan" name="jab_skrd" value="<?php echo $detail->petugas_jab_skrd; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Title Report</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Enter Title Report" name="title_skrd" value="<?php echo $detail->petugas_title_skrd; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-actions">
                                 <div class="row">
