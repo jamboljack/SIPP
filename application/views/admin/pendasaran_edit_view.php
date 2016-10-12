@@ -371,6 +371,35 @@ function HitungLuas(){
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
+                                <h3 class="form-section">Batas-Batas</h3>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Utara</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Batas Utara" name="utara" value="<?php echo $detail->dasar_bts_utara; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Selatan</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Batas Selatan" name="selatan" value="<?php echo $detail->dasar_bts_selatan; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Timur</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Batas Timur" name="timur" value="<?php echo $detail->dasar_bts_timur; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="col-md-3 control-label" for="form_control_1">Barat</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" placeholder="Batas Barat" name="barat" value="<?php echo $detail->dasar_bts_barat; ?>" autocomplete="off" required>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-actions">
                                 <div class="row">

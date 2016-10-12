@@ -248,6 +248,10 @@ class Pendasaran_model extends CI_Model {
 				'dasar_panjang'			=> $this->input->post('panjang'),
 				'dasar_lebar'			=> $this->input->post('lebar'),
 				'dasar_luas'			=> $this->input->post('luas'),
+				'dasar_bts_utara'		=> $this->input->post('utara'),
+				'dasar_bts_selatan'		=> $this->input->post('selatan'),
+				'dasar_bts_timur'		=> $this->input->post('timur'),
+				'dasar_bts_barat'		=> $this->input->post('barat'),
 		   		'user_username' 		=> $this->session->userdata('username'),
 		   		'dasar_date_update' 	=> date('Y-m-d'),
 		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
@@ -335,6 +339,10 @@ class Pendasaran_model extends CI_Model {
 				'dasar_panjang'			=> $this->input->post('panjang'),
 				'dasar_lebar'			=> $this->input->post('lebar'),
 				'dasar_luas'			=> $this->input->post('luas'),
+				'dasar_bts_utara'		=> $this->input->post('utara'),
+				'dasar_bts_selatan'		=> $this->input->post('selatan'),
+				'dasar_bts_timur'		=> $this->input->post('timur'),
+				'dasar_bts_barat'		=> $this->input->post('barat'),
 		   		'user_username' 		=> $this->session->userdata('username'),
 		   		'dasar_date_update' 	=> date('Y-m-d'),
 		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')
