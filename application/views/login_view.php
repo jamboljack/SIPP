@@ -41,7 +41,7 @@
                     <?php echo $this->session->flashdata('notification'); ?>
 	           </div>	            
             </div>
-        <? 
+        <?php
         } 
         ?>       
     </div>
