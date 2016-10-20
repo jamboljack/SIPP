@@ -4,6 +4,7 @@ php_value short_open_tag 1
 php_value date.timezone Asia/Jakarta
 php_value post_max_size                   20M
 php_value upload_max_filesize             20M
+php_value max_execution_time 6000000
 
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f

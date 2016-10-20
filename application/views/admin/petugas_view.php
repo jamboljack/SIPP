@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
-<?php 
+<?php
 if ($this->session->flashdata('notification')) { ?>
 <script>
     swal({
@@ -14,17 +14,17 @@ if ($this->session->flashdata('notification')) { ?>
 <? } ?>
 
 <div class="page-content-wrapper">
-    <div class="page-content">            
+    <div class="page-content">
         <h3 class="page-title">
             Data <small>Data Petugas</small>
         </h3>
         <div class="page-bar">
-            <ul class="page-breadcrumb">                    
+            <ul class="page-breadcrumb">
                 <li>
                     <i class="fa fa-home"></i>
                     <a href="<?php echo site_url('admin/home'); ?>">Dashboard</a>
                     <i class="fa fa-angle-right"></i>
-                </li>                
+                </li>
                 <li>
                     <a href="#">Data</a>
                     <i class="fa fa-angle-right"></i>
@@ -36,9 +36,9 @@ if ($this->session->flashdata('notification')) { ?>
                 <li>
                     <a href="#">Detail Data Petugas</a>
                 </li>
-            </ul>                
-        </div>            
-                        
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
 
@@ -51,13 +51,13 @@ if ($this->session->flashdata('notification')) { ?>
                             <a href="javascript:;" class="collapse"></a>
                         </div>
                     </div>
-                    
+
                     <div class="portlet-body form">
                         <form role="form" class="form-horizontal" action="<?php echo site_url('admin/petugas/updatedata'); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <input type="hidden" value="<?php echo $detail->petugas_id; ?>" name="id">
 
-                            <div class="form-body">                                
+                            <div class="form-body">
                                 <h3 class="form-section">Data Kepala Dinas</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">N I P</label>
@@ -110,10 +110,9 @@ if ($this->session->flashdata('notification')) { ?>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Title Report</label>
+                                    <label class="col-md-3 control-label">Title Report</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Title Report" name="title_skrd" value="<?php echo $detail->petugas_title_skrd; ?>" autocomplete="off" required>
-                                        <div class="form-control-focus"></div>
+                                        <textarea class="form-control ckeditor" name="title_skrd" rows="10"><?php echo $detail->petugas_title_skrd; ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,5 +130,5 @@ if ($this->session->flashdata('notification')) { ?>
             </div>
         </div>
 
-    </div>            
-</div>  
+    </div>
+</div>

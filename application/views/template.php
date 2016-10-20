@@ -50,7 +50,7 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
 <!-- BEGIN SIDEBAR -->
-<?php echo $_sidebar; ?>   
+<?php echo $_sidebar; ?>
 <!-- END SIDEBAR -->
 <!-- BEGIN CONTENT -->
 <?php echo $content; ?>
@@ -86,7 +86,7 @@
 <!-- FILE UPLOAD -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 <!-- CKEDITOR -->
-<script src="<?php echo base_url(); ?>assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/ckeditor/ckeditor.js" type="text/javascript"></script>
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?php echo base_url(); ?>assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
@@ -101,10 +101,10 @@
 <script src="<?php echo base_url(); ?>assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
 
 <script>
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
    Metronic.init();
    Layout.init();
-   ComponentsPickers.init();   
+   ComponentsPickers.init();
    TableAdvanced.init();
    FormSamples.init();
    Profile.init();

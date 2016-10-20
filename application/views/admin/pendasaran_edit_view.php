@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
 
-<?php 
+<?php
 if ($this->session->flashdata('notification')) { ?>
 <script>
     swal({
@@ -19,13 +19,13 @@ if ($this->session->flashdata('notification')) { ?>
         $("#lstPasar").select2({
         });
         $("#lstJenis").select2({
-        });        
+        });
     });
 </script>
 
 <script language="JavaScript" type="text/JavaScript">
-function myPasar() { 
-    var x               = document.getElementById("lstPasar");         
+function myPasar() {
+    var x               = document.getElementById("lstPasar");
     var pasar_inisial   = x.options[(x.selectedIndex)].getAttribute('data-inisial');
     var pasar_kode      = x.options[(x.selectedIndex)].getAttribute('data-kode');
     var pasar_alamat    = x.options[(x.selectedIndex)].getAttribute('data-alamat');
@@ -33,45 +33,45 @@ function myPasar() {
     var desa            = x.options[(x.selectedIndex)].getAttribute('data-desa');
     document.getElementById("pasar_kode").value = pasar_kode;
     document.getElementById("pasar_inisial").value = pasar_inisial;
-    document.getElementById("alamat").value = pasar_alamat+', DESA '+desa+', KECAMATAN '+kecamatan;    
+    document.getElementById("alamat").value = pasar_alamat+', DESA '+desa+', KECAMATAN '+kecamatan;
 }
 </script>
 
 <script language="JavaScript" type="text/JavaScript">
-function myJenis() { 
+function myJenis() {
     var j               = document.getElementById("lstJenis");
-    var jenis_kode      = j.options[(j.selectedIndex)].getAttribute('data-kode');    
-    document.getElementById("jenis_kode").value = jenis_kode;    
+    var jenis_kode      = j.options[(j.selectedIndex)].getAttribute('data-kode');
+    document.getElementById("jenis_kode").value = jenis_kode;
 }
 </script>
 
 <script type="text/javascript">
 function HitungLuas(){
     var myForm1     = document.form1;
-    var Panjang     = parseInt(myForm1.panjang.value);    
+    var Panjang     = parseInt(myForm1.panjang.value);
     var Lebar       = parseInt(myForm1.lebar.value);
-    
-    var Luas    = (Panjang*Lebar);    
+
+    var Luas    = (Panjang*Lebar);
     if (Luas > 0) {
-        myForm1.luas.value = Luas; 
+        myForm1.luas.value = Luas;
     } else {
         myForm1.luas.value = 0;
-    }       
+    }
 }
 </script>
 
 <div class="page-content-wrapper">
-    <div class="page-content">            
+    <div class="page-content">
         <h3 class="page-title">
             Transaksi Pendasaran <small>Surat Pendasaran</small>
         </h3>
         <div class="page-bar">
-            <ul class="page-breadcrumb">                    
+            <ul class="page-breadcrumb">
                 <li>
                     <i class="fa fa-home"></i>
                     <a href="<?php echo site_url('admin/home'); ?>">Dashboard</a>
                     <i class="fa fa-angle-right"></i>
-                </li>                
+                </li>
                 <li>
                     <a href="#">Transaksi Pendasaran</a>
                     <i class="fa fa-angle-right"></i>
@@ -83,9 +83,9 @@ function HitungLuas(){
                 <li>
                     <a href="#">Edit Surat Pendasaran</a>
                 </li>
-            </ul>                
-        </div>            
-                        
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
 
@@ -98,7 +98,7 @@ function HitungLuas(){
                             <a href="javascript:;" class="collapse"></a>
                         </div>
                     </div>
-                    
+
                     <div class="portlet-body form">
                         <form role="form" class="form-horizontal" action="<?php echo site_url('admin/pendasaran/updatedata/'.$this->uri->segment(4)); ?>" method="post" enctype="multipart/form-data" name="form1">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -137,7 +137,7 @@ function HitungLuas(){
                                         <input type="text" class="form-control" name="tgl_lahir" value="<?php echo $tanggal_lhr; ?>" autocomplete="off" readonly>
                                     </div>
                                 </div>
-                                <?php 
+                                <?php
                                 if ($detail->penduduk_jk == 1) {
                                     $jk = 'Laki-Laki';
                                 } else {
@@ -153,7 +153,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detail->penduduk_alamat.' RT.'.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama; ?></textarea>
+                                        <textarea class="form-control" name="alamat" rows="2" readonly><?php echo $detail->penduduk_alamat.' DESA '.$detail->desa_nama.' KEC. '.$detail->kecamatan_nama; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -164,7 +164,7 @@ function HitungLuas(){
                                         <?php } else { ?>
                                         <img src="<?php echo base_url(); ?>img/no_image.gif" alt="" />
                                         <?php }?>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Upload Foto</label>
@@ -180,14 +180,14 @@ function HitungLuas(){
                                                 <span class="fileupload-new"><i class="icon-paper-clip"></i> Browse</span>
                                                 <span class="fileupload-exists"><i class="icon-undo"></i> Change</span>
                                                     <input type="file" class="default" name="userfile" />
-                                                </span>                                             
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="clearfix margin-top-10">
                                             <span class="label label-danger">NOTE !</span>
                                             <span>Resolution : 500 x 750 pixel</span>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <h3 class="form-section">Data Surat Pendasaran</h3>
                                 <div class="form-group form-md-line-input">
@@ -248,15 +248,15 @@ function HitungLuas(){
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Periode Berlaku</label>
-                                    <div class="col-md-9">                                
+                                    <div class="col-md-9">
                                         <div class="input-group input-large" data-date="<?php echo date('Y-m-d'); ?>" data-date-format="yyyy-mm-dd">
                                             <input type="text" class="form-control default-date-picker" name="tgl1" placeholder="DD-MM-YYYY" value="<?php echo $tanggal_dari; ?>" required autofocus>
                                             <div class="form-control-focus"></div>
                                             <span class="input-group-addon"><b>s/d</b></span>
                                             <input type="text" class="form-control default-date-picker" name="tgl2" placeholder="DD-MM-YYYY" value="<?php echo $tanggal_sampai; ?>" required>
                                             <div class="form-control-focus"></div>
-                                        </div>                                        
-                                    </div> 
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Dagangan</label>
@@ -276,7 +276,7 @@ function HitungLuas(){
                                             ?>
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 <h3 class="form-section">Data Pasar</h3>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Pasar</label>
@@ -296,7 +296,7 @@ function HitungLuas(){
                                             ?>
                                         </select>
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Alamat</label>
                                     <div class="col-md-9">
@@ -307,7 +307,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-checkboxes"">
                                     <label class="col-md-3 control-label" for="form_control_1">Jenis Tempat</label>
                                     <div class="md-radio-inline col-md-9">
-                                        <?php 
+                                        <?php
                                         $no = 1;
                                         foreach ($listTempat as $t) {
                                             if ($detail->tempat_id == $t->tempat_id) {
@@ -329,13 +329,13 @@ function HitungLuas(){
                                                 <span class="box"></span> <?php echo $t->tempat_nama; ?>
                                             </label>
                                         </div>
-                                        <?php 
+                                        <?php
                                             }
-                                        $no++; 
-                                        } 
+                                        $no++;
+                                        }
                                         ?>
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Blok</label>
                                     <div class="col-md-3">
@@ -417,5 +417,5 @@ function HitungLuas(){
             </div>
         </div>
 
-    </div>            
-</div>  
+    </div>
+</div>

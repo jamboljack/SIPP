@@ -8,17 +8,17 @@
 	table {
     	border-collapse: collapse;
 	}
-	
+
 	tr, td {
         padding: 1px;
     }
-	
+
 	body{
-        font-family: "Calibri"; 
+        font-family: "Calibri";
         font-size: 14px;
     }
-	
-    .page {             
+
+    .page {
 		left:5px;
         right:5px;
         height:5.51in ; /*Ukuran Panjang Kertas */
@@ -88,7 +88,7 @@ switch ($bln) {
         <td colspan="6" align="center">
             <b> TANDA BUKTI PEMBAYARAN<br>
             Nomor Bukti : <?php echo $detail->skrd_no; ?></b>
-        </td>            
+        </td>
     </tr>
     <tr>
         <td colspan="6" align="center">
@@ -101,7 +101,7 @@ switch ($bln) {
                     <td></td>
                     <td>Telah menerima uang sebesar</td>
                     <td colspan="4"><b>
-                    : Rp. <?php $total = ($detail->skrd_total+$detail->skrd_bunga+$detail->skrd_kenaikan);  
+                    : Rp. <?php $total = ($detail->skrd_total+$detail->skrd_bunga+$detail->skrd_kenaikan);
                     echo number_format($total, 0, '.', ','); ?> <b>(<?php echo ucwords(strtolower(terbilang($total))); ?> Rupiah )</b></b>                    </td>
                 </tr>
                 <tr>
@@ -115,7 +115,7 @@ switch ($bln) {
                     <td></td>
                     <td>Alamat</td>
                     <td colspan="4">
-                    : <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' '.$detail->kabupaten_nama)); ?>
+                    : <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->kabupaten_nama)); ?>
                     </td>
                 </tr>
                 <tr>
@@ -139,11 +139,11 @@ switch ($bln) {
                             </tr>
                             <?php
                                 $subtotal = 0;
-                                $no = 1; 
+                                $no = 1;
                                 foreach($daftarItem as $i) {
                                     $subtotal = ($subtotal + $i->item_subtotal);
                             ?>
-                            <tr>                
+                            <tr>
                                 <td align="center"><?php echo $no; ?></td>
                                 <td><?php echo $i->item_kode; ?></td>
                                 <td><?php echo $i->item_uraian; ?></td>
@@ -151,10 +151,10 @@ switch ($bln) {
                                 <td align="right"><?php echo $i->item_tarif; ?></td>
                                 <td align="right"><?php echo $i->item_hari; ?></td>
                                 <td align="right"><?php echo number_format($i->item_subtotal, 0, '.', ','); ?></td>
-                            </tr>                
-                            <?php 
+                            </tr>
+                            <?php
                                 $no++;
-        				    } 
+        				    }
         				    ?>
                             <tr>
                             <td colspan="2" rowspan="4" align="center">&nbsp;</td>
@@ -174,7 +174,7 @@ switch ($bln) {
                         <tr>
                             <td colspan="4">Jumlah Keseluruhan</td><?php $total = ($detail->skrd_bunga+$detail->skrd_kenaikan+$detail->skrd_total); ?>
                             <td align="right"><?php echo number_format($total, 0, '.', ','); ?></td>
-                        </tr> 
+                        </tr>
                         </table>
                     </td>
                 </tr>

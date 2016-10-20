@@ -8,16 +8,16 @@
 	table {
     	border-collapse: collapse;
 	}
-	
+
 	tr, td {
         padding: 2px;
     }
-	
+
 	body{
-        font-family: "Calibri"; 
+        font-family: "Calibri";
         font-size: 14px;
     }
-	
+
 	h1{
         font-size: 15px
     }
@@ -158,13 +158,13 @@ switch ($bln) {
                             <td width="8%" align="right"><b>Jml. Hari</b></td>
                             <td width="15%" align="right"><b>Jumlah (Rp)</b></td>
                         </tr>
-                        <?php 
-				            $subtotal = 0; 
-				            $no = 1; 
-				            foreach($daftarItem as $i) { 
+                        <?php
+				            $subtotal = 0;
+				            $no = 1;
+				            foreach($daftarItem as $i) {
 					           $subtotal = ($subtotal + $i->item_subtotal);
 				        ?>
-                        <tr>                
+                        <tr>
                             <td align="center"><?php echo $no; ?></td>
                             <td><?php echo $i->item_kode; ?></td>
                             <td><?php echo $i->item_uraian; ?></td>
@@ -173,9 +173,9 @@ switch ($bln) {
                             <td align="right"><?php echo $i->item_hari; ?></td>
                             <td align="right"><?php echo number_format($i->item_subtotal, 0, '.', ','); ?></td>
                         </tr>
-                        <?php 
-					       $no++; 
-				        } 
+                        <?php
+					       $no++;
+				        }
 				        ?>
                         <tr>
                             <td colspan="2" rowspan="4" align="center">&nbsp;</td>
@@ -195,7 +195,7 @@ switch ($bln) {
                         <tr>
                             <td colspan="4">Jumlah Keseluruhan</td><?php $total = ($detail->skrd_bunga+$detail->skrd_kenaikan+$detail->skrd_total); ?>
                             <td align="right"><?php echo number_format($total, 0, '.', ','); ?></td>
-                        </tr> 
+                        </tr>
                     </table>
                 </td>
             </tr>
@@ -277,7 +277,7 @@ switch ($bln) {
                 </tr>
                 <tr>
                     <td>Alamat</td>
-                    <td>: <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->penduduk_rt.'/'.$detail->penduduk_rw.' '.$detail->kabupaten_nama)); ?></td>
+                    <td>: <?php echo ucwords(strtolower($detail->penduduk_alamat.' '.$detail->kabupaten_nama)); ?></td>
                     <td align="center">Yang Menerima</td>
                 </tr>
                 <tr>
