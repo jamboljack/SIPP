@@ -1,5 +1,18 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
+<?php
+if ($this->session->flashdata('notification')) { ?>
+<script>
+    swal({
+        title: "Done",
+        text: "<?php echo $this->session->flashdata('notification'); ?>",
+        timer: 2000,
+        showConfirmButton: false,
+        type: 'success'
+    });
+</script>
+<? } ?>
+
 <script>
     function hapusData(dasar_id) {
         var id = dasar_id;
@@ -13,7 +26,7 @@
             cancelButtonText: 'No',
             closeOnConfirm: true
         }, function() {
-            window.location.href="<?php echo site_url('admin/dasar/deletedata'); ?>"+"/"+id
+            window.location.href="<?php echo site_url('admin/pendasaran/deletedata'); ?>"+"/"+id
         });
     }
 </script>
@@ -30,32 +43,19 @@
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             closeOnConfirm: true
-        }, function() {            
+        }, function() {
             window.location.href="<?php echo site_url('admin/pendasaran/accdata'); ?>"+"/"+id
         });
     }
 </script>
 
-<?php 
-if ($this->session->flashdata('notification')) { ?>
-<script>
-    swal({
-        title: "Done",
-        text: "<?php echo $this->session->flashdata('notification'); ?>",
-        timer: 2000,
-        showConfirmButton: false,
-        type: 'success'
-    });
-</script>
-<? } ?>
-
 <div class="page-content-wrapper">
-    <div class="page-content">            
+    <div class="page-content">
         <h3 class="page-title">
             Transaksi Pendasaran <small>Surat Pendasaran</small>
         </h3>
         <div class="page-bar">
-            <ul class="page-breadcrumb">                    
+            <ul class="page-breadcrumb">
                 <li>
                     <i class="fa fa-home"></i>
                     <a href="<?php echo site_url('admin/home'); ?>">Dashboard</a>
@@ -68,9 +68,9 @@ if ($this->session->flashdata('notification')) { ?>
                 <li>
                     <a href="#">Surat Pendasaran</a>
                 </li>
-            </ul>                
-        </div>            
-                        
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
@@ -85,7 +85,7 @@ if ($this->session->flashdata('notification')) { ?>
                         <div class="tools"></div>
                     </div>
 
-                    <div class="portlet-body">                        
+                    <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_1">
                         <thead>
                             <tr>
@@ -99,9 +99,9 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th width="10%">Aksi</th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
-                            <?php 
+                            <?php
                             $no = 1;
                             foreach($daftarlist as $r) {
                                 $dasar_id       = $r->dasar_id;
@@ -114,13 +114,13 @@ if ($this->session->flashdata('notification')) { ?>
                                 $tanggal_srt    = $tgl.'-'.$bln.'-'.$thn;
                             ?>
                             <tr>
-                                <td><?php echo $no; ?></td>                                
-                                <td><?php echo $r->dasar_no; ?></td>                                
+                                <td><?php echo $no; ?></td>
+                                <td><?php echo $r->dasar_no; ?></td>
                                 <td><?php echo $tanggal_srt; ?></td>
                                 <td><?php echo $r->dasar_npwrd; ?></td>
                                 <td><?php echo $r->penduduk_nama; ?></td>
                                 <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?>
-                                </td>                                
+                                </td>
                                 <td>
                                     <?php if ($r->dasar_status=='Baru') { ?>
                                         <span class="label label-info"><i class="fa fa-plus-circle"></i> <?php echo $r->dasar_status; ?></span>
@@ -163,14 +163,20 @@ if ($this->session->flashdata('notification')) { ?>
                                             <a onclick="ACCData(<?php echo $dasar_id; ?>)"><button class="btn btn-success btn-xs" title="ACC"><i class="icon-check "></i> ACC Data</button>
                                             </a>
                                         <?php } ?>
-                                        
+
                                         <?php if ($r->dasar_st_print == 1) { ?>
                                         <a href="<?php echo site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id); ?>">
-                                            <button class="btn btn-danger btn-xs" title="Perpanjangan Surat">
+                                            <button class="btn btn-warning btn-xs" title="Perpanjangan Surat">
                                                 <i class="icon-docs"></i>
                                             </button>
                                         </a>
                                         <?php } ?>
+
+                                        <a onclick="hapusData(<?php echo $dasar_id; ?>)">
+                                            <button class="btn btn-danger btn-xs" title="Hapus Data">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                        </a>
                                     <?php } else { ?>
                                         <span class="label label-danger"><i class="fa fa-remove (alias)"></i> Tidak Berlaku</span>
                                     <?php } ?>
@@ -184,7 +190,7 @@ if ($this->session->flashdata('notification')) { ?>
 
                         </table>
                     </div>
-                </div>            
+                </div>
             </div>
         </div>
 

@@ -48,8 +48,8 @@ function myJenis() {
 <script type="text/javascript">
 function HitungLuas(){
     var myForm1     = document.form1;
-    var Panjang     = parseInt(myForm1.panjang.value);
-    var Lebar       = parseInt(myForm1.lebar.value);
+    var Panjang     = parseFloat(myForm1.panjang.value);
+    var Lebar       = parseFloat(myForm1.lebar.value);
 
     var Luas    = (Panjang*Lebar);
     if (Luas > 0) {
@@ -353,21 +353,21 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Panjang</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Panjang Tempat" name="panjang" id="panjang" value="<?php echo $detail->dasar_panjang; ?>" onkeydown="HitungLuas()" autocomplete="off" required>
+                                        <input type="number" step="0.01" class="form-control" placeholder="Panjang Tempat" name="panjang" id="panjang" value="<?php echo $detail->dasar_panjang; ?>" onkeydown="HitungLuas()" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Lebar</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo $detail->dasar_lebar ?>" onkeydown="HitungLuas()" autocomplete="off" required>
+                                        <input type="number" step="0.01" class="form-control" placeholder="Lebar Tempat" name="lebar" id="lebar" value="<?php echo $detail->dasar_lebar ?>" onkeydown="HitungLuas()" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Luas Lokasi (m2)</label>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo $detail->dasar_luas; ?>" id="luas" autocomplete="off" readonly>
+                                        <input type="number" step="0.01" class="form-control" placeholder="Luas Lokasi (m2)" name="luas" value="<?php echo $detail->dasar_luas; ?>" id="luas" autocomplete="off" readonly>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>

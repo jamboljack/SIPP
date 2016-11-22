@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>js/sweetalert2.css">
 <script src="<?php echo base_url(); ?>js/sweetalert2.min.js"></script>
-<?php 
+<?php
 if ($this->session->flashdata('notification')) { ?>
 <script>
     swal({
@@ -17,15 +17,15 @@ if ($this->session->flashdata('notification')) { ?>
 function HitungKembalian(){
     var myForm1     = document.form1;
     var Total       = parseFloat(myForm1.totaltagih.value);
-    var JumlahBayar = parseFloat(myForm1.jumlahbayar.value);    
+    var JumlahBayar = parseFloat(myForm1.jumlahbayar.value);
     console.log(Total, JumlahBayar);
 
     var Kembalian   = (JumlahBayar - Total);
     if (Kembalian > 0) {
-        myForm1.kembalian.value = Kembalian; 
+        myForm1.kembalian.value = Kembalian;
     } else {
         myForm1.kembalian.value = 0;
-    }       
+    }
 }
 </script>
 
@@ -72,12 +72,12 @@ switch ($bln) {
 ?>
 
 <div class="page-content-wrapper">
-    <div class="page-content">            
+    <div class="page-content">
         <h3 class="page-title">
             Transaksi Retribusi <small>Pembayaran Retribusi</small>
         </h3>
         <div class="page-bar">
-            <ul class="page-breadcrumb">                    
+            <ul class="page-breadcrumb">
                 <li>
                     <i class="fa fa-home"></i>
                     <a href="<?php echo site_url('admin/home'); ?>">Dashboard</a>
@@ -94,9 +94,9 @@ switch ($bln) {
                 <li>
                     <a href="#">Proses Pembayaran Retribusi</a>
                 </li>
-            </ul>               
-        </div>            
-                        
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet light bordered">
@@ -110,10 +110,10 @@ switch ($bln) {
                     </div>
                     <div class="portlet-body form">
                         <form role="form">
-                            <div class="form-body">                                
+                            <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="no_bukti" value="<?php echo $detail->skrd_no; ?>" readonly>
                                                 <label for="form_control_1">No. Bukti</label>
@@ -121,7 +121,7 @@ switch ($bln) {
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->dasar_npwrd.' / '.$bulan.' '.$detail->skrd_tahun; ?>" readonly>
                                                 <label for="form_control_1">NPWRD / Periode</label>
@@ -129,17 +129,17 @@ switch ($bln) {
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->pasar_nama; ?>" readonly>
                                                 <label for="form_control_1">Pasar</label>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
-                                <div class="row">                                    
+                                <div class="row">
                                     <div class="col-md-2">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_nik; ?>" readonly>
                                                 <label for="form_control_1">N I K</label>
@@ -147,7 +147,7 @@ switch ($bln) {
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_nama; ?>" readonly>
                                                 <label for="form_control_1">Nama Pedagang</label>
@@ -155,13 +155,13 @@ switch ($bln) {
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group form-md-line-input"> 
+                                        <div class="form-group form-md-line-input">
                                             <div class="input-group-control">
                                                 <input type="text" class="form-control" name="name" id="name" value="<?php echo $detail->penduduk_alamat.' '.$detail->kabupaten_nama; ?>" readonly>
                                                 <label for="form_control_1">Alamat</label>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -172,10 +172,10 @@ switch ($bln) {
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-list"></i> Detail Surat Ketetapan Retribusi Daerah
-                        </div>                        
+                        </div>
                     </div>
                     <div class="portlet-body form">
-                        <?php 
+                        <?php
                         $tgl_trans  = $detail->skrd_tgl;
 
                         if (!empty($tgl_trans)) {
@@ -184,7 +184,7 @@ switch ($bln) {
                             $bln            = $mtgl[1];
                             $tgl            = $mtgl[2];
                             $tanggal_tr     = $tgl.'-'.$bln.'-'.$thn;
-                        } else { 
+                        } else {
                             $tanggal_tr     = date('d-m-Y');
                         }
                         ?>
@@ -194,8 +194,8 @@ switch ($bln) {
                                     <p>
                                     <b>TOTAL</b>
                                     <span class="muted">
-                                    Status : 
-                                    <?php 
+                                    Status :
+                                    <?php
                                     if ($detail->skrd_status == 0) {
                                         echo '<b>BELUM BAYAR</b>';
                                     } else {
@@ -204,13 +204,13 @@ switch ($bln) {
 
                                     if ($detail->skrd_status == 1) {
                                         echo " / ".tgl_indo($detail->skrd_tgl_bayar)." / Kasir : ".$detail->user_username;
-                                    }                                    
+                                    }
                                     ?>
                                     </span>
                                     </p>
-                                </div>  
+                                </div>
                                 <div class="col-xs-6">
-                                <p>                                
+                                <p>
                                 <b><?php $total = ($detail->skrd_total+$detail->skrd_bunga+$detail->skrd_kenaikan); echo number_format($total, 0, '.', ','); ?></b>
                                 <span class="muted">No. Bukti : <b><?php echo $detail->skrd_no; ?> / <?php echo $tanggal_tr; ?></b></span>
                                 </p>
@@ -229,11 +229,11 @@ switch ($bln) {
                         <div class="tools"></div>
                     </div>
 
-                    <div class="portlet-body">                        
+                    <div class="portlet-body">
                         <table class="table table-hover table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="5%">No</th>                                
+                                <th width="5%">No</th>
                                 <th width="15%">Kode Rekening</th>
                                 <th>Uraian Retribusi</th>
                                 <th width="10%">Luas</th>
@@ -242,16 +242,16 @@ switch ($bln) {
                                 <th width="10%">Sub Total</th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
-                            <?php 
+                            <?php
                             $no = 1;
                             foreach($daftarItem as $r) {
-                                $item_id = $r->item_id;                                
+                                $item_id = $r->item_id;
                             ?>
                             <tr>
-                                <td><?php echo $no; ?></td>                                
-                                <td><?php echo $r->item_kode; ?></td> 
+                                <td><?php echo $no; ?></td>
+                                <td><?php echo $r->item_kode; ?></td>
                                 <td><?php echo $r->item_uraian; ?></td>
                                 <td align="right"><?php echo $r->item_luas.' '.$r->item_satuan; ?></td>
                                 <td align="right"><?php echo $r->item_tarif; ?></td>
@@ -263,17 +263,17 @@ switch ($bln) {
                             }
                             ?>
                         </tbody>
-                        </table>                        
+                        </table>
                     </div>
                 </div>
 
             </div>
         </div>
-        
+
         <div class="row">
             <form role="form" action="<?php echo site_url('admin/retribusi/updatedata/'.$this->uri->segment(4)); ?>" method="post" name="form1">
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-            <input type="hidden" name="id" value="<?php echo $detail->skrd_id; ?>">            
+            <input type="hidden" name="id" value="<?php echo $detail->skrd_id; ?>">
             <input type="hidden" id="totaltagih" value="<?php echo $total; ?>">
 
                 <div class="col-md-6"></div>
@@ -312,9 +312,8 @@ switch ($bln) {
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <?php if ($detail->skrd_status == 0) { ?>
                     <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Bayar</button>
-                    <?php } else { ?>
+                    <?php if ($detail->skrd_status == 1) { ?>
                     <a href="<?php echo site_url('admin/retribusi/printdata/'.$this->uri->segment(4)); ?>" class="btn blue"><i class="fa fa-print"></i> Print
                     </a>
                     <?php } ?>
@@ -322,9 +321,9 @@ switch ($bln) {
                         <i class="fa fa-times"></i> Batal
                     </a>
                 </div>
-                
+
             </form>
-        </div>            
+        </div>
 
         <div class="clearfix"></div>
     </div>

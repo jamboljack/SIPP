@@ -19,18 +19,18 @@ class Pendasaran extends CI_Controller {
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
-		} 
+		}
 	}
 
 	public function pilihpenduduk() {
-		$data['tampil']		= 'tidak';		
+		$data['tampil']		= 'tidak';
 		$this->template->display('admin/penduduk_pilih_view', $data);
 	}
 
 	public function caridatapenduduk() {
 		$data['tampil']			= 'ya';
 		$nama 					= strtoupper(trim($this->input->post('nama')));
-		$data['listPenduduk'] 	= $this->pendasaran_model->select_penduduk_cari($nama)->result();		
+		$data['listPenduduk'] 	= $this->pendasaran_model->select_penduduk_cari($nama)->result();
 		$this->template->display('admin/penduduk_pilih_view', $data);
 	}
 
@@ -51,7 +51,7 @@ class Pendasaran extends CI_Controller {
 		$data['kecamatan'] 		= $this->chain_model->ambil_kecamatan($this->uri->segment(4));
 		$this->load->view('admin/v_drop_down_kecamatan',$data);
 	}
-	
+
 	// dijalankan saat kecamatan di klik
 	public function pilih_kelurahan() {
 		$data['kelurahan'] 		= $this->chain_model->ambil_kelurahan($this->uri->segment(4));
@@ -60,7 +60,7 @@ class Pendasaran extends CI_Controller {
 
 	public function savedatapenduduk() {
 		$this->form_validation->set_rules('nik','<b>N I K</b>','trim|required|min_length[16]|max_length[16]|is_unique[sipp_penduduk.penduduk_nik]');
-		
+
 		if ($this->form_validation->run() == FALSE) {
 			$data['error']			= true;
 			$data['provinsi']		= $this->chain_model->ambil_provinsi();
@@ -69,21 +69,21 @@ class Pendasaran extends CI_Controller {
 			if (!empty($_FILES['userfile']['name'])) {
 				$jam 	= time();
 				$kode 	= seo_title($this->input->post('nama'));
-					
+
 				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './penduduk_image/';
-				$config['allowed_types'] = 'jpg|png|gif|jpeg';		
+				$config['allowed_types'] = 'jpg|png|gif|jpeg';
 				$config['overwrite'] = TRUE;
 				$this->load->library('upload', $config);
 				$this->upload->do_upload('userfile');
 				$config['image_library'] = 'gd2';
 				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
 				$config['maintain_ratio'] = TRUE;
-												
+
 				$config['width'] = 500;
 				$config['height'] = 750;
 				$this->load->library('image_lib',$config);
-				 
+
 				$this->image_lib->resize();
 			} elseif (empty($_FILES['userfile']['name'])){
 				$config['file_name'] = '';
@@ -115,7 +115,7 @@ class Pendasaran extends CI_Controller {
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
 				   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
 				);
-			} else {		
+			} else {
 				$data = array(
 						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
 						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
@@ -142,7 +142,7 @@ class Pendasaran extends CI_Controller {
 	public function adddata() {
 		$penduduk_id 			= $this->uri->segment(4);
 		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
-		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();		
+		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
 		$data['detailpenduduk'] = $this->pendasaran_model->select_penduduk($penduduk_id)->row(); // Data Penduduk
 		$this->template->display('admin/pendasaran_add_view', $data);
@@ -152,21 +152,21 @@ class Pendasaran extends CI_Controller {
 		if (!empty($_FILES['userfile']['name'])) {
 			$jam 	= time();
 			$kode 	= $this->input->post('penduduk_id');
-					
+
 			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 			$config['upload_path'] = './penduduk_image/';
-			$config['allowed_types'] = 'jpg|png|gif|jpeg';		
+			$config['allowed_types'] = 'jpg|png|gif|jpeg';
 			$config['overwrite'] = TRUE;
 			$this->load->library('upload', $config);
 			$this->upload->do_upload('userfile');
 			$config['image_library'] = 'gd2';
 			$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
 			$config['maintain_ratio'] = TRUE;
-											
+
 			$config['width'] = 500;
 			$config['height'] = 750;
 			$this->load->library('image_lib',$config);
-				 
+
 			$this->image_lib->resize();
 		} elseif (empty($_FILES['userfile']['name'])){
 			$config['file_name'] = '';
@@ -182,8 +182,8 @@ class Pendasaran extends CI_Controller {
 		$this->session->set_flashdata('notification','Data Telah di ACC.');
 	 	redirect(site_url('admin/pendasaran'));
 	}
-	
-	public function editdata($dasar_id) {		
+
+	public function editdata($dasar_id) {
 		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
 		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
@@ -199,21 +199,21 @@ class Pendasaran extends CI_Controller {
 			if (!empty($_FILES['userfile']['name'])) {
 				$jam 	= time();
 				$kode 	= $this->input->post('penduduk_id');
-						
+
 				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './penduduk_image/';
-				$config['allowed_types'] = 'jpg|png|gif|jpeg';		
+				$config['allowed_types'] = 'jpg|png|gif|jpeg';
 				$config['overwrite'] = TRUE;
 				$this->load->library('upload', $config);
 				$this->upload->do_upload('userfile');
 				$config['image_library'] = 'gd2';
 				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
 				$config['maintain_ratio'] = TRUE;
-												
+
 				$config['width'] = 500;
 				$config['height'] = 750;
 				$this->load->library('image_lib',$config);
-					 
+
 				$this->image_lib->resize();
 			} elseif (empty($_FILES['userfile']['name'])){
 				$config['file_name'] = '';
@@ -224,18 +224,18 @@ class Pendasaran extends CI_Controller {
 			redirect(site_url('admin/pendasaran'));
 		}
 	}
-	
-	public function printdata($dasar_id) {		
+
+	public function printdata($dasar_id) {
 		$data['detail'] = $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$cek 			= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
-		
+
 		if ($cek->dasar_st_print == 0) {
 			$this->pendasaran_model->update_data_print();
-		}		
+		}
 		$this->template->display('admin/pendasaran_preview_view', $data);
 	}
 
-	public function preview($dasar_id) {		
+	public function preview($dasar_id) {
 		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$data['petugas'] 		= $this->pendasaran_model->select_petugas()->row();
 		$this->load->view('admin/pendasaran_preview_print', $data);
@@ -243,28 +243,28 @@ class Pendasaran extends CI_Controller {
 
 	public function exportpdf($dasar_id) {
 		$data['detail'] 		= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
-		$data['petugas'] 		= $this->pendasaran_model->select_petugas()->row();	
+		$data['petugas'] 		= $this->pendasaran_model->select_petugas()->row();
 
 		$time 			= time();
 		$npwrd 			= $this->uri->segment(5);
 		$filename 		= 'Surat_Pendasaran_'.$npwrd.'_'.$time;
 		$pdfFilePath 	= FCPATH."download/$filename.pdf";
-			
+
 		if (file_exists($pdfFilePath) == FALSE){
 			ini_set('memory_limit','50M');
 			$html = $this->load->view('admin/pendasaran_preview_pdf', $data, true);
 			$this->load->library('pdf');
-			$param = '"en-GB-x","A4","","",10,10,10,10,6,3,"L"'; // Landscape		
+			$param = '"en-GB-x","A4","","",10,10,10,10,6,3,"L"'; // Landscape
 			$pdf = $this->pdf->load($param);
-			$pdf->SetHeader(''); 
+			$pdf->SetHeader('');
 			$pdf->SetFooter('');
 			$pdf->WriteHTML($html); // write the HTML into the PDF
 			$pdf->Output($pdfFilePath, 'F'); // save to file because we can
 		}
-		redirect("download/$filename.pdf");			
+		redirect("download/$filename.pdf");
 	}
 
-	public function perpanjangan($dasar_id) {		
+	public function perpanjangan($dasar_id) {
 		$data['listTempat']		= $this->pendasaran_model->select_tempat()->result();
 		$data['listPasar'] 		= $this->pendasaran_model->select_pasar()->result();
 		$data['listJenis'] 		= $this->pendasaran_model->select_jenis()->result();
@@ -272,10 +272,28 @@ class Pendasaran extends CI_Controller {
 		$this->template->display('admin/pendasaran_perpanjangan_view', $data);
 	}
 
-	public function savedataperpanjangan() {		
+	public function savedataperpanjangan() {
 		$this->pendasaran_model->insert_data_perpanjangan();
 		$this->session->set_flashdata('notification','Simpan Data Perpanjangan Sukses.');
 	 	redirect(site_url('admin/pendasaran'));
+	}
+
+	public function deletedata($kode) {
+		$kode = $this->security->xss_clean($this->uri->segment(4));
+
+		if ($kode == null) {
+			redirect(site_url('admin/pendasaran'));
+		} else {
+			// Cek jika sudah ada SKRD
+			$cek_data = $this->pendasaran_model->check_data_skrd($kode)->result();
+			if (count($cek_data) > 0) { // Jika sudah ada SKRD, tidak bisa diHapus
+				$this->session->set_flashdata('notification','Data tidak bisa di Hapus, Sudah ada SKRD.');
+			} else {
+				$this->pendasaran_model->delete_data($kode);
+				$this->session->set_flashdata('notification','Hapus Data Sukses.');
+			}
+			redirect(site_url('admin/pendasaran'));
+		}
 	}
 }
 /* Location: ./application/controller/admin/Pendasaran.php */
