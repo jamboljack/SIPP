@@ -76,6 +76,13 @@ if ($this->session->flashdata('notification')) { ?>
                 <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
                 </a>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
+                    <a href="<?php echo site_url('admin/pendasaran/accdata_all'); ?>">
+                        <button type="submit" class="btn btn-warning" title="ACC Semua Data">
+                            <i class="fa fa-check"></i> ACC Semua
+                        </button>
+                    </a>
+                <?php } ?>
                 <br><br>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">

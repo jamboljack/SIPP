@@ -472,5 +472,14 @@ class Pendasaran_model extends CI_Model {
 		$this->db->where('dasar_id', $kode);
 		$this->db->delete('sipp_dasar');
 	}
+
+	function update_data_acc_all() {
+		$data = array(
+				'dasar_acc' => 1
+		);
+
+		$this->db->where('dasar_acc', 0);
+		$this->db->update('sipp_dasar', $data);
+	}
 }
 /* Location: ./application/model/admin/Pendasaran_model.php */

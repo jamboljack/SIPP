@@ -295,5 +295,11 @@ class Pendasaran extends CI_Controller {
 			redirect(site_url('admin/pendasaran'));
 		}
 	}
+
+	public function accdata_all() {
+		$this->pendasaran_model->update_data_acc_all();
+		$this->session->set_flashdata('notification','Data Telah di ACC Semua.');
+	 	redirect(site_url('admin/pendasaran'));
+	}
 }
 /* Location: ./application/controller/admin/Pendasaran.php */
