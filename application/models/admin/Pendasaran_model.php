@@ -293,12 +293,20 @@ class Pendasaran_model extends CI_Model {
 			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
 			);
 		}
+
 		$penduduk_id = $this->input->post('penduduk_id');
 		$this->db->where('penduduk_id', $penduduk_id);
 		$this->db->update('sipp_penduduk', $data);
 
 		$dasar_id    	= $this->input->post('id');
 
+		// Tgl. Surat
+		$tgl_surat 		= $this->input->post('tgl_surat');
+		$xtgl 			= explode("-",$tgl_surat);
+		$thn 			= $xtgl[2];
+		$bln 			= $xtgl[1];
+		$tgl 			= $xtgl[0];
+		$tanggal_srt 	= $thn.'-'.$bln.'-'.$tgl;
 		// Dari Tanggal
 		$tgl_dari 		= $this->input->post('tgl1');
 		$xtgld 			= explode("-",$tgl_dari);
@@ -318,6 +326,7 @@ class Pendasaran_model extends CI_Model {
 				'penduduk_id'			=> $this->input->post('penduduk_id'),
 				'jenis_id'				=> $this->input->post('lstJenis'),
 				'tempat_id'				=> $this->input->post('rdTempat'),
+				'dasar_tgl_surat'		=> $tanggal_srt,
 				'dasar_dari'			=> $tanggal_dari,
 				'dasar_sampai'			=> $tanggal_sampai,
 				'dasar_blok'			=> strtoupper(trim($this->input->post('blok'))),

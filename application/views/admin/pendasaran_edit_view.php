@@ -242,7 +242,7 @@ function HitungLuas(){
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Tanggal Surat</label>
                                     <div class="col-md-3">
-                                        <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" name="tgl_surat" value="<?php echo $tanggal_srt; ?>" placeholder="DD-MM-YYYY" autocomplete="off" disabled />
+                                        <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" name="tgl_surat" value="<?php echo $tanggal_srt; ?>" placeholder="DD-MM-YYYY" autocomplete="off" required autofocus/>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@ function HitungLuas(){
                                     <label class="col-md-3 control-label" for="form_control_1">Periode Berlaku</label>
                                     <div class="col-md-9">
                                         <div class="input-group input-large" data-date="<?php echo date('Y-m-d'); ?>" data-date-format="yyyy-mm-dd">
-                                            <input type="text" class="form-control default-date-picker" name="tgl1" placeholder="DD-MM-YYYY" value="<?php echo $tanggal_dari; ?>" required autofocus>
+                                            <input type="text" class="form-control default-date-picker" name="tgl1" placeholder="DD-MM-YYYY" value="<?php echo $tanggal_dari; ?>" required>
                                             <div class="form-control-focus"></div>
                                             <span class="input-group-addon"><b>s/d</b></span>
                                             <input type="text" class="form-control default-date-picker" name="tgl2" placeholder="DD-MM-YYYY" value="<?php echo $tanggal_sampai; ?>" required>

@@ -159,6 +159,9 @@ if ($this->session->flashdata('notification')) { ?>
                 <a href="<?php echo site_url('admin/skrd/adddata'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Buat SKRD</button>
                 </a>
+                <a href="<?php echo site_url('admin/skrd/deletedataskrd'); ?>">
+                    <button type="submit" class="btn btn-warning"><i class="fa fa-trash"></i> Hapus SKRD</button>
+                </a>
                 <br><br>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">

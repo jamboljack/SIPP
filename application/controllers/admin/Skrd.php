@@ -37,6 +37,13 @@ class Skrd extends CI_Controller {
 		$this->template->display('admin/skrd_add_view', $data);
 	}
 
+	public function deletedataskrd() {
+		$data['error'] 		= 'false';
+		$data['listPasar'] 	= $this->skrd_model->select_pasar()->result();
+		$data['listTempat'] = $this->skrd_model->select_tempat()->result();
+		$this->template->display('admin/skrd_delete_view', $data);
+	}
+
 	public function savedata() {
 		$pasar_id	= $this->input->post('lstPasar');
 		// Cari Data Pedagang by Pasar
