@@ -13,6 +13,7 @@ class Lap1 extends CI_Controller{
 		if($this->session->userdata('logged_in_sipp')) {
 			$data['tampil']		= 'tidak';
 			$data['listPasar'] 	= $this->lap1_model->select_pasar()->result();
+			$data['listJenis'] 	= $this->lap1_model->select_jenis()->result();
 			$data['listTempat'] = $this->lap1_model->select_tempat()->result();
 			$this->template->display('admin/lap1_view', $data);
 		} else {
@@ -23,24 +24,28 @@ class Lap1 extends CI_Controller{
 
 	public function caridata() {
 		$pasar_id	= trim($this->input->post('lstPasar'));
+		$jenis_id 	= trim($this->input->post('lstJenis'));
 		$tempat_id 	= trim($this->input->post('lstTempat'));
 
 		$data = array(
 			'Pasar' 	=> $pasar_id,
+			'Jenis' 	=> $jenis_id,
 			'Tempat' 	=> $tempat_id
 		);
 
 		$data['Report'] 	= $data;
 		$data['tampil']		= 'ya';
 		$data['listPasar'] 	= $this->lap1_model->select_pasar()->result();
+		$data['listJenis'] 	= $this->lap1_model->select_jenis()->result();
 		$data['listTempat'] = $this->lap1_model->select_tempat()->result();
 		$data['daftarlist'] = $this->lap1_model->select_by_criteria()->result();		
 		$this->template->display('admin/lap1_view', $data);
 	}	
 	
-	public function preview($pasar_id = '', $tempat_id = '') {  
+	public function preview($pasar_id = '', $jenis_id = '', $tempat_id = '') {  
 		$pasar_id 	= $this->uri->segment(4);
-		$tempat_id 	= $this->uri->segment(5);
+		$jenis_id 	= $this->uri->segment(5);
+		$tempat_id 	= $this->uri->segment(6);
 
 		$data['detailpasar'] 	= $this->lap1_model->select_pasar_by_id($pasar_id)->row();
 		if ($tempat_id == 'all') {
@@ -48,23 +53,24 @@ class Lap1 extends CI_Controller{
 			$this->load->view('admin/lap1_preview_all', $data);
 		} else {
 			$data['detailtempat'] 	= $this->lap1_model->select_tempat_by_id($tempat_id)->row();
-			$data['daftarlist'] 	= $this->lap1_model->select_by_id()->result();			
+			$data['daftarlist'] 	= $this->lap1_model->select_by_id()->result();
 			$this->load->view('admin/lap1_preview_by_tempat', $data);
 		}
 	}
 	
 	
-	public function exportpdf($pasar_id = '', $tempat_id = '') {
+	public function exportpdf($pasar_id = '', $jenis_id='', $tempat_id = '') {
 		$pasar_id 	= $this->uri->segment(4);
-		$tempat_id 	= $this->uri->segment(5);
-		$data['detailpasar'] 	= $this->lap1_model->select_pasar_by_id($pasar_id)->row();
+		$jenis_id 	= $this->uri->segment(5);
+		$tempat_id 	= $this->uri->segment(6);
 
+		$data['detailpasar'] 	= $this->lap1_model->select_pasar_by_id($pasar_id)->row();
 		$time = time();
 		$filename = 'Report_Pelanggan_'.$pasar_id.'_'.$tempat_id.'_'.$time;
 		$pdfFilePath = FCPATH."download/$filename.pdf";
 			
 		if (file_exists($pdfFilePath) == FALSE){
-			ini_set('memory_limit','50M');
+			ini_set('memory_limit','1000M');
 
 			if ($tempat_id == 'all') {
 				$data['listTempat'] = $this->lap1_model->select_tempat()->result();

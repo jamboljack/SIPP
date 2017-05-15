@@ -44,6 +44,7 @@ class Home_model extends CI_Model {
 		$this->db->from('sipp_dasar');
 		$this->db->where('MONTH(dasar_sampai)', $bulan);
 		$this->db->where('YEAR(dasar_sampai)', $tahun);
+		$this->db->limit(20);
 		
 		return $this->db->get();
 	}
@@ -57,6 +58,7 @@ class Home_model extends CI_Model {
 		$this->db->where('MONTH(skrd_tgl_tempo)', $bulan);
 		$this->db->where('YEAR(skrd_tgl_tempo)', $tahun);
 		$this->db->where('skrd_status', 0);
+		$this->db->limit(20);
 		
 		return $this->db->get();
 	}

@@ -76,7 +76,7 @@ class Lap3 extends CI_Controller{
 		$pdfFilePath = FCPATH."download/$filename.pdf";
 			
 		if (file_exists($pdfFilePath) == FALSE){
-			ini_set('memory_limit','50M');
+			ini_set('memory_limit','1000M');
 
 			if ($tempat_id == 'all') {
 				$data['listTempat'] = $this->lap3_model->select_tempat()->result();

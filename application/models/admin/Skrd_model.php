@@ -254,19 +254,23 @@ class Skrd_model extends CI_Model {
 				// Cek Luas Tempat
 				$cek_luas   = $this->skrd_model->select_luas($dasar_id)->row();
 				$luas 		= $cek_luas->dasar_luas;
-
 				// Cek Tarif Pasti
 				$komponen_id = $r->komponen_id;
-				$sql 		= "SELECT tarif_harga FROM sipp_tarif WHERE komponen_id='$komponen_id'
+				$sql 		= "SELECT tarif_harga, st_tarif FROM sipp_tarif WHERE komponen_id='$komponen_id'
 								AND kelas_id = '$kelas_id' AND tempat_id = '$tempat_id'";
 				$hasil 		= $this->db->query($sql)->row();
 				$harga  	= $hasil->tarif_harga;
-				$subtotal 	= ($harga*$jumHari*$luas);
-			} elseif ($r->komponen_uraian == 'Sampah') { // Jika Sampah
+				if ($hasil->st_tarif == 'H') {
+					$subtotal 	= ($harga*$jumHari); // per Hari (Harga * Hari)
+				} else {
+					$subtotal 	= ($harga*$jumHari*$luas);	// per Hari (Harga * Hari * Luas)
+				}				
+			/*} elseif ($r->komponen_uraian == 'Sampah') { // Jika Sampah
 				$harga  	= $hasil->tarif_harga;
 				$luas 		= 1;
 				$harga 		= $r->komponen_tarif;
 				$subtotal 	= ($harga*$jumHari);
+				*/
 			} else {
 				$harga  	= $hasil->tarif_harga;
 				$luas 		= 0;
@@ -391,6 +395,48 @@ class Skrd_model extends CI_Model {
 
 		$this->db->where('skrd_id', $kode);
 		$this->db->delete('sipp_skrd');
+	}
+
+	function select_skrd_hapus() {
+		$bulan    	= $this->uri->segment(4);
+		$tahun 		= $this->uri->segment(5);
+		$pasar_id	= $this->uri->segment(6);
+		$tempat_id 	= $this->uri->segment(7);
+
+		if ($tempat_id == 'all') {
+			$this->db->select('*');
+			$this->db->from('sipp_skrd');
+			$this->db->where('skrd_bulan', $bulan);
+			$this->db->where('skrd_tahun', $tahun);
+			$this->db->where('pasar_id', $pasar_id);
+			$this->db->where('skrd_st_print', 0);
+			$this->db->order_by('skrd_id', 'asc');
+
+			return $this->db->get();
+		} else {
+			$this->db->select('*');
+			$this->db->from('sipp_skrd');
+			$this->db->where('skrd_bulan', $bulan);
+			$this->db->where('skrd_tahun', $tahun);
+			$this->db->where('pasar_id', $pasar_id);
+			$this->db->where('tempat_id', $tempat_id);
+			$this->db->where('skrd_st_print', 0);
+			$this->db->order_by('skrd_id', 'asc');
+
+			return $this->db->get();
+		}		
+	}
+
+	function delete_data_skrd() {
+		$hapus 		= $this->skrd_model->select_skrd_hapus()->result();		
+		foreach($hapus as $i) {
+			$skrd_id = $i->skrd_id;
+			$this->db->where('skrd_id', $skrd_id);
+			$this->db->delete('sipp_skrd_item');
+
+			$this->db->where('skrd_id', $skrd_id);
+			$this->db->delete('sipp_skrd');
+		}
 	}
 
 	function update_data_print() {

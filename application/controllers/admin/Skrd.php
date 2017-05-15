@@ -28,7 +28,7 @@ class Skrd extends CI_Controller {
 		$data['listTempat'] = $this->skrd_model->select_tempat()->result();
 		$data['daftarlist'] = $this->skrd_model->select_by_criteria()->result();
 		$this->template->display('admin/skrd_view', $data);
-	}
+	}	
 
 	public function adddata() {
 		$data['error'] 		= 'false';
@@ -38,10 +38,32 @@ class Skrd extends CI_Controller {
 	}
 
 	public function deletedataskrd() {
-		$data['error'] 		= 'false';
+		$data['info'] 		= 'false';
 		$data['listPasar'] 	= $this->skrd_model->select_pasar()->result();
 		$data['listTempat'] = $this->skrd_model->select_tempat()->result();
 		$this->template->display('admin/skrd_delete_view', $data);
+	}
+
+	public function caridataskrdhapus() {		
+		$data = array(
+			'Pasar' 	=> $this->input->post('lstPasar'),
+			'Tempat' 	=> $this->input->post('lstTempat'),
+			'Bulan' 	=> $this->input->post('lstBulan'),
+			'Tahun' 	=> $this->input->post('tahun')
+		);
+
+		$data['info'] 		= 'true';
+		$data['listPasar'] 	= $this->skrd_model->select_pasar()->result();
+		$data['listTempat'] = $this->skrd_model->select_tempat()->result();
+		$data['daftarlist'] = $this->skrd_model->select_by_criteria()->result();
+
+		$this->template->display('admin/skrd_delete_view', $data);
+	}
+
+	public function deletedataskrdaksi() {
+		$this->skrd_model->delete_data_skrd();
+		$this->session->set_flashdata('notification','Hapus Data Sukses.');
+		redirect(site_url('admin/skrd'));
 	}
 
 	public function savedata() {
@@ -56,6 +78,7 @@ class Skrd extends CI_Controller {
 				$this->skrd_model->insert_data($dasar_id);
 			}
 		}
+		
 		$this->session->set_flashdata('notification','Simpan Data Sukses.');
 	 	redirect(site_url('admin/skrd'));
 	}

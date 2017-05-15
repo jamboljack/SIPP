@@ -87,7 +87,6 @@ echo $detailpasar->pasar_nama;
     foreach($listTempat as $d) {
         $tempat_id  = $d->tempat_id;
         $cekdata    = $this->lap1_model->select_detail_by_tempat($tempat_id)->result(); 
-
         if (count($cekdata) > 0) {
     ?>
     <tr>
@@ -103,7 +102,7 @@ echo $detailpasar->pasar_nama;
         <td valign="top" align="center"><?php echo $r->dasar_npwrd; ?></td>
         <td valign="top"><?php echo ucwords(strtolower($r->penduduk_nama)); ?></td>
         <td valign="top"><?php echo ucwords(strtolower($r->penduduk_alamat.' Desa '.$r->desa_nama.' Kec. '.$r->kecamatan_nama)).'<br>'.ucwords(strtolower($r->kabupaten_nama.' Provinsi '.$r->provinsi_nama)); ?></td>
-        <td valign="top"><?php echo $r->pasar_nama.' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>
+        <td valign="top"><?php echo $r->pasar_nama.' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?><br>Jenis : <b><?php echo $r->jenis_nama; ?></b></td>
         <td align="center" valign="top"><?php echo $r->dasar_status; ?></td>   
     </tr>
     <?php 

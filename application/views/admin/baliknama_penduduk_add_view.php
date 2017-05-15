@@ -11,7 +11,6 @@
     });
 </script>
 
-<!--<script src="<?php echo base_url();?>js/jquery-2.1.1.js"></script> -->
 <script type="text/javascript">
     function tampilKabupaten() {
         kdprop = document.getElementById("provinsi_id").value;

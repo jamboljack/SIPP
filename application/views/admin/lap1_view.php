@@ -1,9 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function () {        
-        $("#lstPasar").select2({
-        });
-        $("#lstTempat").select2({
-        });
+        $("#lstPasar").select2({});
+        $("#lstJenis").select2({});
+        $("#lstTempat").select2({});
     });
 </script>
 
@@ -69,6 +68,26 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Jenis Dagangan</label>
+                                            <div class="col-md-9">
+                                                <select class="select2_category form-control" data-placeholder="- Pilih Jenis Dagangan -" name="lstJenis" id="lstJenis" required>
+                                                    <option value="">- Pilih Jenis Dagangan -</option>
+                                                    <?php
+                                                    foreach($listJenis as $j) {
+                                                    ?>php
+                                                    <option value="<?php echo $j->jenis_id; ?>" <?php echo set_select('lstJenis', $j->jenis_id); ?>><?php echo $j->jenis_nama; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Tempat</label>
                                             <div class="col-md-6">
                                                 <select class="select2_category form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" required>
@@ -108,14 +127,14 @@
                 <?php 
                     if ($Report['Tempat'] == 'all') {  // Semua Tempat
                 ?>
-                    <a href="<?php echo site_url('admin/lap1/preview/'.$Report['Pasar'].'/all'); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print Preview
+                    <a href="<?php echo site_url('admin/lap1/preview/'.$Report['Pasar'].'/'.$Report['Jenis'].'/all'); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print Preview
                     </a>
-                    <a href="<?php echo site_url('admin/lap1/exportpdf/'.$Report['Pasar'].'/all'); ?>" class="btn red" target="_blank"><i class="fa fa-file-pdf-o"></i> PDF
+                    <a href="<?php echo site_url('admin/lap1/exportpdf/'.$Report['Pasar'].'/'.$Report['Jenis'].'/all'); ?>" class="btn red" target="_blank"><i class="fa fa-file-pdf-o"></i> PDF
                     </a>
                 <?php } else { ?>
-                    <a href="<?php echo site_url('admin/lap1/preview/'.$Report['Pasar'].'/'.$Report['Tempat']); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print Preview
+                    <a href="<?php echo site_url('admin/lap1/preview/'.$Report['Pasar'].'/'.$Report['Jenis'].'/'.$Report['Tempat']); ?>" class="btn blue" target="_blank"><i class="fa fa-print"></i> Print Preview
                     </a>
-                    <a href="<?php echo site_url('admin/lap1/exportpdf/'.$Report['Pasar'].'/'.$Report['Tempat']); ?>" class="btn red" target="_blank"><i class="fa fa-file-pdf-o"></i> PDF
+                    <a href="<?php echo site_url('admin/lap1/exportpdf/'.$Report['Pasar'].'/'.$Report['Jenis'].'/'.$Report['Tempat']); ?>" class="btn red" target="_blank"><i class="fa fa-file-pdf-o"></i> PDF
                     </a>
                 <?php }?>
                 <br><br>
@@ -150,7 +169,7 @@
                                 <td><?php echo $r->dasar_npwrd; ?></td>
                                 <td><?php echo ucwords(strtolower($r->penduduk_nama)); ?></td>
                                 <td><?php echo ucwords(strtolower($r->penduduk_alamat.' Desa '.$r->desa_nama.' Kec. '.$r->kecamatan_nama)).'<br>'.ucwords(strtolower($r->kabupaten_nama.' Provinsi '.$r->provinsi_nama)); ?></td>
-                                <td><?php echo $r->pasar_nama.' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?></td>
+                                <td><?php echo $r->pasar_nama.' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?><br>Jenis : <?php echo $r->jenis_nama; ?></td>
                                 <td><?php echo $r->dasar_status; ?></td>
                             </tr>
                             <?php

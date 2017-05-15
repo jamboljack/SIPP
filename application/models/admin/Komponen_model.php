@@ -94,6 +94,7 @@ class Komponen_model extends CI_Model {
 				'kelas_id'				=> trim($this->input->post('lstKelas')),
 				'tempat_id'				=> trim($this->input->post('lstTempat')),
 				'tarif_harga'			=> $this->input->post('harga'),
+				'st_tarif'				=> $this->input->post('lstType'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'tarif_date_update' 	=> date('Y-m-d'),
 			   	'tarif_time_update' 	=> date('Y-m-d H:i:s')
@@ -109,6 +110,7 @@ class Komponen_model extends CI_Model {
 				'kelas_id'				=> trim($this->input->post('lstKelas')),
 				'tempat_id'				=> trim($this->input->post('lstTempat')),
 				'tarif_harga'			=> $this->input->post('harga'),
+				'st_tarif'				=> $this->input->post('lstType'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'tarif_date_update' 	=> date('Y-m-d'),
 			   	'tarif_time_update' 	=> date('Y-m-d H:i:s')

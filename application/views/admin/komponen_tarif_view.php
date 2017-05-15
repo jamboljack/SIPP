@@ -37,11 +37,13 @@ if ($this->session->flashdata('notification')) { ?>
             var id      = $(this).data('id');
             var kelas   = $(this).data('kelas');
             var tempat  = $(this).data('tempat');
-            var harga  = $(this).data('harga');
+            var harga   = $(this).data('harga');
+            var type    = $(this).data('type');
             $(".tarif_id").val(id);
             $(".kelas_id").val(kelas);
             $(".tempat_id").val(tempat);
             $(".harga").val(harga);
+            $(".lstType").val(type);
         })
     });
 </script>
@@ -93,6 +95,16 @@ if ($this->session->flashdata('notification')) { ?>
                     <label class="col-md-3 control-label">Harga /m2 per Hari</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" placeholder="Enter Harga" name="harga" pattern="^[0-9]*" title="Harus ANGKA" value="<?php echo set_value('harga', 0); ?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">                    
+                    <label class="col-md-3 control-label">Type Bayar</label>
+                    <div class="col-md-3">
+                        <select class="form-control" name="lstType" required>
+                            <option value="">- Pilih Type Bayar -</option>
+                            <option value="H">Per Hari</option>
+                            <option value="M">Per m2/Hari</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -153,6 +165,16 @@ if ($this->session->flashdata('notification')) { ?>
                     <label class="col-md-3 control-label">Harga /m2 per Hari</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control harga" placeholder="Enter Harga" name="harga" pattern="^[0-9]*" title="Harus ANGKA" value="<?php echo set_value('harga', 0); ?>" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">                    
+                    <label class="col-md-3 control-label">Type Bayar</label>
+                    <div class="col-md-3">
+                        <select class="form-control lstType" name="lstType" required>
+                            <option value="">- Pilih Type Bayar -</option>
+                            <option value="H">Per Hari</option>
+                            <option value="M">Per m2/Hari</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -222,6 +244,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th>Kelas</th>
                                 <th>Tempat</th>
                                 <th>Tarif</th>
+                                <th>Type Bayar</th>
                                 <th width="16%">Aksi</th>
                             </tr>
                         </thead>
@@ -231,14 +254,21 @@ if ($this->session->flashdata('notification')) { ?>
                             $no = 1;
                             foreach($listTarif as $r) {
                                 $tarif_id = $r->tarif_id;
+
+                                if ($r->st_tarif == 'H') {
+                                    $type = 'Per Hari';
+                                } else {
+                                    $type = 'Per m2/Hari';
+                                }
                             ?>
                             <tr>
                                 <td><?php echo $no; ?></td>                                
                                 <td><?php echo $r->kelas_nama; ?></td> 
                                 <td><?php echo $r->tempat_nama; ?></td>
                                 <td><?php echo 'Rp. '.number_format($r->tarif_harga, 0, '.', ','); ?></td>
+                                <td><?php echo $type; ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->tarif_id; ?>" data-kelas="<?php echo $r->kelas_id; ?>" data-tempat="<?php echo $r->tempat_id; ?>" data-harga="<?php echo $r->tarif_harga; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
+                                    <button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->tarif_id; ?>" data-kelas="<?php echo $r->kelas_id; ?>" data-tempat="<?php echo $r->tempat_id; ?>" data-harga="<?php echo $r->tarif_harga; ?>" data-type="<?php echo $r->st_tarif; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
                                     </button>
                                     <a onclick="hapusData(<?php echo $tarif_id; ?>)"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button>
                                     </a>
