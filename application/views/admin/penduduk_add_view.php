@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-md-line-input">
-                                    <label class="col-md-3 control-label" for="form_control_1">Provinsi</label>
+                                    <label class="col-md-3 control-label">Provinsi</label>
                                     <div class="col-md-9">
                                         <?php
                                         $style_provinsi = 'class="select2_category form-control" id="provinsi_id"  onChange="tampilKabupaten()"';
@@ -183,7 +183,7 @@
                                     <div class="col-md-9">
                                         <?php
                                         $style_kecamatan = 'class="select2_category form-control" id="kecamatan_id" onChange="tampilKelurahan()"';
-                                        echo form_dropdown("lstKecamatan",array('Pilih Kecamatan'=>'- Pilih Kecamatan -'),'',$style_kecamatan);
+                                        echo form_dropdown("lstKecamatan", array('Pilih Kecamatan'=>'- Pilih Kecamatan -'),'',$style_kecamatan);
                                         ?>
                                     </div>
                                 </div>
