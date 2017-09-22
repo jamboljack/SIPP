@@ -14,13 +14,120 @@ class Pendasaran extends CI_Controller {
 	{
 		if($this->session->userdata('logged_in_sipp'))
 		{
-			$data['daftarlist'] = $this->pendasaran_model->select_all()->result();
+			$data['listPasar'] 	= $this->pendasaran_model->select_pasar()->result();
+			$data['listTempat'] = $this->pendasaran_model->select_tempat()->result();
 			$this->template->display('admin/pendasaran_view', $data);
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		}
 	}
+
+	public function data_list() {
+        $List = $this->pendasaran_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $dasar_id = $r->dasar_id;
+
+            $row[] = $no;
+            $row[] = $r->dasar_no;
+            $row[] = date("d-m-Y", strtotime($r->dasar_sampai));
+            $row[] = $r->dasar_npwrd;
+            $row[] = $r->penduduk_nama;
+            $row[] = ucwords($r->pasar_nama).'<br>'.$r->tempat_nama.' Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2';
+
+            // Status NPWRD
+            if ($r->dasar_status=='Baru') {
+            	$status = '<span class="label label-info"><i class="fa fa-plus-circle"></i> '.$r->dasar_status.'</span>';
+            } elseif ($r->dasar_status=='Perpanjangan') {
+            	$status = '<span class="label label-warning"><i class="fa fa-copy (alias)"></i> '.$r->dasar_status.'</span>';
+            } else {
+            	$status = '<span class="label label-primary"><i class="fa fa-random"></i> '.$r->dasar_status.'</span>';
+            }
+
+            // Status Print
+            if ($r->dasar_st_print == 1) {
+            	$statusprint = '<span class="label label-warning"><i class="fa fa-print"></i> Di Cetak</span>';
+            } else {
+            	$statusprint = '<span class="label label-danger"><i class="fa fa-print"></i> Belum Cetak</span>';
+            }
+            
+            // Status ACC
+            if ($r->dasar_acc == 0) {
+            	$statusacc 	= '<span class="label label-warning"><i class="fa fa-times-circle"></i> Belum ACC SPV</span>';
+            } else {
+            	$statusacc = '<span class="label label-success"><i class="fa fa-check-square"></i> ACC SPV</span>';
+            }
+            
+            $row[] = $status.'<br>'.$statusprint.'<br>'.$statusacc;
+
+            
+	        $linkedit  = site_url('admin/pendasaran/editdata/'.$r->dasar_id);
+	        $edit = '<a href="'.$linkedit.'">
+	        		<button class="btn btn-primary btn-xs" title="Edit Data">
+	                	<i class="icon-pencil"></i>
+	                </button>
+	                </a>';
+            
+            if ($r->dasar_acc == 1) {
+	            $linkprint = site_url('admin/pendasaran/printdata/'.$r->dasar_id);
+				$print = '<a href="'.$linkprint.'">
+						<button class="btn btn-default btn-xs" title="Cetak Surat Pendasaran">
+							<i class="icon-printer"></i>
+						</button>
+	                    </a>';
+			} else {
+				$print = '';
+			}
+
+
+			if ($this->session->userdata('level') <> 'Operator' && $r->dasar_acc == 0) {
+	            $tombolacc = '<a onclick="ACCData('.$dasar_id.')">
+	            				<button class="btn btn-success btn-xs" title="ACC"><i class="icon-check"></i> ACC Data</button>
+	            			</a>';
+			} else {
+				$tombolacc = '';
+			}
+			
+			if ($r->dasar_st_print == 1) {
+	            $linkperpanjang = site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id);			
+	           	$tombolperpanjang = '<a href="'.$linkperpanjang.'">
+	           						<button class="btn btn-warning btn-xs" title="Perpanjangan Surat">
+	           							<i class="icon-docs"></i>
+	           						</button>
+	                                </a>';
+			} else {
+				$tombolperpanjang = '';
+			}
+
+            $tombolhapus = '<a onclick="hapusData('.$dasar_id.')">
+            				<button class="btn btn-danger btn-xs" title="Hapus Data">
+                            	<i class="icon-trash"></i>
+                            </button>
+                            </a>';
+            
+            if ($r->dasar_data == 0) {
+            	$row[] = $edit.''.$print.''.$tombolacc.''.$tombolperpanjang.''.$tombolhapus;
+            } else {
+            	$row[] = '<span class="label label-danger"><i class="fa fa-remove (alias)"></i> Tidak Berlaku</span>';
+            }
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->pendasaran_model->count_all(),
+                        "recordsFiltered" 	=> $this->pendasaran_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function pilihpenduduk() {
 		$data['tampil']		= 'tidak';
@@ -192,37 +299,31 @@ class Pendasaran extends CI_Controller {
 	}
 
 	public function updatedata() {
-		if ($this->input->post('status_print') == 1) {
-			$this->session->set_flashdata('notification','Surat Pendasaran sudah di Print, Tidak bisa di Edit.');
-			redirect(site_url('admin/pendasaran/editdata/'.$this->uri->segment(4)));
-		} else {
-			if (!empty($_FILES['userfile']['name'])) {
-				$jam 	= time();
-				$kode 	= $this->input->post('penduduk_id');
+		if (!empty($_FILES['userfile']['name'])) {
+			$jam 	= time();
+			$kode 	= $this->input->post('penduduk_id');
 
-				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
-				$config['upload_path'] = './penduduk_image/';
-				$config['allowed_types'] = 'jpg|png|gif|jpeg';
-				$config['overwrite'] = TRUE;
-				$this->load->library('upload', $config);
-				$this->upload->do_upload('userfile');
-				$config['image_library'] = 'gd2';
-				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
-				$config['maintain_ratio'] = TRUE;
+			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
+			$config['upload_path'] = './penduduk_image/';
+			$config['allowed_types'] = 'jpg|png|gif|jpeg';
+			$config['overwrite'] = TRUE;
+			$this->load->library('upload', $config);
+			$this->upload->do_upload('userfile');
+			$config['image_library'] = 'gd2';
+			$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;
+			$config['maintain_ratio'] = TRUE;
+			$config['width'] = 500;
+			$config['height'] = 750;
+			$this->load->library('image_lib',$config);
 
-				$config['width'] = 500;
-				$config['height'] = 750;
-				$this->load->library('image_lib',$config);
-
-				$this->image_lib->resize();
-			} elseif (empty($_FILES['userfile']['name'])){
-				$config['file_name'] = '';
-			}
-
-			$this->pendasaran_model->update_data();
-			$this->session->set_flashdata('notification','Update Data Sukses.');
-			redirect(site_url('admin/pendasaran'));
+			$this->image_lib->resize();
+		} elseif (empty($_FILES['userfile']['name'])){
+			$config['file_name'] = '';
 		}
+
+		$this->pendasaran_model->update_data();
+		$this->session->set_flashdata('notification','Update Data Sukses.');
+		redirect(site_url('admin/pendasaran'));
 	}
 
 	public function printdata($dasar_id) {

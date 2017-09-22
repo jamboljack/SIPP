@@ -70,7 +70,7 @@ if ($this->session->flashdata('notification')) { ?>
                     </div>
 
                     <div class="portlet-body">                        
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <table class="table table-striped table-bordered table-hover" id="tableData">
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
@@ -84,48 +84,7 @@ if ($this->session->flashdata('notification')) { ?>
                         </thead>
                         
                         <tbody>
-                            <?php 
-                            $no = 1;
-                            foreach($daftarlist as $r) {
-                                $pasar_id = $r->pasar_id;
-                                
-                                if ($r->pasar_jenis == 'T') {
-                                    $jenis = '(Pasar Tradisional)';
-                                } else {
-                                    $jenis = '(Pasar Hewan)';
-                                }
-
-                                $nama = '<b>'.$r->pasar_nama.'</b>';
-                            ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>                                
-                                <td><?php echo $r->pasar_inisial.'-'.$r->pasar_kode; ?></td>
-                                <td><?php echo $nama.'<br>'.$jenis; ?></td>
-                                <td><?php echo $r->pasar_thn_berdiri; ?></td>
-                                <td><?php echo $r->pasar_alamat; ?><br><?php echo 'DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama; ?></td>
-                                <td><?php echo $r->pasar_nip.'<br>'.$r->pasar_koordinator; ?></td>
-                                <td>
-                                    <a href="<?php echo site_url('admin/pasar/editdata/'.$r->pasar_id); ?>">
-                                        <button class="btn btn-primary btn-xs" title="Edit Data">
-                                            <i class="icon-pencil"></i>
-                                        </button>
-                                    </a>
-                                    <a onclick="hapusData(<?php echo $pasar_id; ?>)">
-                                        <button class="btn btn-danger btn-xs" title="Hapus Data">
-                                            <i class="icon-trash"></i>
-                                        </button>
-                                    </a>
-                                    <a href="<?php echo site_url('admin/pasar/printdata/'.$r->pasar_id); ?>" target="_blank">
-                                        <button class="btn btn-warning btn-xs" title="Print">
-                                            <i class="icon-printer"></i>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
+                            
                         </tbody>
 
                         </table>
@@ -137,3 +96,26 @@ if ($this->session->flashdata('notification')) { ?>
         <div class="clearfix"></div>
     </div>
 </div>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+var table;
+$(document).ready(function() {
+    table = $('#tableData').DataTable({ 
+        "processing": false,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+            "type": "POST",
+            "url": "<?php echo site_url('admin/pasar/data_list')?>"
+        },
+        "columnDefs": [ 
+            { 
+                "targets": [ 0, 6 ],
+                "orderable": false,
+            },
+        ],
+    });
+});
+</script>

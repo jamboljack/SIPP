@@ -13,13 +13,40 @@ class Kondisi extends CI_Controller {
 	{
 		if($this->session->userdata('logged_in_sipp'))
 		{
-			$data['daftarlist'] = $this->kondisi_model->select_all()->result();
-			$this->template->display('admin/kondisi_view', $data);
+			$this->template->display('admin/kondisi_view');
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		} 
 	}
+
+	public function data_list() {
+        $List = $this->kondisi_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $kondisi_id = $r->kondisi_id;
+
+            $row[] = $no;
+            $row[] = $r->kondisi_nama;
+            $row[] = '<button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="'.$r->kondisi_id.'" data-name="'.$r->kondisi_nama.'" title="Edit Data"><i class="icon-pencil"></i> Edit</button>
+            		<a onclick="hapusData('.$kondisi_id.')"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button></a>';
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->kondisi_model->count_all(),
+                        "recordsFiltered" 	=> $this->kondisi_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function savedata() {		
 		$this->kondisi_model->insert_data();

@@ -1,11 +1,127 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pendasaran_model extends CI_Model {
+	var $column_order 	= array(null, 'd.dasar_no', 'd.dasar_sampai', 'd.dasar_npwrd', 'p.penduduk_nama', 's.pasar_nama', 'd.dasar_status', null);
+    var $column_search 	= array('d.dasar_no', 'd.dasar_sampai', 'd.dasar_npwrd', 'p.penduduk_nama', 's.pasar_nama', 'd.dasar_status');
+    var $order 			= array('d.dasar_id' => 'desc', 's.pasar_nama' => 'asc', 'p.penduduk_nama' => 'asc');
+
 	function __construct() {
 		parent::__construct();
 	}
 
-	function select_all() {
+	private function _get_datatables_query() {
+       	$user_username = $this->session->userdata('username');
+		
+		if ($this->session->userdata('level') == 'Admin') {
+        	if ($this->input->post('lstPasar')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+        	}
+        	if ($this->input->post('lstTempat')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	}
+
+			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
+			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data,  p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+		} else {
+        	if ($this->input->post('lstPasar')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+        	}
+        	if ($this->input->post('lstTempat')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	}
+
+			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
+			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+			$this->db->join('sipp_akses a', 's.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+		}
+
+        $i = 0;
+
+        foreach ($this->column_search as $item) {
+            if($_POST['search']['value']) {
+                if($i===0) {
+                    $this->db->group_start();
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+ 
+                if(count($this->column_search) - 1 == $i)
+                    $this->db->group_end();
+            }
+            $i++;
+        }
+         
+        if(isset($_POST['order'])) {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if(isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+ 
+    function get_datatables() {
+        $this->_get_datatables_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+ 
+    function count_filtered() {
+        $this->_get_datatables_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all() {
+        $user_username = $this->session->userdata('username');
+		
+		if ($this->session->userdata('level') == 'Admin') {
+			if ($this->input->post('lstPasar')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+        	}
+        	if ($this->input->post('lstTempat')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	}
+
+			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
+			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+		} else {
+			if ($this->input->post('lstPasar')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+        	}
+        	if ($this->input->post('lstTempat')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	}
+
+			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
+			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_dasar d');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+			$this->db->join('sipp_akses a', 's.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+		}
+
+        return $this->db->count_all_results();
+    }
+
+	/*function select_all() {
 		$user_username = $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
@@ -35,7 +151,7 @@ class Pendasaran_model extends CI_Model {
 
 			return $this->db->get();
 		}
-	}
+	}*/
 
 	function select_pasar() {
 		$user_username = $this->session->userdata('username');

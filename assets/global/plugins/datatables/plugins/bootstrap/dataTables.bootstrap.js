@@ -3,7 +3,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     "dom": "<'row'<'col-md-6 col-sm-6'l><'col-md-6 col-sm-6'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-5'i><'col-md-7 col-sm-7'p>>", // default layout with horizobtal scrollable datatable
     //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // datatable layout without  horizobtal scroll(used when bootstrap dropdowns used in the datatable cells)
     "language": {
-        "lengthMenu": " _MENU_ records ",
+        "lengthMenu": " _MENU_ Data ",
         "paginate": {
             "previous": '<i class="fa fa-angle-left"></i>',
             "next": '<i class="fa fa-angle-right"></i>'

@@ -15,13 +15,116 @@ class Retribusi extends CI_Controller {
 		{
 			$data['listPasar'] 	= $this->retribusi_model->select_pasar()->result();
 			$data['listTempat'] = $this->retribusi_model->select_tempat()->result();
-			$data['daftarlist'] = $this->retribusi_model->select_all()->result();
+			//$data['daftarlist'] = $this->retribusi_model->select_all()->result();
 			$this->template->display('admin/retribusi_view', $data);
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		}
 	}
+
+	public function data_list() {
+        $List = $this->retribusi_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $skrd_id 	= $r->skrd_id;
+            $bln        = $r->skrd_bulan;
+			switch ($bln) {
+                        	case 1:
+	                            $bulan = "Januari";
+	                            break;
+                            case 2:
+	                            $bulan = "Februari";
+	                            break;
+                            case 3:
+	                            $bulan = "Maret";
+	                            break;
+                            case 4:
+	                            $bulan = "April";
+	                            break;
+                            case 5:
+	                            $bulan = "Mei";
+	                            break;
+                            case 6:
+	                            $bulan = "Juni";
+	                            break;
+                            case 7:
+	                            $bulan = "Juli";
+	                            break;
+                            case 8:
+	                            $bulan = "Agustus";
+	                            break;
+                            case 9:
+	                            $bulan = "September";
+	                            break;
+                            case 10:
+	                            $bulan = "Oktober";
+	                            break;
+                            case 11:
+	                            $bulan = "November";
+	                            break;
+                            case 12:
+	                            $bulan = "Desember";
+	                            break;
+                       	}
+
+            $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
+			$total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
+			if ($r->skrd_status == 0) {
+				$status = '<span class="label label-danger">BELUM BAYAR</span>';
+			} else {
+            	$status = '<span class="label label-success">BAYAR</span>';
+			}
+
+            $row[] = $no;
+            $row[] = $r->skrd_no;
+            $row[] = $bulan.'<br>'.$r->skrd_tahun;
+            $row[] = $r->dasar_npwrd.'<br>'.$r->penduduk_nama;
+            $row[] = $r->pasar_nama.'<br>'.$r->tempat_nama.' Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2';
+            $row[] = $total;
+            $row[] = $status;
+            
+            $linkedit 	= site_url('admin/retribusi/editdata/'.$r->skrd_id);
+            $tomboledit = 	'<a href="'.$linkedit.'">
+								<button class="btn btn-primary btn-xs" title="Edit Data">
+                                	<i class="icon-pencil"></i>
+								</button>
+                               	</a>';
+				
+            if ($r->skrd_status==1) {
+            	$linkprint = site_url('admin/retribusi/printdata/'.$r->skrd_id);
+            	$tombolprint = '<a href="'.$linkprint.'" target="_blank">
+								<button class="btn btn-default btn-xs" title="Cetak Surat Tagihan">
+                                	<i class="icon-printer"></i>
+								</button>
+                                </a>
+                                <a onclick="hapusData('.$skrd_id.')">
+								<button class="btn btn-danger btn-xs" title="Hapus Data">
+                                	<i class="icon-trash"></i>
+								</button>
+                                </a>';
+            } else {
+            	$tombolprint = '';
+            }
+
+            $row[] = $tomboledit.''.$tombolprint;
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->retribusi_model->count_all(),
+                        "recordsFiltered" 	=> $this->retribusi_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function caridataskrd() {
 		$data['listPasar'] 	= $this->retribusi_model->select_pasar()->result();

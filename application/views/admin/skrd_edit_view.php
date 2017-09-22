@@ -67,6 +67,7 @@ switch ($bln) {
             var hari        = $(this).data('hari');
             var harga       = $(this).data('harga');
             var subtotal    = $(this).data('subtotal');
+            var st_tarif    = $(this).data('st_tarif');
             $(".item_id").val(id);
             $(".item_skrd").val(skrd_id);
             $(".item_kode").val(kode);
@@ -76,6 +77,7 @@ switch ($bln) {
             $(".item_hari").val(hari);
             $(".item_harga").val(harga);
             $(".item_subtotal").val(subtotal);
+            $(".item_st_tarif").val(st_tarif);
         })
     });
 </script>
@@ -86,8 +88,13 @@ function HitungSubTotalItem(){
     var Luas        = parseFloat(myForm2.item_luas.value);
     var Harga       = parseFloat(myForm2.item_harga.value);
     var Hari        = parseFloat(myForm2.item_hari.value);
+    var Status      = myForm2.item_st_tarif.value;
 
-    var SubTotal    = (Luas*Harga*Hari);
+    if (Status === 'H') {
+        var SubTotal    = (Harga*Hari);
+    } else {
+        var SubTotal    = (Luas*Harga*Hari);
+    }
     if (SubTotal > 0) {
         myForm2.item_subtotal.value = SubTotal; 
     } else {
@@ -104,6 +111,7 @@ function HitungSubTotalItem(){
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <input type="hidden" class="form-control item_id" name="id">
             <input type="hidden" class="form-control item_skrd" name="skrd_id">
+            <input type="hidden" class="form-control item_st_tarif" name="st_tarif" id="item_st_tarif">
                         
             <div class="modal-header">                      
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -350,7 +358,7 @@ function HitungSubTotalItem(){
                                 <td align="right"><?php echo $r->item_hari; ?></td>
                                 <td align="right"><?php echo number_format($r->item_subtotal, 0, '.', ','); ?></td>
                                 <td align="center">
-                                    <button type="button" class="btn btn-primary btn-xs edit_item" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->item_id; ?>" data-skrd="<?php echo $r->skrd_id; ?>" data-kode="<?php echo $r->item_kode; ?>" data-nama="<?php echo $r->item_uraian; ?>" data-luas="<?php echo $r->item_luas; ?>" data-harga="<?php echo $r->item_tarif; ?>" data-satuan="<?php echo $r->item_satuan; ?>" data-hari="<?php echo $r->item_hari; ?>" data-subtotal="<?php echo $r->item_subtotal; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
+                                    <button type="button" class="btn btn-primary btn-xs edit_item" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->item_id; ?>" data-skrd="<?php echo $r->skrd_id; ?>" data-kode="<?php echo $r->item_kode; ?>" data-nama="<?php echo $r->item_uraian; ?>" data-luas="<?php echo $r->item_luas; ?>" data-harga="<?php echo $r->item_tarif; ?>" data-satuan="<?php echo $r->item_satuan; ?>" data-hari="<?php echo $r->item_hari; ?>" data-subtotal="<?php echo $r->item_subtotal; ?>" data-st_tarif="<?php echo $r->item_st_tarif; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
                                     </button>
                                 </td>
                             </tr>

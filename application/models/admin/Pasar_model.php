@@ -1,9 +1,99 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pasar_model extends CI_Model {
+	//var $table 			= 'sipp_pasar';
+    var $column_order 	= array(null, 'p.pasar_inisial', 'p.pasar_nama', 'p.pasar_jenis', 'p.pasar_thn_berdiri', 'p.pasar_alamat', 'p.pasar_nip', 'p.pasar_koordinator', null);
+    var $column_search 	= array('p.pasar_inisial', 'p.pasar_nama', 'p.pasar_jenis', 'p.pasar_thn_berdiri', 'p.pasar_alamat', 'p.pasar_nip', 'p.pasar_koordinator');
+    var $order 			= array('p.pasar_id' => 'asc');
+
+    // Kecamatan
+    var $column_order1 	= array(null, 'd.desa_nama', 'c.kecamatan_nama', 'k.kabupaten_nama', 'p.provinsi_nama');
+    var $column_search1	= array('d.desa_nama', 'c.kecamatan_nama', 'k.kabupaten_nama', 'p.provinsi_nama');
+    var $order1 		= array('d.desa_nama' => 'asc', 'c.kecamatan_nama' => 'asc');
+
 	function __construct() {
 		parent::__construct();	
 	}
+
+	private function _get_datatables_query() {
+       	$user_username = $this->session->userdata('username');
+		
+		if ($this->session->userdata('level') == 'Admin') {
+			$this->db->select('p.pasar_id,p.pasar_inisial,p.pasar_nama,p.pasar_kode,p.pasar_jenis,p.pasar_thn_berdiri,p.pasar_alamat,
+			p.pasar_nip,p.pasar_koordinator, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		} else {
+			$this->db->select('p.pasar_id,p.pasar_inisial,p.pasar_nama,p.pasar_kode,p.pasar_jenis,p.pasar_thn_berdiri,p.pasar_alamat,
+			p.pasar_nip,p.pasar_koordinator, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+			$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+		}
+
+        $i = 0;
+
+        foreach ($this->column_search as $item) {
+            if($_POST['search']['value']) {
+                if($i===0) {
+                    $this->db->group_start();
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+ 
+                if(count($this->column_search) - 1 == $i)
+                    $this->db->group_end();
+            }
+            $i++;
+        }
+         
+        if(isset($_POST['order'])) {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if(isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+ 
+    function get_datatables() {
+        $this->_get_datatables_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+ 
+    function count_filtered() {
+        $this->_get_datatables_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all() {
+        $user_username = $this->session->userdata('username');
+		
+		if ($this->session->userdata('level') == 'Admin') {
+			$this->db->select('p.pasar_id,p.pasar_inisial,p.pasar_nama,p.pasar_kode,p.pasar_jenis,p.pasar_thn_berdiri,p.pasar_alamat,
+			p.pasar_nip,p.pasar_koordinator, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+		} else {
+			$this->db->select('p.pasar_id,p.pasar_inisial,p.pasar_nama,p.pasar_kode,p.pasar_jenis,p.pasar_thn_berdiri,p.pasar_alamat,
+			p.pasar_nip,p.pasar_koordinator, k.kecamatan_nama, d.desa_nama');
+			$this->db->from('sipp_pasar p');
+			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
+			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
+			$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
+			$this->db->where('a.user_username', $user_username);
+		}
+
+        return $this->db->count_all_results();
+    }
 
 	function select_all() {
 		$user_username = $this->session->userdata('username');
@@ -13,7 +103,6 @@ class Pasar_model extends CI_Model {
 			$this->db->from('sipp_pasar p');
 			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
 			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
-			//$this->db->join('sipp_kelas l', 'p.kelas_id = l.kelas_id');
 			$this->db->order_by('p.pasar_id', 'asc');
 			
 			return $this->db->get();
@@ -23,7 +112,6 @@ class Pasar_model extends CI_Model {
 			$this->db->join('sipp_kecamatan k', 'p.kecamatan_id = k.kecamatan_id');
 			$this->db->join('sipp_desa d', 'p.desa_id = d.desa_id');
 			$this->db->join('sipp_akses a', 'p.pasar_id = a.pasar_id');
-			//$this->db->join('sipp_kelas l', 'p.kelas_id = l.kelas_id');
 			$this->db->where('a.user_username', $user_username);
 			$this->db->order_by('p.pasar_id', 'asc');
 			
@@ -75,6 +163,69 @@ class Pasar_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+
+	// Data Kecamatan Datatables
+	private function _get_datatables_kecamatan_query() {
+       	$this->db->select('p.provinsi_id, p.provinsi_nama, k.kabupaten_id, k.kabupaten_nama,
+							c.kecamatan_id, c.kecamatan_nama, d.desa_id, d.desa_nama');
+		$this->db->from('sipp_provinsi p');
+		$this->db->join('sipp_kabupaten k', 'k.provinsi_id = p.provinsi_id');
+		$this->db->join('sipp_kecamatan c', 'c.kabupaten_id = k.kabupaten_id');
+		$this->db->join('sipp_desa d', 'd.kecamatan_id = c.kecamatan_id');
+		$this->db->where('p.provinsi_id', '33');
+		$this->db->where('c.kabupaten_id', '3319');	
+
+        $i = 0;
+
+        foreach ($this->column_search1 as $item) {
+            if($_POST['search']['value']) {
+                if($i===0) {
+                    $this->db->group_start();
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+ 
+                if(count($this->column_search1) - 1 == $i)
+                    $this->db->group_end();
+            }
+            $i++;
+        }
+         
+        if(isset($_POST['order'])) {
+            $this->db->order_by($this->column_order1[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if(isset($this->order1)) {
+            $order = $this->order1;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+ 
+    function get_kecamatan_datatables() {
+        $this->_get_datatables_kecamatan_query();
+        if($_POST['length'] != -1)
+        $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+ 
+    function count_filtered_kecamatan() {
+        $this->_get_datatables_kecamatan_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_kecamatan() {
+        $this->db->select('p.provinsi_id, p.provinsi_nama, k.kabupaten_id, k.kabupaten_nama,
+							c.kecamatan_id, c.kecamatan_nama, d.desa_id, d.desa_nama');
+		$this->db->from('sipp_provinsi p');
+		$this->db->join('sipp_kabupaten k', 'k.provinsi_id = p.provinsi_id');
+		$this->db->join('sipp_kecamatan c', 'c.kabupaten_id = k.kabupaten_id');
+		$this->db->join('sipp_desa d', 'd.kecamatan_id = c.kecamatan_id');
+		$this->db->where('p.provinsi_id', '33');
+		$this->db->where('c.kabupaten_id', '3319');	
+
+        return $this->db->count_all_results();
+    }
 	
 	function getkodeunik() {
 		$this->db->select('RIGHT(pasar_inisial, 2) as kode', FALSE);

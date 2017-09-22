@@ -22,10 +22,22 @@ class Baliknama extends CI_Controller {
 		} 
 	}
 
+	public function pilihpedagang() {
+		$data['tampil']		= 'tidak';
+		$this->template->display('admin/pedagang_pilih_view', $data);
+	}
+
 	public function pilihpasar() {
 		$data['tampil']		= 'tidak';
 		$data['listPasar'] 	= $this->baliknama_model->select_pasar()->result();
 		$this->template->display('admin/baliknama_pilih_view', $data);
+	}
+
+	public function caridatapedagang() {
+		$data['tampil']			= 'ya';
+		$nama 					= strtoupper(trim($this->input->post('nama')));
+		$data['listPedagang'] 	= $this->baliknama_model->select_pedagang_cari($nama)->result();
+		$this->template->display('admin/pedagang_pilih_view', $data);
 	}
 
 	public function caridatapasar() {

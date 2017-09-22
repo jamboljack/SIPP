@@ -138,7 +138,7 @@ if ($this->session->flashdata('notification')) { ?>
                     </div>
 
                     <div class="portlet-body">                        
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <table class="table table-striped table-bordered table-hover" id="tableData">
                         <thead>
                             <tr>
                                 <th width="5%">No</th>                                
@@ -148,25 +148,7 @@ if ($this->session->flashdata('notification')) { ?>
                         </thead>
                         
                         <tbody>
-                            <?php 
-                            $no = 1;
-                            foreach($daftarlist as $r) {
-                                $kepemilikan_id = $r->kepemilikan_id;
-                            ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>                                
-                                <td><?php echo $r->kepemilikan_nama; ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="<?php echo $r->kepemilikan_id; ?>" data-name="<?php echo $r->kepemilikan_nama; ?>" title="Edit Data"><i class="icon-pencil"></i> Edit
-                                    </button>
-                                    <a onclick="hapusData(<?php echo $kepemilikan_id; ?>)"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
+                            
                         </tbody>
 
                         </table>
@@ -178,3 +160,26 @@ if ($this->session->flashdata('notification')) { ?>
         <div class="clearfix"></div>
     </div>
 </div>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+var table;
+$(document).ready(function() {
+    table = $('#tableData').DataTable({ 
+        "processing": false,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+            "type": "POST",
+            "url": "<?php echo site_url('admin/kepemilikan/data_list')?>"
+        },
+        "columnDefs": [ 
+            { 
+                "targets": [ 0, 2 ],
+                "orderable": false,
+            },
+        ],
+    });
+});
+</script>

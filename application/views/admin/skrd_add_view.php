@@ -13,17 +13,6 @@ if ($this->session->flashdata('notification')) { ?>
 </script>
 <? } ?>
 
-<script type="text/javascript">
-    $(document).ready(function () {        
-        $("#lstPasar").select2({
-        });
-        $("#lstBulan").select2({
-        });
-        $("#lstTempat").select2({
-        });        
-    });
-</script>
-
 <script language="JavaScript" type="text/JavaScript">
 function myPasar() { 
     var x         = document.getElementById("lstPasar");
@@ -71,7 +60,7 @@ function myTempat() {
         <div class="row">
             <div class="col-md-12">                
                 <div class="portlet-body form">
-                    <form role="form" class="form-horizontal" action="<?php echo site_url('admin/skrd/savedata'); ?>" method="post" enctype="multipart/form-data">
+                    <form role="form" class="form-horizontal" name="formInput" action="<?php echo site_url('admin/skrd/savedata'); ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <input type="hidden" name="kode_tempat" id="kode_tempat" value="<?php echo set_value('kode_tempat'); ?>">
                     <input type="hidden" name="kode_pasar" id="kode_pasar" value="<?php echo set_value('kode_pasar'); ?>">
@@ -83,7 +72,7 @@ function myTempat() {
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-3">Periode</label>
                                         <div class="col-md-6">
-                                            <select class="form-control" name="lstBulan" id="lstBulan" required autofocus>
+                                            <select class="form-control" name="lstBulan" id="lstBulan" onchange="myDay()" required autofocus>
                                                 <option value="">- Pilih Bulan -</option>
                                                 <option value="1" <?php echo set_select('lstBulan', 1); ?>>Januari</option>
                                                 <option value="2" <?php echo set_select('lstBulan', 2); ?>>Februari</option>
@@ -101,8 +90,19 @@ function myTempat() {
                                             <div class="form-control-focus"></div>
                                         </div>
                                         <div class="col-md-3">
-                                            <input type="number" class="form-control" placeholder="Tahun" name="tahun" value="<?php echo set_value('tahun', date('Y')); ?>" autocomplete="off" required>
+                                            <input type="number" class="form-control" placeholder="Tahun" name="tahun" id="tahun" onkeyup="myDay()" value="<?php echo date('Y'); ?>" autocomplete="off">
                                             <div class="form-control-focus"></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="control-label col-md-3">Jumlah Hari</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" name="jumlahhari" id="jumlahhari" value="<?php echo set_value('jumlahhari'); ?>" pattern="^[0-9]*" title="Harus Angka" autocomplete="off" maxlength="2" required>
+                                            <div class="form-control-focus"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@ function myTempat() {
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-3">Pasar</label>
                                         <div class="col-md-9">
-                                            <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" onchange="myPasar()" required>
+                                            <select class="form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" onchange="myPasar()" required>
                                                 <option value="">- Pilih Nama Pasar -</option>
                                                 <?php
                                                 foreach($listPasar as $p) {
@@ -132,7 +132,7 @@ function myTempat() {
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-3">Tempat</label>
                                         <div class="col-md-6">
-                                            <select class="select2_category form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" onchange="myTempat()" required>
+                                            <select class="form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" onchange="myTempat()" required>
                                                 <option value="">- Pilih Jenis Tempat -</option>
                                                 <?php
                                                 foreach($listTempat as $t) {
@@ -167,3 +167,18 @@ function myTempat() {
         <div class="clearfix"></div>
     </div>
 </div>
+
+<script>
+var hitunghari=function(bulan,taun){
+    return new Date(taun, bulan, 0).getDate();
+}
+
+function myDay() {
+    var myForm      = document.formInput;
+    var mm_o        = document.getElementById("lstBulan").options;
+    var mm_s        = document.getElementById("lstBulan").selectedIndex;
+    var yy_o        = parseInt(myForm.tahun.value);
+    var j_hari      = hitunghari(mm_s, yy_o);
+    document.getElementById("jumlahhari").value = j_hari;
+}
+</script> 

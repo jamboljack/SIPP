@@ -56,12 +56,12 @@
                                         <?php
                                             $dasar_id   = trim($this->uri->segment(4));
                                             $npwrd      = trim($detail->dasar_npwrd);
-                                            $cetak_surat= "print/Cetak_Surat_Dasar.php?id=".$dasar_id."&npwrd=".$npwrd;
+                                            $cetak_surat= "print/cetak_surat_dasar.php?id=".$dasar_id."&npwrd=".$npwrd;
                                         ?>
                                         <a href="<?php echo base_url().$cetak_surat; ?>" class="btn red" target="_blank"><i class="fa fa-file-word-o"></i> Save Word
                                         </a>
-                                        <a href="<?php echo site_url('admin/pendasaran/exportpdf/'.$this->uri->segment(4).'/'.$detail->dasar_npwrd); ?>" class="btn green" target="_blank"><i class="fa fa-file-pdf-o"></i> Save PDF
-                                        </a>                                        
+                                        <!--<a href="<?php // echo site_url('admin/pendasaran/exportpdf/'.$this->uri->segment(4).'/'.$detail->dasar_npwrd); ?>" class="btn green" target="_blank"><i class="fa fa-file-pdf-o"></i> Save PDF
+                                        </a>-->                                        
                                         <a href="<?php echo site_url('admin/pendasaran'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
                                         </a>
                                     </div>

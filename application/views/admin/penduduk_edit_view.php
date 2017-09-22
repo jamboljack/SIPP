@@ -63,7 +63,7 @@
                                 <div class="form-group form-md-line-input">
                                     <label class="col-md-3 control-label" for="form_control_1">Nama Penduduk</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" placeholder="Enter Nama Pasar" name="nama" value="<?php echo $detail->penduduk_nama; ?>" autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="Enter Nama Penduduk (30 Karakter)" name="nama" value="<?php echo $detail->penduduk_nama; ?>" maxlength="30" autocomplete="off" required>
                                         <div class="form-control-focus"></div>
                                     </div>
                                 </div>

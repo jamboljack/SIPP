@@ -72,6 +72,73 @@ if ($this->session->flashdata('notification')) { ?>
         </div>
 
         <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                            <i class="fa fa-search"></i>
+                            <span class="caption-subject bold uppercase"> Filter Data</span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body form">
+                        <form role="form" id="form-filter" class="form-horizontal">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Pasar</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar">
+                                                    <option value="">- Pilih Nama Pasar -</option>
+                                                    <?php
+                                                    foreach($listPasar as $p) {
+                                                    ?>php
+                                                    <option value="<?php echo $p->pasar_id; ?>"><?php echo $p->pasar_nama; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Tempat</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat">
+                                                    <?php
+                                                    foreach($listTempat as $t) {
+                                                    ?>php
+                                                    <option value="<?php echo $t->tempat_id; ?>"><?php echo ucwords(strtolower($t->tempat_nama)); ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="button" class="btn blue" id="btn-filter">Filter</button>
+                                        <button type="button" class="btn default" id="btn-reset">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
@@ -93,7 +160,7 @@ if ($this->session->flashdata('notification')) { ?>
                     </div>
 
                     <div class="portlet-body">
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <table class="table table-striped table-bordered table-hover" id="tableData">
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
@@ -108,91 +175,7 @@ if ($this->session->flashdata('notification')) { ?>
                         </thead>
 
                         <tbody>
-                            <?php
-                            $no = 1;
-                            foreach($daftarlist as $r) {
-                                $dasar_id       = $r->dasar_id;
 
-                                $tgl_surat      = $r->dasar_sampai;
-                                $xtgl           = explode("-",$tgl_surat);
-                                $thn            = $xtgl[0];
-                                $bln            = $xtgl[1];
-                                $tgl            = $xtgl[2];
-                                $tanggal_srt    = $tgl.'-'.$bln.'-'.$thn;
-                            ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $r->dasar_no; ?></td>
-                                <td><?php echo $tanggal_srt; ?></td>
-                                <td><?php echo $r->dasar_npwrd; ?></td>
-                                <td><?php echo $r->penduduk_nama; ?></td>
-                                <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?>
-                                </td>
-                                <td>
-                                    <?php if ($r->dasar_status=='Baru') { ?>
-                                        <span class="label label-info"><i class="fa fa-plus-circle"></i> <?php echo $r->dasar_status; ?></span>
-                                    <?php } elseif ($r->dasar_status=='Perpanjangan') { ?>
-                                        <span class="label label-warning"><i class="fa fa-copy (alias)"></i> <?php echo $r->dasar_status; ?></span>
-                                    <?php } else { ?>
-                                        <span class="label label-primary"><i class="fa fa-random"></i> <?php echo $r->dasar_status; ?></span>
-                                    <?php } ?>
-                                    <br>
-                                    <?php if ($r->dasar_st_print == 1) { ?>
-                                        <span class="label label-default"><i class="fa fa-print"></i> Di Cetak</span>
-                                    <?php } else { ?>
-                                        <span class="label label-danger"><i class="fa fa-print"></i> Belum Cetak</span>
-                                    <?php } ?>
-                                    <?php if ($r->dasar_acc == 0) { ?>
-                                    <span class="label label-warning"><i class="fa fa-times-circle"></i> Belum ACC SPV</span>
-                                    <?php } else { ?>
-                                    <span class="label label-success"><i class="fa fa-check-square"></i> ACC SPV</span>
-                                    <?php }?>
-                                </td>
-                                <td>
-                                    <?php if ($r->dasar_data == 0) { ?>
-                                        <?php if ($r->dasar_st_print == 0) { ?>
-                                        <a href="<?php echo site_url('admin/pendasaran/editdata/'.$r->dasar_id); ?>">
-                                            <button class="btn btn-primary btn-xs" title="Edit Data">
-                                                <i class="icon-pencil"></i>
-                                            </button>
-                                        </a>
-                                        <?php } ?>
-
-                                        <?php if ($r->dasar_acc == 1) { ?>
-                                        <a href="<?php echo site_url('admin/pendasaran/printdata/'.$r->dasar_id); ?>">
-                                            <button class="btn btn-default btn-xs" title="Cetak Surat Pendasaran">
-                                                <i class="icon-printer"></i>
-                                            </button>
-                                        </a>
-                                        <?php } ?>
-
-                                        <?php if ($this->session->userdata('level') <> 'Operator' && $r->dasar_acc == 0) { ?>
-                                            <a onclick="ACCData(<?php echo $dasar_id; ?>)"><button class="btn btn-success btn-xs" title="ACC"><i class="icon-check "></i> ACC Data</button>
-                                            </a>
-                                        <?php } ?>
-
-                                        <?php if ($r->dasar_st_print == 1) { ?>
-                                        <a href="<?php echo site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id); ?>">
-                                            <button class="btn btn-warning btn-xs" title="Perpanjangan Surat">
-                                                <i class="icon-docs"></i>
-                                            </button>
-                                        </a>
-                                        <?php } ?>
-
-                                        <a onclick="hapusData(<?php echo $dasar_id; ?>)">
-                                            <button class="btn btn-danger btn-xs" title="Hapus Data">
-                                                <i class="icon-trash"></i>
-                                            </button>
-                                        </a>
-                                    <?php } else { ?>
-                                        <span class="label label-danger"><i class="fa fa-remove (alias)"></i> Tidak Berlaku</span>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
                         </tbody>
 
                         </table>
@@ -204,3 +187,37 @@ if ($this->session->flashdata('notification')) { ?>
         <div class="clearfix"></div>
     </div>
 </div>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+var table;
+$(document).ready(function() {
+    table = $('#tableData').DataTable({ 
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+            "type": "POST",
+            "url": "<?php echo site_url('admin/pendasaran/data_list')?>",
+            "data": function(data) {
+                data.lstPasar = $('#lstPasar').val();
+                data.lstTempat = $('#lstTempat').val();
+            }
+        },
+        "columnDefs": [ 
+            { 
+                "targets": [ 0],
+                "orderable": false,
+            },
+        ],
+    });
+    $('#btn-filter').click(function(){ //button filter event click
+        table.ajax.reload();  //just reload table
+    });
+    $('#btn-reset').click(function(){ //button reset event click
+        $('#form-filter')[0].reset();
+        table.ajax.reload();  //just reload table
+    });
+});
+</script>

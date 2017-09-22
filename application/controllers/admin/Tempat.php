@@ -9,17 +9,42 @@ class Tempat extends CI_Controller {
 		$this->load->model('admin/tempat_model');
 	}
 
-	public function index()
-	{
-		if($this->session->userdata('logged_in_sipp'))
-		{
-			$data['daftarlist'] = $this->tempat_model->select_all()->result();
-			$this->template->display('admin/tempat_view', $data);
+	public function index() {
+		if($this->session->userdata('logged_in_sipp')) {
+			$this->template->display('admin/tempat_view');
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		} 
 	}
+
+	public function data_list() {
+        $List = $this->tempat_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $tempat_id = $r->tempat_id;
+
+            $row[] = $no;
+            $row[] = $r->tempat_nama;
+            $row[] = '<button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="'.$r->tempat_id.'" data-name="'.$r->tempat_nama.'" title="Edit Data"><i class="icon-pencil"></i> Edit</button>
+            		<a onclick="hapusData('.$tempat_id.')"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button></a>';
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->tempat_model->count_all(),
+                        "recordsFiltered" 	=> $this->tempat_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function savedata() {		
 		$this->tempat_model->insert_data();

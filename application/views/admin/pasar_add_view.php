@@ -31,37 +31,21 @@ $(function() {
                     <h4 class="modal-title"><i class="fa fa-search"></i> Cari Data Alamat</h4>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-striped table-bordered table-hover" id="sample_1">
+                    <table class="table table-striped table-bordered table-hover" id="tableData" width="100%">
                         <thead>
                             <tr>
                                 <th width="8%">Pilih</th>
-                                <th>Desa</th>
-                                <th>Kecamatan</th>
-                                <th>Kabupaten</th>
-                                <th>Provinsi</th>
+                                <th width="15%">Desa</th>
+                                <th width="15%">Kecamatan</th>
+                                <th width="15%">Kabupaten</th>
+                                <th width="15%">Provinsi</th>
                             </tr>
                         </thead>
                             
                         <tbody>
-                        <?php 
-                            $no = 1;
-                            foreach($listAlamat as $a) {                            
-                            ?>
-                            <tr>
-                                <td align="center">
-                                    <button type="button" class="btn btn-success btn-xs pilih_alamat" data-toggle="modal" data-pid="<?php echo $a->provinsi_id; ?>" data-pname="<?php echo $a->provinsi_nama; ?>" data-kid="<?php echo $a->kabupaten_id; ?>" data-kname="<?php echo $a->kabupaten_nama; ?>" data-cid="<?php echo $a->kecamatan_id; ?>" data-cname="<?php echo $a->kecamatan_nama; ?>" data-did="<?php echo $a->desa_id; ?>" data-dname="<?php echo $a->desa_nama; ?>" title="Pilih Alamat" data-dismiss="modal"><i class="icon-check"></i> Pilih
-                                    </button>
-                                </td>
-                                <td><?php echo $a->desa_nama; ?></td>
-                                <td><?php echo $a->kecamatan_nama; ?></td>
-                                <td><?php echo $a->kabupaten_nama; ?></td>
-                                <td><?php echo $a->provinsi_nama; ?></td>
-                            </tr>
-                            <?php
-                                $no++;
-                            }
-                            ?>
+                        
                         </tbody>
+
                     </table>
                 </div>
                 <div class="modal-footer">                    
@@ -549,4 +533,27 @@ $(function() {
         </div>
 
     </div>            
-</div>  
+</div> 
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+var table;
+$(document).ready(function() {
+    table = $('#tableData').DataTable({ 
+        "processing": false,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+            "type": "POST",
+            "url": "<?php echo site_url('admin/pasar/data_kecamatan_list')?>"
+        },
+        "columnDefs": [ 
+            { 
+                "targets": [ 0 ],
+                "orderable": false,
+            },
+        ],
+    });
+});
+</script> 

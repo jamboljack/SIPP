@@ -32,6 +32,20 @@ class Baliknama_model extends CI_Model {
 		return $this->db->get();
 	}
 
+	function select_pedagang_cari($nama) {
+		$this->db->select('d.dasar_id, d.dasar_no, d.dasar_tgl_surat,d.dasar_npwrd, d.dasar_blok, 
+			d.dasar_nomor, d.dasar_luas, d.dasar_status, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
+		$this->db->from('sipp_dasar d');
+		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
+		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+		$this->db->or_like('p.penduduk_nik', $nama);
+		$this->db->or_like('p.penduduk_nama', $nama);
+		$this->db->limit(20);
+
+		return $this->db->get();
+	}
+
 	function select_penduduk() {
 		$this->db->select('p.*, v.provinsi_nama, b.kabupaten_nama, c.kecamatan_nama, d.desa_nama');
 		$this->db->from('sipp_penduduk p');

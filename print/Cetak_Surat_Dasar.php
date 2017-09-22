@@ -1,12 +1,11 @@
-<?
+<?php
 include_once '../config/koneksidb.php';
 include_once '../config/fungsi.php';
 
 session_start();
-$id 		= $_REQUEST['id'];
-$npwrd 		= base64_decode(trim($_REQUEST['npwrd']));
+$id 		= $_GET['id'];
+//$npwrd 		= base64_decode(trim($_REQUEST['npwrd']));
 mysql_select_db($database, $konekdb);
-
 $sqla 		= "SELECT d.*, p.*, e.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama, a.desa_nama,
  				s.pasar_nama, s.pasar_alamat, j.jenis_nama, t.tempat_nama 
 				FROM sipp_dasar d 
@@ -22,38 +21,24 @@ $sqla 		= "SELECT d.*, p.*, e.provinsi_nama, k.kabupaten_nama, c.kecamatan_nama,
 
 $rsa 		= mysql_query($sqla, $konekdb) or die(mysql_error());	
 $rowrsa 	= mysql_fetch_assoc($rsa);
-
 $xno_surat	= strtoupper(trim($rowrsa['dasar_no']));
 $xnpwrd		= strtoupper(trim($rowrsa['dasar_npwrd']));
 $xnik		= strtoupper(trim($rowrsa['penduduk_nik']));
 $xnama		= strtoupper(trim($rowrsa['penduduk_nama']));
-$xumur		= age($rowrsa['penduduk_tgl_lahir']);
+$xtmptlhr   = ucwords(strtolower($rowrsa['penduduk_tmpt_lhr']));
+$xtgllhr   	= tgl_indo($rowrsa['penduduk_tgl_lahir']);
 $xalamat	= ucwords(strtolower(trim($rowrsa['penduduk_alamat']).' Desa '.trim($rowrsa['desa_nama']).' Kecamatan '.trim($rowrsa['kecamatan_nama'])));
-$xarea		= ucwords(strtolower(trim($rowrsa['kabupaten_nama']).' - '.trim($rowrsa['provinsi_nama'])));
 $xfoto 		= trim($rowrsa['penduduk_foto']); // Foto
-$xtempat	= strtoupper(trim($rowrsa['tempat_nama']));
-$xpasar		= strtoupper(trim($rowrsa['pasar_nama']));
+$xtempat	= ucwords(strtolower(trim($rowrsa['tempat_nama'])));
+$xpasar		= ucwords(strtolower(trim($rowrsa['pasar_nama'])));
 $xblok		= strtoupper(trim($rowrsa['dasar_blok']));
 $xnomor		= strtoupper(trim($rowrsa['dasar_nomor']));
-$xukuran	= $rowrsa['dasar_panjang'].'x'.$rowrsa['dasar_lebar'];
+$xukuran	= $rowrsa['dasar_panjang'].' x '.$rowrsa['dasar_lebar'];
 $xjenis		= strtoupper(trim($rowrsa['jenis_nama']));
-$tgl1 		= trim($rowrsa['dasar_dari']);
-if (($tgl1 == "") || ($tgl1 == "0000-00-00")) {
-	$xtgl1 	="";
-} else {
-	$xtgl 	= explode("-",$tgl1);
-	$xtgl1 	= $xtgl[2]."-".$xtgl[1]."-".$xtgl[0];	
-}
+$xtgl1      = tgl_indo($rowrsa['dasar_dari']);
+$xtgl2      = tgl_indo($rowrsa['dasar_sampai']);
 
-$tgl2 		= trim($rowrsa['dasar_sampai']);
-if (($tgl2 == "") || ($tgl2 == "0000-00-00")) {
-	$xtgl2 	="";
-} else {
-	$xtgl 	= explode("-",$tgl2);
-	$xtgl2 	= $xtgl[2]."-".$xtgl[1]."-".$xtgl[0];	
-}
-
-$xtanggalcetak = date('d-m-Y');
+$xtanggalcetak = tgl_indo(date('Y-m-d'));
 
 // Data Petugas
 $sqlb 		= "SELECT * FROM sipp_petugas WHERE petugas_id = 1";
@@ -69,9 +54,9 @@ $document = preg_replace('[xno_surat]',$xno_surat,$document);
 $document = preg_replace('[xnpwrd]',$xnpwrd,$document);
 $document = preg_replace('[xnik]',$xnik,$document);
 $document = preg_replace('[xnama]',$xnama,$document);
-$document = preg_replace('[xumr]',$xumur,$document);
+$document = preg_replace('[xtmptlhr]',$xtmptlhr,$document);
+$document = preg_replace('[xtgllhr]',$xtgllhr,$document);
 $document = preg_replace('[xalamat]',$xalamat,$document);
-$document = preg_replace('[xarea]',$xarea,$document);
 $document = preg_replace('[xtempat]',$xtempat,$document);
 $document = preg_replace('[xpasar]',$xpasar,$document);
 $document = preg_replace('[xblok]',$xblok,$document);
@@ -88,7 +73,7 @@ $document = preg_replace('[xnip]',$xnik_kadin,$document);
 $document = preg_replace('[xnama]',$xnama,$document);
 
 $time 		= time();
-$mnpwrd		= $_REQUEST['npwrd'];
+$mnpwrd		= $_GET['npwrd'];
 $file 		= "Surat_Pendasaran_".$mnpwrd.'_'.$time.".rtf";
 header("Content-type: application/msword");
 header("Expires: 0");

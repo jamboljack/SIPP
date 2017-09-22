@@ -13,13 +13,40 @@ class Bentuk extends CI_Controller {
 	{
 		if($this->session->userdata('logged_in_sipp'))
 		{
-			$data['daftarlist'] = $this->bentuk_model->select_all()->result();
-			$this->template->display('admin/bentuk_view', $data);
+			$this->template->display('admin/bentuk_view');
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		} 
 	}
+
+	public function data_list() {
+        $List = $this->bentuk_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $bentuk_id = $r->bentuk_id;
+
+            $row[] = $no;
+            $row[] = $r->bentuk_nama;
+            $row[] = '<button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="'.$r->bentuk_id.'" data-name="'.$r->bentuk_nama.'" title="Edit Data"><i class="icon-pencil"></i> Edit</button>
+            		<a onclick="hapusData('.$bentuk_id.')"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button></a>';
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->bentuk_model->count_all(),
+                        "recordsFiltered" 	=> $this->bentuk_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function savedata() {		
 		$this->bentuk_model->insert_data();

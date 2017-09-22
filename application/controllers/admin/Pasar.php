@@ -13,13 +13,67 @@ class Pasar extends CI_Controller {
 	{
 		if($this->session->userdata('logged_in_sipp'))
 		{
-			$data['daftarlist'] = $this->pasar_model->select_all()->result();
-			$this->template->display('admin/pasar_view', $data);
+			$this->template->display('admin/pasar_view');
 		} else {
 			$this->session->sess_destroy();
 			redirect(base_url());
 		} 
 	}
+
+	public function data_list() {
+        $List = $this->pasar_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+            $pasar_id = $r->pasar_id;
+
+            if ($r->pasar_jenis == 'T') {
+            	$jenis = '(Pasar Tradisional)';
+            } else {
+           		$jenis = '(Pasar Hewan)';
+           	}
+
+            $row[] = $no;
+            $row[] = $r->pasar_inisial.'-'.$r->pasar_kode;
+            $row[] = $r->pasar_nama.'<br>'.$jenis;
+            $row[] = $r->pasar_thn_berdiri;
+            $row[] = $r->pasar_alamat.'<br>DESA. '.$r->desa_nama.', KEC. '.$r->kecamatan_nama;
+            $row[] = $r->pasar_nip.'<br>'.$r->pasar_koordinator;
+
+            $linkedit  = site_url('admin/pasar/editdata/'.$r->pasar_id);
+            $linkprint = site_url('admin/pasar/printdata/'.$r->pasar_id);
+
+            $row[] = '<a href="'.$linkedit.'">
+            			<button class="btn btn-primary btn-xs" title="Edit Data">
+                       	<i class="icon-pencil"></i>
+                       	</button>
+                      </a>
+                      <a onclick="hapusData('.$pasar_id.')">
+                      	<button class="btn btn-danger btn-xs" title="Hapus Data">
+                        <i class="icon-trash"></i>
+                        </button>
+                      </a>
+                      <a href="'.$linkprint.'" target="_blank">
+                      	<button class="btn btn-warning btn-xs" title="Print">
+                        <i class="icon-printer"></i>
+                        </button>
+                      </a>';
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->pasar_model->count_all(),
+                        "recordsFiltered" 	=> $this->pasar_model->count_filtered(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function adddata() {
 		$data['error']			= false;
@@ -27,9 +81,39 @@ class Pasar extends CI_Controller {
 		$data['listBentuk'] 	= $this->pasar_model->select_bentuk_bangunan()->result();
 		$data['listKondisi'] 	= $this->pasar_model->select_kondisi_bangunan()->result();
 		$data['listSurat'] 		= $this->pasar_model->select_surat_kepemilikan()->result();
-		$data['listAlamat'] 	= $this->pasar_model->select_desa_kecamatan()->result();
+		//$data['listAlamat'] 	= $this->pasar_model->select_desa_kecamatan()->result();
 		$this->template->display('admin/pasar_add_view', $data);
 	}
+
+	// Ajax Kecamatan
+	public function data_kecamatan_list() {
+        $List = $this->pasar_model->get_kecamatan_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($List as $r) {
+            $no++;
+            $row = array();
+
+            $row[] = '<button type="button" class="btn btn-success btn-xs pilih_alamat" data-toggle="modal" data-pid="'.$r->provinsi_id.'" data-pname="'.$r->provinsi_nama.'" data-kid="'.$r->kabupaten_id.'" data-kname="'.$r->kabupaten_nama.'" data-cid="'.$r->kecamatan_id.'" data-cname="'.$r->kecamatan_nama.'" data-did="'.$r->desa_id.'" data-dname="'.$r->desa_nama.'" title="Pilih Alamat" data-dismiss="modal"><i class="icon-check"></i> Pilih</button>';
+
+            $row[] = $r->desa_nama;
+            $row[] = $r->kecamatan_nama;
+            $row[] = $r->kabupaten_nama;
+            $row[] = $r->provinsi_nama;
+            
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" 				=> $_POST['draw'],
+                        "recordsTotal" 		=> $this->pasar_model->count_all_kecamatan(),
+                        "recordsFiltered" 	=> $this->pasar_model->count_filtered_kecamatan(),
+                        "data" 				=> $data,
+                );
+        
+        echo json_encode($output);
+    }
 
 	public function savedata() {
 		$this->form_validation->set_rules('kode','<b>Kode Pasar</b>','trim|required|is_unique[sipp_pasar.pasar_kode]');

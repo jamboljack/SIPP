@@ -39,7 +39,7 @@
     }
 
     .surat {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: bold;
         line-height: 2px;
         text-align: center;
@@ -101,17 +101,6 @@
 <img src="<?php echo base_url(); ?>img/print_icon.gif" height="36" width="32" title="Print" id="print-link" onClick="window.print(); return false;" />
 </a>
 <?php
-// Tgl. Surat
-$tgl_surat      = $detail->dasar_tgl_surat;
-if (!empty($tgl_surat)) {
-    $xtgl           = explode("-",$tgl_surat);
-    $thn            = $xtgl[0];
-    $bln            = $xtgl[1];
-    $tgl            = $xtgl[2];
-    $tanggal_srt    = $tgl.'-'.$bln.'-'.$thn;
-} else {
-    $tanggal_srt    = '';
-}
 
 $tgl_dari           = $detail->dasar_dari;
 if (!empty($tgl_dari)) {
@@ -138,16 +127,12 @@ if (!empty($tgl_sampai)) {
 <div class="page">
     <table width="100%" align="center" cellpadding="2" cellspacing="2">
         <tr>
-            <td width="20%" align="center"><img src="<?php echo base_url(); ?>img/logokds.jpg" height="80%"></td>
+            <td width="20%" align="center"></td>
             <td width="80%" align="center">
-                <p class="head1">PEMERINTAH KABUPATEN KUDUS</p>
-                <p class="head2">DINAS PERDAGANGAN DAN PENGELOLAAN PASAR</p>
-                <p class="head3">Komplek Perkantoran Jl. Mejobo Nomor 45 Telp (0291) 4251050 - 437434</p>
-                <p class="head4">KUDUS 59319</p>
+                <br><br><br><br><br><br>
             </td>            
         </tr>
     </table>
-    <hr size="5px" color="#000000">
     <br>
     <p class="surat">SURAT PENDASARAN</p>
     <p class="nomor">Nomor : <?php echo $detail->dasar_no; ?></p>
@@ -159,11 +144,6 @@ if (!empty($tgl_sampai)) {
     <li>Diberikan Kepada :<br>    
     <table width="100%">
         <tr>
-            <td width="15%">NPWRD</td>
-            <td width="5%">:</td>
-            <td width="80%"><b><?php echo $detail->dasar_npwrd; ?></b></td>
-        </tr>
-        <tr>
             <td>N I K</td>
             <td>:</td>
             <td><b><?php echo $detail->penduduk_nik; ?></b></td>
@@ -171,12 +151,12 @@ if (!empty($tgl_sampai)) {
         <tr>
             <td>Nama</td>
             <td>:</td>
-            <td><?php echo $detail->penduduk_nama; ?></td>
+            <td><b><?php echo $detail->penduduk_nama; ?></b></td>
         </tr>
         <tr>
-            <td>Umur</td>
+            <td>Tempat, Tgl. Lahir</td>
             <td>:</td>
-            <td><?php echo age($detail->penduduk_tgl_lahir); ?> Tahun</td>
+            <td><?php echo ucwords(strtolower($detail->penduduk_tmpt_lhr)).', '.tgl_indo($detail->penduduk_tgl_lahir); ?></td>
         </tr>
         <tr>
             <td valign="top">Alamat</td>
@@ -187,14 +167,14 @@ if (!empty($tgl_sampai)) {
     </table>
     </li>
     <li>
-    Untuk menggunakan/menempati tempat pendasaran Los/Kios : <?php echo $detail->tempat_nama; ?> <?php echo $detail->pasar_nama; ?>, Lokasi Los/Kios : Blok/Kring <?php echo $detail->dasar_blok; ?>, Nomor <?php echo $detail->dasar_nomor; ?>, Ukuran <?php echo $detail->dasar_panjang.'x'.$detail->dasar_lebar; ?> m, Jenis barang dagangan : <?php echo $detail->jenis_nama; ?>
+    Untuk menggunakan/menempati tempat pendasaran <b><?php echo ucwords(strtolower($detail->tempat_nama)).' '.ucwords(strtolower($detail->pasar_nama)); ?></b>, Blok/Kring <b><?php echo $detail->dasar_blok; ?></b>, Nomor <b><?php echo $detail->dasar_nomor; ?></b>, Ukuran <b><?php echo $detail->dasar_panjang.' x '.$detail->dasar_lebar; ?> m</b>, dengan jenis barang dagangan : <b><?php echo $detail->jenis_nama; ?></b>.
     </li>
     <li>Dengan persyaratan :<br>
     <ol type="a">
       	<li>Mentaati semua ketentuan yang diatur dalam Peraturan Daerah Kabupaten Kudus Nomor 14 Tahun 2012 dan ketentuan peraturan perundang-undangan lainnya yang berlaku.</li>
-      	<li>Mentaati petunjuk dari Dinas Perdagangan dan Pengelolaan Pasar.</li>
-      	<li>Surat Izin ini berlaku mulai tanggal <b><?php echo $tanggal_dari; ?></b> sampai dengan tanggal <b><?php echo $tanggal_sampai; ?></b> dan dapat diperbaharui.</li>
-      	<li>Izin sewaktu-waktu dapat dicabut apabila pemegang izin melakukan pelanggaran terhadap ketentuan peraturan perundang-undangan yang berlaku.</li>        
+      	<li>Mentaati petunjuk dari Dinas Perdagangan Kabupaten Kudus.</li>
+      	<li>Surat Pendasaran ini berlaku mulai tanggal <b><?php echo tgl_indo($detail->dasar_dari); ?></b> sampai dengan tanggal <b><?php echo tgl_indo($detail->dasar_sampai); ?></b> dan dapat diperbaharui.</li>
+      	<li>Pendasaran sewaktu-waktu dapat dicabut apabila pemegang izin melakukan pelanggaran terhadap ketentuan peraturan perundang-undangan yang berlaku.</li>        
    	</ol>
     </li>
     </ol>
@@ -208,7 +188,7 @@ if (!empty($tgl_sampai)) {
         <tr>
             <td>&nbsp;</td>
             <td>Pada Tanggal</td>
-            <td>: <?php echo date('d-m-Y'); ?></td>
+            <td>: <?php echo tgl_indo(date('Y-m-d')); ?></td>
         </tr>
     </table>
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -218,9 +198,7 @@ if (!empty($tgl_sampai)) {
                     <img src="<?php echo base_url(); ?>penduduk_image/<?php echo $detail->penduduk_foto; ?>" width="100%">
                 <?php } ?>
             </td>
-            <td width="40%" align="center" valign="top">Pemegang Izin<br>
-            <br>
-            <br>
+            <td width="40%" align="center" valign="top">PEDAGANG<br>
             <br>
             <br>
             <br>
@@ -232,7 +210,6 @@ if (!empty($tgl_sampai)) {
             </td>
             <td width="45%" align="center" valign="top">
             <?php echo $petugas->petugas_title_kadin; ?><br>
-            KABUPATEN KUDUS
             <br>
             <br>
             <br>
