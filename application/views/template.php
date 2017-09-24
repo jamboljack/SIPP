@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <link rel="shortcut icon" href="<?php echo base_url(); ?>img/kudus.jpg">
-<title>SIPP | Sistem Informasi Pengelolaan Pasar</title>
+<title>SIPP | Sistem Informasi Pedagang Pasar</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
