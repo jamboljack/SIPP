@@ -37,7 +37,7 @@ class Users extends CI_Controller {
 		} else {
 			if (!empty($_FILES['userfile']['name'])) {
 				$jam 	= time();
-				$kode 	= strtolower($this->input->post('username'));
+				$kode 	= strtolower($this->input->post('username', 'true'));
 					
 				$config['file_name']    = 'Avatar_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './icon/';
@@ -72,7 +72,7 @@ class Users extends CI_Controller {
 	public function updatedata() {
 		if (!empty($_FILES['userfile']['name'])) {
 			$jam 	= time();
-			$kode 	= strtolower($this->input->post('user_username'));
+			$kode 	= strtolower($this->input->post('user_username', 'true'));
 					
 			$config['file_name']    = 'Avatar_'.$kode.'_'.$jam.'.jpg';
 			$config['upload_path'] = './icon/';

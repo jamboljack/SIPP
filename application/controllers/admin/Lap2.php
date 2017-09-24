@@ -22,10 +22,10 @@ class Lap2 extends CI_Controller{
 	}
 
 	public function caridata() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
 
 		if ($tempat_id == 'all') { 
 			$data = array(

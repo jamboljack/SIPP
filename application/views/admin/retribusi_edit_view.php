@@ -196,13 +196,13 @@ switch ($bln) {
                                     <span class="muted">
                                     Status :
                                     <?php
-                                    if ($detail->skrd_status == 0) {
+                                    if ($detail->skrd_status == 1) {
                                         echo '<b>BELUM BAYAR</b>';
                                     } else {
                                         echo '<b>BAYAR</b>';
                                     }
 
-                                    if ($detail->skrd_status == 1) {
+                                    if ($detail->skrd_status == 2) {
                                         echo " / ".tgl_indo($detail->skrd_tgl_bayar)." / Kasir : ".$detail->user_username;
                                     }
                                     ?>

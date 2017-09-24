@@ -72,27 +72,27 @@ if ($this->session->flashdata('notification')) { ?>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="portlet light bordered">
+            <div class="col-md-12">
+                <div class="portlet box red-intense">
                     <div class="portlet-title">
-                        <div class="caption font-red-sunglo">
-                            <i class="fa fa-search"></i>
-                            <span class="caption-subject bold uppercase"> Filter Data</span>
+                        <div class="caption">
+                            <i class="fa fa-search"></i> Filter Data
+                        </div>
+                        <div class="tools">
+                            <a href="" class="collapse"></a>
                         </div>
                     </div>
-
                     <div class="portlet-body form">
                         <form role="form" id="form-filter" class="form-horizontal">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Pasar</label>
                                             <div class="col-md-9">
-                                                <select class="form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar">
-                                                    <option value="">- Pilih Nama Pasar -</option>
+                                                <select class="form-control" name="lstPasar" id="lstPasar">
                                                     <?php
                                                     foreach($listPasar as $p) {
                                                     ?>php
@@ -105,13 +105,12 @@ if ($this->session->flashdata('notification')) { ?>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Tempat</label>
-                                            <div class="col-md-6">
-                                                <select class="form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat">
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstTempat" id="lstTempat">
+                                                    <option value="">- SEMUA -</option>
                                                     <?php
                                                     foreach($listTempat as $t) {
                                                     ?>php
@@ -124,11 +123,68 @@ if ($this->session->flashdata('notification')) { ?>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Status</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstStatus" id="lstStatus">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="Baru">Baru</option>
+                                                    <option value="Perpanjangan">Perpanjangan</option>
+                                                    <option value="Balik Nama">Balik Nama</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <button type="button" class="btn blue" id="btn-filter">Filter</button>
-                                        <button type="button" class="btn default" id="btn-reset">Reset</button>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Cetak ?</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstStatusCetak" id="lstStatusCetak">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="1">Belum Cetak</option>
+                                                    <option value="2">Sudah Cetak</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">ACC ?</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstStatusACC" id="lstStatusACC">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="1">Belum ACC</option>
+                                                    <option value="2">Sudah ACC</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Berlaku ?</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstStatusSurat" id="lstStatusSurat">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="1">Masih Berlaku</option>
+                                                    <option value="2">Tidak Berlaku</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" align="center">
+                                        <button type="button" class="btn blue" id="btn-filter"><i class="fa fa-search"></i> Filter</button>
+                                        <button type="button" class="btn default" id="btn-reset"><i class="fa fa-refresh"></i> Reset</button>
                                     </div>
                                 </div>
                             </div>
@@ -138,27 +194,25 @@ if ($this->session->flashdata('notification')) { ?>
             </div>
         </div>
 
+        <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
+        </a>
+        <?php if ($this->session->userdata('level') == 'Admin') { ?>
+        <a href="<?php echo site_url('admin/pendasaran/accdata_all'); ?>">
+            <button type="submit" class="btn btn-warning" title="ACC Semua Data">
+                <i class="fa fa-check"></i> ACC Semua
+            </button>
+        </a>
+        <?php } ?>
+        <br><br>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i> Tambah</button>
-                </a>
-                <?php if ($this->session->userdata('level') == 'Admin') { ?>
-                    <a href="<?php echo site_url('admin/pendasaran/accdata_all'); ?>">
-                        <button type="submit" class="btn btn-warning" title="ACC Semua Data">
-                            <i class="fa fa-check"></i> ACC Semua
-                        </button>
-                    </a>
-                <?php } ?>
-                <br><br>
                 <div class="portlet box red-intense">
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-list"></i> Daftar Surat Pendasaran
                         </div>
-                        <div class="tools"></div>
                     </div>
-
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="tableData">
                         <thead>
@@ -203,11 +257,15 @@ $(document).ready(function() {
             "data": function(data) {
                 data.lstPasar = $('#lstPasar').val();
                 data.lstTempat = $('#lstTempat').val();
+                data.lstStatus = $('#lstStatus').val();
+                data.lstStatusCetak = $('#lstStatusCetak').val();
+                data.lstStatusACC = $('#lstStatusACC').val();
+                data.lstStatusSurat = $('#lstStatusSurat').val();
             }
         },
         "columnDefs": [ 
             { 
-                "targets": [ 0],
+                "targets": [ 0, 7],
                 "orderable": false,
             },
         ],

@@ -1,14 +1,3 @@
-<script type="text/javascript">
-    $(document).ready(function () {        
-        $("#lstPasar").select2({
-        });
-        $("#lstTempat").select2({
-        });
-        $("#lstBulan").select2({
-        });
-    });
-</script>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
@@ -51,29 +40,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
-                                            <label class="control-label col-md-3">Pasar</label>
-                                            <div class="col-md-9">
-                                                <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" required autofocus>
-                                                    <option value="">- Pilih Nama Pasar -</option>
-                                                    <?php
-                                                    foreach($listPasar as $p) {
-                                                    ?>php
-                                                    <option value="<?php echo $p->pasar_id; ?>" <?php echo set_select('lstPasar', $p->pasar_id); ?>><?php echo $p->pasar_nama; ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                                <div class="form-control-focus"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Periode</label>
                                             <div class="col-md-6">
-                                                <select class="form-control" name="lstBulan" id="lstBulan" required>
+                                                <select class="form-control" name="lstBulan" id="lstBulan" required autofocus>
                                                     <option value="">- Pilih Bulan -</option>
                                                     <option value="1" <?php echo set_select('lstBulan', 1); ?>>Januari</option>
                                                     <option value="2" <?php echo set_select('lstBulan', 2); ?>>Februari</option>
@@ -96,13 +65,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Pasar</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="lstPasar" id="lstPasar" required>
+                                                    <option value="">- Pilih Nama Pasar -</option>
+                                                    <?php
+                                                    foreach($listPasar as $p) {
+                                                    ?>php
+                                                    <option value="<?php echo $p->pasar_id; ?>" <?php echo set_select('lstPasar', $p->pasar_id); ?>><?php echo $p->pasar_nama; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Tempat</label>
                                             <div class="col-md-6">
-                                                <select class="select2_category form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" required>
+                                                <select class="form-control" name="lstTempat" id="lstTempat" required>
                                                     <option value="all">Semua</option>
                                                     <?php
                                                     foreach($listTempat as $t) {
@@ -116,16 +103,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Status</label>
                                             <div class="col-md-6">
                                                 <select class="form-control" name="lstStatus" required>
                                                     <option value="all" <?php echo set_select('lstStatus', 'all'); ?>>Semua</option>
-                                                    <option value="0" <?php echo set_select('lstStatus', 0); ?>>Belum Bayar</option>
-                                                    <option value="1" <?php echo set_select('lstStatus', 1); ?>>Lunas</option>
+                                                    <option value="1" <?php echo set_select('lstStatus', 1); ?>>Belum Bayar</option>
+                                                    <option value="2" <?php echo set_select('lstStatus', 2); ?>>Bayar</option>
                                                 </select>
                                                 <div class="form-control-focus"></div>
                                             </div>
@@ -139,6 +124,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         </form>

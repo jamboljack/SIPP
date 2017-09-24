@@ -66,7 +66,7 @@ class Kondisi_model extends CI_Model {
 	
 	function insert_data() {		
 		$data = array(
-				'kondisi_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'kondisi_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'kondisi_date_update' 	=> date('Y-m-d'),
 		   		'kondisi_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -75,10 +75,10 @@ class Kondisi_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$kondisi_id     = $this->input->post('id');
+		$kondisi_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'kondisi_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'kondisi_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'kondisi_date_update' 	=> date('Y-m-d'),
 		   		'kondisi_time_update' 	=> date('Y-m-d H:i:s')
 		);

@@ -15,7 +15,7 @@ class Skrd extends CI_Controller {
 		{
 			$data['listPasar'] 	= $this->skrd_model->select_pasar()->result();
 			$data['listTempat'] = $this->skrd_model->select_tempat()->result();
-			//$data['daftarlist'] = $this->skrd_model->select_all()->result();
+
 			$this->template->display('admin/skrd_view', $data);
 		} else {
 			$this->session->sess_destroy();
@@ -74,10 +74,17 @@ class Skrd extends CI_Controller {
 
             $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
 			$total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
-			if ($r->skrd_status == 0) {
+
+			if ($r->skrd_status == 1) {
 				$status = '<span class="label label-danger">BELUM BAYAR</span>';
 			} else {
             	$status = '<span class="label label-success">BAYAR</span>';
+			}
+
+			if ($r->skrd_st_print == 1) {
+				$statuscetak = '<span class="label label-warning">BELUM CETAK</span>';
+			} else {
+            	$statuscetak = '<span class="label label-primary">SUDAH CETAK</span>';
 			}
 
             $row[] = $no;
@@ -86,9 +93,9 @@ class Skrd extends CI_Controller {
             $row[] = $r->dasar_npwrd.'<br>'.$r->penduduk_nama;
             $row[] = $r->pasar_nama.'<br>'.$r->tempat_nama.' Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2';
             $row[] = $total;
-            $row[] = $status;
+            $row[] = $status.'<br>'.$statuscetak;
             
-            if ($r->skrd_status==0) {
+            if ($r->skrd_status == 1) {
             	$linkedit 	= site_url('admin/skrd/editdata/'.$r->skrd_id);
             	$linkprint 	= site_url('admin/skrd/printdata/'.$r->skrd_id);
 
@@ -106,7 +113,7 @@ class Skrd extends CI_Controller {
             	$tomboledit = '';
             }
 
-            if ($this->session->userdata('level')<>'Operator' && $r->skrd_status==0) {
+            if ($this->session->userdata('level')<>'Operator' && $r->skrd_status==1) {
             	$tombolhapus = '<a onclick="hapusData('.$skrd_id.')">
             					<button class="btn btn-danger btn-xs" title="Hapus Data">
                                 	<i class="icon-trash"></i>
@@ -154,10 +161,10 @@ class Skrd extends CI_Controller {
 
 	public function caridataskrdhapus() {		
 		$data = array(
-			'Pasar' 	=> $this->input->post('lstPasar'),
-			'Tempat' 	=> $this->input->post('lstTempat'),
-			'Bulan' 	=> $this->input->post('lstBulan'),
-			'Tahun' 	=> $this->input->post('tahun')
+			'Pasar' 	=> $this->input->post('lstPasar', 'true'),
+			'Tempat' 	=> $this->input->post('lstTempat', 'true'),
+			'Bulan' 	=> $this->input->post('lstBulan', 'true'),
+			'Tahun' 	=> $this->input->post('tahun', 'true')
 		);
 
 		$data['info'] 		= 'true';
@@ -175,7 +182,7 @@ class Skrd extends CI_Controller {
 	}
 
 	public function savedata() {
-		$pasar_id	= $this->input->post('lstPasar');
+		$pasar_id	= $this->input->post('lstPasar', 'true');
 		// Cari Data Pedagang by Pasar
 		$pedagang 	= $this->skrd_model->select_pedagang($pasar_id)->result();
 		foreach ($pedagang as $p) {
@@ -225,7 +232,7 @@ class Skrd extends CI_Controller {
 		$data['daftarItem'] = $this->skrd_model->select_list_item($skrd_id)->result();
 		$data['petugas'] 	= $this->skrd_model->select_kadin()->row();
 		$cek 				= $this->skrd_model->select_detail_by_id($skrd_id)->row();
-		if ($cek->skrd_st_print == 0) {
+		if ($cek->skrd_st_print == 1) {
 			$this->skrd_model->update_data_print();
 		}
 		$this->load->view('admin/surat_tagihan_skrd_view', $data);

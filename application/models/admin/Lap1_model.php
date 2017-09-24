@@ -42,9 +42,9 @@ class Lap1_model extends CI_Model {
 	}
 
 	function select_by_criteria() {
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$jenis_id 	= trim($this->input->post('lstJenis'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$jenis_id 	= trim($this->input->post('lstJenis', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
 		
 		if ($tempat_id == 'all') {
 			$this->db->select('d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, d.dasar_status, 
@@ -61,7 +61,7 @@ class Lap1_model extends CI_Model {
 			$this->db->join('sipp_desa s', 'p.desa_id = s.desa_id');
 			$this->db->where('d.pasar_id', $pasar_id);
 			$this->db->where('d.jenis_id', $jenis_id);
-			$this->db->where('d.dasar_data', 0);
+			$this->db->where('d.dasar_data', 1);
 			$this->db->order_by('d.pasar_id','asc');
 			$this->db->order_by('d.tempat_id','asc');
 			$this->db->order_by('d.penduduk_id','asc');
@@ -83,7 +83,7 @@ class Lap1_model extends CI_Model {
 			$this->db->where('d.pasar_id', $pasar_id);
 			$this->db->where('d.jenis_id', $jenis_id);
 			$this->db->where('d.tempat_id', $tempat_id);
-			$this->db->where('d.dasar_data', 0);
+			$this->db->where('d.dasar_data', 1);
 			$this->db->order_by('d.pasar_id','asc');
 			$this->db->order_by('d.tempat_id','asc');
 			$this->db->order_by('d.penduduk_id','asc');
@@ -111,7 +111,7 @@ class Lap1_model extends CI_Model {
 		$this->db->where('d.pasar_id', $pasar_id);
 		$this->db->where('d.jenis_id', $jenis_id);
 		$this->db->where('d.tempat_id', $tempat_id);
-		$this->db->where('d.dasar_data', 0);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->order_by('d.pasar_id','asc');
 		$this->db->order_by('d.tempat_id','asc');
 		$this->db->order_by('d.penduduk_id','asc');
@@ -139,7 +139,7 @@ class Lap1_model extends CI_Model {
 		$this->db->where('d.pasar_id', $pasar_id);
 		$this->db->where('d.jenis_id', $jenis_id);
 		$this->db->where('d.tempat_id', $tempat_id);
-		$this->db->where('d.dasar_data', 0);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->order_by('d.pasar_id','asc');
 		$this->db->order_by('d.tempat_id','asc');
 		$this->db->order_by('d.penduduk_id','asc');

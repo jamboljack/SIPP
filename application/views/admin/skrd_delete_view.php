@@ -13,17 +13,6 @@ if ($this->session->flashdata('notification')) { ?>
 </script>
 <? } ?>
 
-<script type="text/javascript">
-    $(document).ready(function () {        
-        $("#lstPasar").select2({
-        });
-        $("#lstBulan").select2({
-        });
-        $("#lstTempat").select2({
-        });        
-    });
-</script>
-
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">
@@ -91,8 +80,7 @@ if ($this->session->flashdata('notification')) { ?>
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-3">Pasar</label>
                                         <div class="col-md-9">
-                                            <select class="select2_category form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar" required>
-                                                <option value="">- Pilih Nama Pasar -</option>
+                                            <select class="form-control" name="lstPasar" id="lstPasar" required>
                                                 <?php
                                                 foreach($listPasar as $p) {
                                                 ?>php
@@ -111,8 +99,8 @@ if ($this->session->flashdata('notification')) { ?>
                                     <div class="form-group form-md-line-input">
                                         <label class="control-label col-md-3">Tempat</label>
                                         <div class="col-md-6">
-                                            <select class="select2_category form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat" required>
-                                                <option value="all">Semua</option>
+                                            <select class="form-control" name="lstTempat" id="lstTempat" required>
+                                                <option value="all">- SEMUA -</option>
                                                 <?php
                                                 foreach($listTempat as $t) {
                                                 ?>php
@@ -218,7 +206,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
                                 $total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
 
-                                if ($r->skrd_status == 0) {
+                                if ($r->skrd_status == 1) {
                                     $status = '<span class="label label-danger">BELUM BAYAR</span>';
                                 } else {
                                     $status = '<span class="label label-success">BAYAR</span>';

@@ -35,14 +35,14 @@ class Baliknama extends CI_Controller {
 
 	public function caridatapedagang() {
 		$data['tampil']			= 'ya';
-		$nama 					= strtoupper(trim($this->input->post('nama')));
+		$nama 					= strtoupper(trim($this->input->post('nama', 'true')));
 		$data['listPedagang'] 	= $this->baliknama_model->select_pedagang_cari($nama)->result();
 		$this->template->display('admin/pedagang_pilih_view', $data);
 	}
 
 	public function caridatapasar() {
 		$data['tampil']		= 'ya';
-		$pasar_id 			= $this->input->post('lstPasar');
+		$pasar_id 			= $this->input->post('lstPasar', 'true');
 		$data['listPasar'] 	= $this->baliknama_model->select_pasar()->result();
 		$data['listSurat']	= $this->baliknama_model->select_surat_dasar($pasar_id)->result();
 		$data['detail'] 	= $this->baliknama_model->select_pasar_by_id($pasar_id)->row();
@@ -56,7 +56,7 @@ class Baliknama extends CI_Controller {
 
 	public function caridatapenduduk() {
 		$data['tampil']			= 'ya';
-		$nama 					= strtoupper(trim($this->input->post('nama')));
+		$nama 					= strtoupper(trim($this->input->post('nama', 'true')));
 		$data['listPenduduk'] 	= $this->baliknama_model->select_penduduk_cari($nama)->result();		
 		$this->template->display('admin/baliknama_pilih_penduduk_view', $data);
 	}
@@ -86,7 +86,7 @@ class Baliknama extends CI_Controller {
 		} else {
 			if (!empty($_FILES['userfile']['name'])) {
 				$jam 	= time();
-				$kode 	= seo_title($this->input->post('nama'));
+				$kode 	= seo_title($this->input->post('nama', 'true'));
 					
 				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './penduduk_image/';
@@ -117,17 +117,17 @@ class Baliknama extends CI_Controller {
 
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(
-						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
-						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
+						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir', 'true'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
-						'penduduk_jk'			=> $this->input->post('rdJk'),
-						'provinsi_id'			=> $this->input->post('lstProvinsi'),
-						'kabupaten_id'			=> $this->input->post('lstKabupaten'),
-						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
-						'desa_id'				=> $this->input->post('lstKelurahan'),
-						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
+						'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+						'provinsi_id'			=> $this->input->post('lstProvinsi', 'true'),
+						'kabupaten_id'			=> $this->input->post('lstKabupaten', 'true'),
+						'kecamatan_id'			=> $this->input->post('lstKecamatan', 'true'),
+						'desa_id'				=> $this->input->post('lstKelurahan', 'true'),
+						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
 						'penduduk_foto' 		=> $this->upload->file_name,
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
@@ -135,17 +135,17 @@ class Baliknama extends CI_Controller {
 				);
 			} else {		
 				$data = array(
-						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
-						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
+						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir', 'true'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
-						'penduduk_jk'			=> $this->input->post('rdJk'),
-						'provinsi_id'			=> $this->input->post('lstProvinsi'),
-						'kabupaten_id'			=> $this->input->post('lstKabupaten'),
-						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
-						'desa_id'				=> $this->input->post('lstKelurahan'),
-						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
+						'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+						'provinsi_id'			=> $this->input->post('lstProvinsi', 'true'),
+						'kabupaten_id'			=> $this->input->post('lstKabupaten', 'true'),
+						'kecamatan_id'			=> $this->input->post('lstKecamatan', 'true'),
+						'desa_id'				=> $this->input->post('lstKelurahan', 'true'),
+						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
 				   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
@@ -229,7 +229,7 @@ class Baliknama extends CI_Controller {
 		// Update NPWRD Pedagang Baru
 		$data = array(
 				'baliknama_npwrd'			=> strtoupper(trim($No_NPWRD)),
-				'baliknama_data'			=> 1, // ACC Status
+				'baliknama_data'			=> 2, // ACC Status
 		   		'user_username' 			=> $this->session->userdata('username'),
 		   		'baliknama_date_update' 	=> date('Y-m-d'),
 		   		'baliknama_time_update' 	=> date('Y-m-d H:i:s')
@@ -239,7 +239,7 @@ class Baliknama extends CI_Controller {
 		
 		// Update ke Table Dasar = Tidak Berlaku
 		$data = array(
-				'dasar_data'			=> 1,				
+				'dasar_data'			=> 2,				
 		   		'user_username' 		=> $this->session->userdata('username'),
 		   		'dasar_date_update' 	=> date('Y-m-d'),
 		   		'dasar_time_update' 	=> date('Y-m-d H:i:s')

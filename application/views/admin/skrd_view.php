@@ -54,12 +54,14 @@ if ($this->session->flashdata('notification')) { ?>
         </div>            
                         
         <div class="row">
-            <div class="col-md-6">
-                <div class="portlet light bordered">
+            <div class="col-md-12">
+                <div class="portlet box red-intense">
                     <div class="portlet-title">
-                        <div class="caption font-red-sunglo">
-                            <i class="fa fa-search"></i>
-                            <span class="caption-subject bold uppercase"> Filter Data</span>
+                        <div class="caption">
+                            <i class="fa fa-search"></i> Filter Data
+                        </div>
+                        <div class="tools">
+                            <a href="" class="collapse"></a>
                         </div>
                     </div>
 
@@ -69,7 +71,7 @@ if ($this->session->flashdata('notification')) { ?>
 
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Periode</label>
                                             <div class="col-md-6">
@@ -96,14 +98,11 @@ if ($this->session->flashdata('notification')) { ?>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Pasar</label>
                                             <div class="col-md-9">
-                                                <select class="form-control" data-placeholder="- Pilih Nama Pasar -" name="lstPasar" id="lstPasar">
-                                                    <option value="">- Pilih Nama Pasar -</option>
+                                                <select class="form-control" name="lstPasar" id="lstPasar">
                                                     <?php
                                                     foreach($listPasar as $p) {
                                                     ?>php
@@ -118,11 +117,12 @@ if ($this->session->flashdata('notification')) { ?>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Tempat</label>
                                             <div class="col-md-6">
-                                                <select class="form-control" data-placeholder="- Pilih Jenis Tempat -" name="lstTempat" id="lstTempat">
+                                                <select class="form-control" name="lstTempat" id="lstTempat">
+                                                    <option value="">- SEMUA -</option>
                                                     <?php
                                                     foreach($listTempat as $t) {
                                                     ?>php
@@ -135,11 +135,41 @@ if ($this->session->flashdata('notification')) { ?>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Status Cetak</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="lstStatusCetak" id="lstStatusCetak">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="1">Belum Cetak</option>
+                                                    <option value="2">Sudah Cetak</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <button type="button" class="btn blue" id="btn-filter">Filter</button>
-                                        <button type="button" class="btn default" id="btn-reset">Reset</button>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="control-label col-md-3">Status Bayar</label>
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="lstStatusBayar" id="lstStatusBayar">
+                                                    <option value="">- SEMUA -</option>
+                                                    <option value="1">Belum Bayar</option>
+                                                    <option value="2">Sudah Bayar</option>
+                                                </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12" align="center">
+                                        <button type="button" class="btn blue" id="btn-filter"><i class="fa fa-search"></i> Filter</button>
+                                        <button type="button" class="btn default" id="btn-reset"><i class="fa fa-refresh"></i> Reset</button>
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +207,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <th width="20%">Pasar</th>
                                 <th width="10%">Total</th>
                                 <th width="10%">Status</th>
-                                <th width="13%">Aksi</th>
+                                <th width="10%">Aksi</th>
                             </tr>
                         </thead>
                         
@@ -212,6 +242,8 @@ $(document).ready(function() {
                 data.tahun = $('#tahun').val();
                 data.lstPasar = $('#lstPasar').val();
                 data.lstTempat = $('#lstTempat').val();
+                data.lstStatusCetak = $('#lstStatusCetak').val();
+                data.lstStatusBayar = $('#lstStatusBayar').val();
             }
         },
         "columnDefs": [ 

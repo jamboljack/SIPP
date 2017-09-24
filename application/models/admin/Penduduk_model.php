@@ -30,9 +30,9 @@ class Penduduk_model extends CI_Model {
 	}
 
 	function update_data() {
-		$penduduk_id     = $this->input->post('id');
+		$penduduk_id     = $this->input->post('id', 'true');
 
-		$tgl_lahir 		= $this->input->post('tgl_lahir');
+		$tgl_lahir 		= $this->input->post('tgl_lahir', 'true');
 		$xtgl 			= explode("-",$tgl_lahir);
 		$thn 			= $xtgl[2];
 		$bln 			= $xtgl[1];
@@ -41,14 +41,14 @@ class Penduduk_model extends CI_Model {
 		
 		if (!empty($_FILES['userfile']['name'])) {
 			$data = array(
-					'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-					'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-					'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+					'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+					'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+					'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 					'penduduk_tgl_lahir'	=> $tanggal_lhr,
-					'penduduk_jk'			=> $this->input->post('rdJk'),
-					'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
-					'penduduk_rt'			=> $this->input->post('rt'),
-					'penduduk_rw'			=> $this->input->post('rw'),
+					'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+					'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
+					'penduduk_rt'			=> $this->input->post('rt', 'true'),
+					'penduduk_rw'			=> $this->input->post('rw', 'true'),
 					'penduduk_foto' 		=> $this->upload->file_name,
 			   		'user_username' 		=> $this->session->userdata('username'),
 			   		'penduduk_date_update' 	=> date('Y-m-d'),
@@ -56,14 +56,14 @@ class Penduduk_model extends CI_Model {
 			);
 		} else {		
 			$data = array(
-					'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-					'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-					'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+					'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+					'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+					'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 					'penduduk_tgl_lahir'	=> $tanggal_lhr,
-					'penduduk_jk'			=> $this->input->post('rdJk'),
-					'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
-					'penduduk_rt'			=> $this->input->post('rt'),
-					'penduduk_rw'			=> $this->input->post('rw'),
+					'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+					'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
+					'penduduk_rt'			=> $this->input->post('rt', 'true'),
+					'penduduk_rw'			=> $this->input->post('rw', 'true'),
 			   		'user_username' 		=> $this->session->userdata('username'),
 			   		'penduduk_date_update' 	=> date('Y-m-d'),
 			   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')

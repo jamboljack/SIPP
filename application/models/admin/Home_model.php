@@ -15,7 +15,7 @@ class Home_model extends CI_Model {
 	function select_count_pedagang() {
 		$this->db->select('*');
 		$this->db->from('sipp_dasar');
-		$this->db->where('dasar_data', 0);
+		$this->db->where('dasar_data', 1);
 		
 		return $this->db->get();
 	}
@@ -32,7 +32,7 @@ class Home_model extends CI_Model {
 		$this->db->select('SUM(skrd_total) as subtotal, SUM(skrd_bunga) as bunga, SUM(skrd_kenaikan) as kenaikan');
 		$this->db->from('sipp_skrd');
 		$this->db->where('skrd_tahun', date('Y'));
-		$this->db->where('skrd_status', 1);
+		$this->db->where('skrd_status', 2);
 		
 		return $this->db->get();
 	}
@@ -57,7 +57,7 @@ class Home_model extends CI_Model {
 		$this->db->from('sipp_skrd');
 		$this->db->where('MONTH(skrd_tgl_tempo)', $bulan);
 		$this->db->where('YEAR(skrd_tgl_tempo)', $tahun);
-		$this->db->where('skrd_status', 0);
+		$this->db->where('skrd_status', 1);
 		$this->db->limit(20);
 		
 		return $this->db->get();
@@ -66,7 +66,7 @@ class Home_model extends CI_Model {
 	function select_pendasaran_baru() {
 		$this->db->select('*');
 		$this->db->from('sipp_dasar');
-		$this->db->where('dasar_acc', 0);
+		$this->db->where('dasar_acc', 1);
 		
 		return $this->db->get();
 	}
@@ -74,7 +74,7 @@ class Home_model extends CI_Model {
 	function select_baliknama() {
 		$this->db->select('*');
 		$this->db->from('sipp_baliknama');
-		$this->db->where('baliknama_data', 0);
+		$this->db->where('baliknama_data', 1);
 		
 		return $this->db->get();
 	}

@@ -23,9 +23,9 @@ class Lap1 extends CI_Controller{
 	}
 
 	public function caridata() {
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$jenis_id 	= trim($this->input->post('lstJenis'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$jenis_id 	= trim($this->input->post('lstJenis', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
 
 		$data = array(
 			'Pasar' 	=> $pasar_id,

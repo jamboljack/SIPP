@@ -66,7 +66,7 @@ class Bentuk_model extends CI_Model {
 	
 	function insert_data() {		
 		$data = array(
-				'bentuk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'bentuk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'bentuk_date_update' 	=> date('Y-m-d'),
 		   		'bentuk_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -75,10 +75,10 @@ class Bentuk_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$bentuk_id     = $this->input->post('id');
+		$bentuk_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'bentuk_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'bentuk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'bentuk_date_update' 	=> date('Y-m-d'),
 		   		'bentuk_time_update' 	=> date('Y-m-d H:i:s')
 		);

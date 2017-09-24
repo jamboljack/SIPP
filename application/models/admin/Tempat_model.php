@@ -64,7 +64,7 @@ class Tempat_model extends CI_Model {
 	}
 	
 	function insert_data() {
-		$nama 	= strtoupper(trim($this->input->post('nama')));
+		$nama 	= strtoupper(trim($this->input->post('nama', 'true')));
 		$kode 	= substr($nama, 0, 1);
 		
 		$data = array(
@@ -78,9 +78,9 @@ class Tempat_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$tempat_id     = $this->input->post('id');
+		$tempat_id     = $this->input->post('id', 'true');
 
-		$nama 	= strtoupper(trim($this->input->post('nama')));
+		$nama 	= strtoupper(trim($this->input->post('nama', 'true')));
 		$kode 	= substr($nama, 0, 1);		
 		
 		$data = array(

@@ -179,7 +179,7 @@
                                 <td><?php echo $r->dasar_no; ?></td>                                
                                 <td><?php echo $tanggal_srt; ?></td>
                                 <td><?php echo $r->dasar_npwrd; ?></td>
-                                <td><?php echo ucwords(strtolower($r->penduduk_nama)); ?></td>
+                                <td><?php echo strtoupper($r->penduduk_nama); ?></td>
                                 <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?>
                                 </td>
                             </tr>

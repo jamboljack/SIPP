@@ -15,11 +15,11 @@ class Komponen_model extends CI_Model {
 
 	function insert_data() {		
 		$data = array(				
-				'komponen_kode'			=> trim($this->input->post('kode')),
-				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian')))),
-				'komponen_type'			=> trim($this->input->post('rdType')),
-				'komponen_tarif'		=> $this->input->post('tarif'),
-				'komponen_satuan'		=> $this->input->post('satuan'),
+				'komponen_kode'			=> trim($this->input->post('kode', 'true')),
+				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian', 'true')))),
+				'komponen_type'			=> trim($this->input->post('rdType', 'true')),
+				'komponen_tarif'		=> $this->input->post('tarif', 'true'),
+				'komponen_satuan'		=> $this->input->post('satuan', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'komponen_date_update' 	=> date('Y-m-d'),
 			   	'komponen_time_update' 	=> date('Y-m-d H:i:s')
@@ -37,14 +37,14 @@ class Komponen_model extends CI_Model {
 	}
 
 	function update_data() {
-		$komponen_id     = $this->input->post('id');
+		$komponen_id     = $this->input->post('id', 'true');
 		
 		$data = array(				
-				'komponen_kode'			=> trim($this->input->post('kode')),
-				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian')))),
-				'komponen_type'			=> trim($this->input->post('rdType')),
-				'komponen_tarif'		=> $this->input->post('tarif'),
-				'komponen_satuan'		=> $this->input->post('satuan'),
+				'komponen_kode'			=> trim($this->input->post('kode', 'true')),
+				'komponen_uraian'		=> ucwords(strtolower(trim($this->input->post('uraian', 'true')))),
+				'komponen_type'			=> trim($this->input->post('rdType', 'true')),
+				'komponen_tarif'		=> $this->input->post('tarif', 'true'),
+				'komponen_satuan'		=> $this->input->post('satuan', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'komponen_date_update' 	=> date('Y-m-d'),
 			   	'komponen_time_update' 	=> date('Y-m-d H:i:s')
@@ -91,10 +91,10 @@ class Komponen_model extends CI_Model {
 	function insert_data_tarif() {		
 		$data = array(				
 				'komponen_id'			=> $this->uri->segment(4),
-				'kelas_id'				=> trim($this->input->post('lstKelas')),
-				'tempat_id'				=> trim($this->input->post('lstTempat')),
-				'tarif_harga'			=> $this->input->post('harga'),
-				'st_tarif'				=> $this->input->post('lstType'),
+				'kelas_id'				=> trim($this->input->post('lstKelas', 'true')),
+				'tempat_id'				=> trim($this->input->post('lstTempat', 'true')),
+				'tarif_harga'			=> $this->input->post('harga', 'true'),
+				'st_tarif'				=> $this->input->post('lstType', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'tarif_date_update' 	=> date('Y-m-d'),
 			   	'tarif_time_update' 	=> date('Y-m-d H:i:s')
@@ -104,13 +104,13 @@ class Komponen_model extends CI_Model {
 	}
 
 	function update_data_tarif() {
-		$tarif_id     = $this->input->post('id');
+		$tarif_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'kelas_id'				=> trim($this->input->post('lstKelas')),
-				'tempat_id'				=> trim($this->input->post('lstTempat')),
-				'tarif_harga'			=> $this->input->post('harga'),
-				'st_tarif'				=> $this->input->post('lstType'),
+				'kelas_id'				=> trim($this->input->post('lstKelas', 'true')),
+				'tempat_id'				=> trim($this->input->post('lstTempat', 'true')),
+				'tarif_harga'			=> $this->input->post('harga', 'true'),
+				'st_tarif'				=> $this->input->post('lstType', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'tarif_date_update' 	=> date('Y-m-d'),
 			   	'tarif_time_update' 	=> date('Y-m-d H:i:s')

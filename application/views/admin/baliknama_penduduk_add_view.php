@@ -236,7 +236,7 @@
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-9">
                                         <button type="submit" class="btn green"><i class="fa fa-floppy-o"></i> Simpan</button>
-                                        <a href="<?php echo site_url('admin/pendasaran/pilihpenduduk'); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
+                                        <a href="<?php echo site_url('admin/baliknama/pilihpenduduk/'.$this->uri->segment(4)); ?>" class="btn yellow"><i class="fa fa-times"></i> Batal
                                         </a>
                                     </div>
                                 </div>

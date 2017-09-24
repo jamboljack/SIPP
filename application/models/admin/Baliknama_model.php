@@ -26,7 +26,7 @@ class Baliknama_model extends CI_Model {
 		$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		$this->db->where('d.pasar_id', $pasar_id);
-		$this->db->where('d.dasar_data', 0);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->order_by('d.dasar_id','desc');
 
 		return $this->db->get();
@@ -41,6 +41,7 @@ class Baliknama_model extends CI_Model {
 		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		$this->db->or_like('p.penduduk_nik', $nama);
 		$this->db->or_like('p.penduduk_nama', $nama);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->limit(20);
 
 		return $this->db->get();
@@ -256,7 +257,7 @@ class Baliknama_model extends CI_Model {
 		$this->db->update('sipp_penduduk', $data);		
 
 		// Tgl. Balik Nama
-		$tgl_surat 		= $this->input->post('tgl_surat');
+		$tgl_surat 		= $this->input->post('tgl_surat', 'true');
 		$xtgl 			= explode("-",$tgl_surat);
 		$thn 			= $xtgl[2];
 		$bln 			= $xtgl[1];
@@ -284,11 +285,11 @@ class Baliknama_model extends CI_Model {
 
 		// Insert ke Tabel Balik Nama
 		$data = array(
-				'dasar_id'					=> $this->input->post('id'),
+				'dasar_id'					=> $this->input->post('id', 'true'),
 				'penduduk_id'				=> $this->uri->segment(5),
-				'jenis_id'					=> $this->input->post('jenis_id'),
-				'pasar_id'					=> $this->input->post('pasar_id'),
-				'tempat_id'					=> $this->input->post('tempat_id'),
+				'jenis_id'					=> $this->input->post('jenis_id', 'true'),
+				'pasar_id'					=> $this->input->post('pasar_id', 'true'),
+				'tempat_id'					=> $this->input->post('tempat_id', 'true'),
 				'baliknama_no'				=> strtoupper(trim($No_BalikNama)), // 511.2/00001/BN/2016
 				'baliknama_tgl'				=> $tanggal_srt,
 		   		'user_username' 			=> $this->session->userdata('username'),
@@ -315,10 +316,10 @@ class Baliknama_model extends CI_Model {
 	}
 
 	function update_data() {
-		$baliknama_id    	= $this->input->post('baliknama_id');
+		$baliknama_id    	= $this->input->post('baliknama_id', 'true');
 
 		// Tgl. Balik Nama
-		$tgl_surat 		= $this->input->post('tgl_surat');
+		$tgl_surat 		= $this->input->post('tgl_surat', 'true');
 		$xtgl 			= explode("-",$tgl_surat);
 		$thn 			= $xtgl[2];
 		$bln 			= $xtgl[1];

@@ -20,9 +20,9 @@ class Account_model extends CI_Model {
 		$user_username = $this->session->userdata('username');
 
 		$data = array(
-					'user_name' 		=> strtoupper(trim($this->input->post('nama'))),
-	    			'user_address' 		=> strtoupper(trim($this->input->post('alamat'))),
-	    			'user_phone' 		=> trim($this->input->post('telp')),
+					'user_name' 		=> strtoupper(trim($this->input->post('nama', 'true'))),
+	    			'user_address' 		=> strtoupper(trim($this->input->post('alamat', 'true'))),
+	    			'user_phone' 		=> trim($this->input->post('telp', 'true')),
 	    			'user_date_update' 	=> date('Y-m-d'),
 		    		'user_time_update' 	=> date('Y-m-d H:i:s')
 				);
@@ -53,11 +53,11 @@ class Account_model extends CI_Model {
 
 	function update_data_password() {
 		$user_username  = trim($this->session->userdata('username'));		
-		$password 		= trim($this->input->post('password'));
+		$password 		= trim($this->input->post('password', 'true'));
 		
 		if (!empty($password)) { // Jika Password Diisi / Change Password			
 			$data = array(
-		    		'user_password' 		=> sha1(trim($this->input->post('password'))),
+		    		'user_password' 		=> sha1(trim($this->input->post('password', 'true'))),
 		    		'user_date_update' 		=> date('Y-m-d'),
 		    		'user_time_update' 		=> date('Y-m-d H:i:s')  			
 				);

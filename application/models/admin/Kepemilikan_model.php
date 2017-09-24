@@ -64,9 +64,9 @@ class Kepemilikan_model extends CI_Model {
 		return $this->db->get();
 	}
 	
-	function insert_data() {		
+	function insert_data() {
 		$data = array(
-				'kepemilikan_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'kepemilikan_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'kepemilikan_date_update' 	=> date('Y-m-d'),
 		   		'kepemilikan_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -75,10 +75,10 @@ class Kepemilikan_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$kepemilikan_id     = $this->input->post('id');
+		$kepemilikan_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'kepemilikan_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'kepemilikan_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'kepemilikan_date_update' 	=> date('Y-m-d'),
 		   		'kepemilikan_time_update' 	=> date('Y-m-d H:i:s')
 		);

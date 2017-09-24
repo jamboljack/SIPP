@@ -131,7 +131,7 @@ if ($this->session->flashdata('notification')) { ?>
                                 <td><?php echo ucwords($r->pasar_nama).' <b>('.$r->tempat_nama.')</b>'."<br>".'Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2'; ?>
                                 </td>                               
                                 <td>
-                                    <?php if ($r->baliknama_data == 0) { ?>
+                                    <?php if ($r->baliknama_data == 1) { ?>
                                     <a href="<?php echo site_url('admin/baliknama/editdata/'.$r->baliknama_id.'/'.$r->dasar_id); ?>">
                                         <button class="btn btn-primary btn-xs" title="Edit Data">
                                             <i class="icon-pencil"></i>
@@ -143,7 +143,7 @@ if ($this->session->flashdata('notification')) { ?>
                                     <span class="label label-success"><i class="fa fa-check-square"></i> ACC SPV</span>
                                     <?php } ?>
 
-                                    <?php if ($this->session->userdata('level') <> 'Operator' && $r->baliknama_data == 0) { ?>
+                                    <?php if ($this->session->userdata('level') <> 'Operator' && $r->baliknama_data == 1) { ?>
                                         <a onclick="ACCData(<?php echo $baliknama_id; ?>)"><button class="btn btn-success btn-xs" title="ACC"><i class="icon-check "></i> ACC Data</button>
                                         </a>
                                     <?php } ?>    

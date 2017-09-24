@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <span class="input-group-btn btn-right">
-                                            <a href="<?php echo site_url('admin/baliknama/pilihpasar'); ?>" class="btn yellow">
+                                            <a href="<?php echo site_url('admin/baliknama/pilihpedagang'); ?>" class="btn yellow">
                                                 <i class="fa fa-times"></i> Kembali
                                             </a>
                                         </span>

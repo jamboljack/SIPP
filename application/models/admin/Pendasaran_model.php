@@ -12,12 +12,24 @@ class Pendasaran_model extends CI_Model {
 	private function _get_datatables_query() {
        	$user_username = $this->session->userdata('username');
 		
-		if ($this->session->userdata('level') == 'Admin') {
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+		if ($this->session->userdata('level', 'true') == 'Admin') {
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatus', 'true')) {
+            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusACC', 'true')) {
+            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
+        	}
+        	if ($this->input->post('lstStatusSurat', 'true')) {
+            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
         	}
 
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
@@ -27,11 +39,23 @@ class Pendasaran_model extends CI_Model {
 			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatus', 'true')) {
+            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusACC', 'true')) {
+            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
+        	}
+        	if ($this->input->post('lstStatusSurat', 'true')) {
+            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
         	}
 
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
@@ -87,11 +111,23 @@ class Pendasaran_model extends CI_Model {
         $user_username = $this->session->userdata('username');
 		
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstPasar')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+			if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatus', 'true')) {
+            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusACC', 'true')) {
+            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
+        	}
+        	if ($this->input->post('lstStatusSurat', 'true')) {
+            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
         	}
 
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
@@ -101,11 +137,23 @@ class Pendasaran_model extends CI_Model {
 			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstPasar')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar'));
+			if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatus', 'true')) {
+            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusACC', 'true')) {
+            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
+        	}
+        	if ($this->input->post('lstStatusSurat', 'true')) {
+            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
         	}
 
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
@@ -366,7 +414,7 @@ class Pendasaran_model extends CI_Model {
 		$dasar_id = $this->uri->segment(4);
 
 		$data = array(
-				'dasar_acc' => 1
+				'dasar_acc' => 2
 		);
 
 		$this->db->where('dasar_id', $dasar_id);
@@ -467,7 +515,7 @@ class Pendasaran_model extends CI_Model {
 		$dasar_id    	= $this->uri->segment(4);
 
 		$data = array(
-				'dasar_st_print'		=> 1,
+				'dasar_st_print'		=> 2,
 				'dasar_tgl_print'		=> date('Y-m-d'),
 		   		'user_username' 		=> $this->session->userdata('username'),
 		   		'dasar_date_update' 	=> date('Y-m-d'),
@@ -542,7 +590,7 @@ class Pendasaran_model extends CI_Model {
 
 		// Update Surat Lama jadi di Perpanjang
 		$data = array(
-				'dasar_data'		=> 1
+				'dasar_data'		=> 2
 			);
 
 		$this->db->where('dasar_id', $dasar_id);
@@ -600,10 +648,10 @@ class Pendasaran_model extends CI_Model {
 
 	function update_data_acc_all() {
 		$data = array(
-				'dasar_acc' => 1
+				'dasar_acc' => 2
 		);
 
-		$this->db->where('dasar_acc', 0);
+		$this->db->where('dasar_acc', 1);
 		$this->db->update('sipp_dasar', $data);
 	}
 }

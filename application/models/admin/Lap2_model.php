@@ -34,10 +34,10 @@ class Lap2_model extends CI_Model {
 	}
 
 	function select_by_criteria() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
 		
 		if ($tempat_id == 'all') {
 			$this->db->select('d.*, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
@@ -48,7 +48,7 @@ class Lap2_model extends CI_Model {
 			$this->db->where('d.pasar_id', $pasar_id);
 			$this->db->where('MONTH(dasar_sampai)', $bulan);
 			$this->db->where('YEAR(dasar_sampai)', $tahun);
-			$this->db->where('d.dasar_data', 0);
+			$this->db->where('d.dasar_data', 1);
 			$this->db->order_by('d.pasar_id','asc');
 			$this->db->order_by('d.tempat_id','asc');
 			$this->db->order_by('d.penduduk_id','asc');
@@ -64,7 +64,7 @@ class Lap2_model extends CI_Model {
 			$this->db->where('MONTH(dasar_sampai)', $bulan);
 			$this->db->where('YEAR(dasar_sampai)', $tahun);
 			$this->db->where('d.tempat_id', $tempat_id);
-			$this->db->where('d.dasar_data', 0);
+			$this->db->where('d.dasar_data', 1);
 			$this->db->order_by('d.pasar_id','asc');
 			$this->db->order_by('d.tempat_id','asc');
 			$this->db->order_by('d.penduduk_id','asc');
@@ -87,7 +87,7 @@ class Lap2_model extends CI_Model {
 		$this->db->where('MONTH(dasar_sampai)', $bulan);
 		$this->db->where('YEAR(dasar_sampai)', $tahun);
 		$this->db->where('d.tempat_id', $tempat_id);
-		$this->db->where('d.dasar_data', 0);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->order_by('d.pasar_id','asc');
 		$this->db->order_by('d.tempat_id','asc');
 		$this->db->order_by('d.penduduk_id','asc');
@@ -110,7 +110,7 @@ class Lap2_model extends CI_Model {
 		$this->db->where('MONTH(dasar_sampai)', $bulan);
 		$this->db->where('YEAR(dasar_sampai)', $tahun);
 		$this->db->where('d.tempat_id', $tempat_id);
-		$this->db->where('d.dasar_data', 0);
+		$this->db->where('d.dasar_data', 1);
 		$this->db->order_by('d.pasar_id','asc');
 		$this->db->order_by('d.tempat_id','asc');
 		$this->db->order_by('d.penduduk_id','asc');

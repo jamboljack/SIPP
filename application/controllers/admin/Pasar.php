@@ -81,7 +81,6 @@ class Pasar extends CI_Controller {
 		$data['listBentuk'] 	= $this->pasar_model->select_bentuk_bangunan()->result();
 		$data['listKondisi'] 	= $this->pasar_model->select_kondisi_bangunan()->result();
 		$data['listSurat'] 		= $this->pasar_model->select_surat_kepemilikan()->result();
-		//$data['listAlamat'] 	= $this->pasar_model->select_desa_kecamatan()->result();
 		$this->template->display('admin/pasar_add_view', $data);
 	}
 

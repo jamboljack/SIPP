@@ -15,7 +15,6 @@ class Retribusi extends CI_Controller {
 		{
 			$data['listPasar'] 	= $this->retribusi_model->select_pasar()->result();
 			$data['listTempat'] = $this->retribusi_model->select_tempat()->result();
-			//$data['daftarlist'] = $this->retribusi_model->select_all()->result();
 			$this->template->display('admin/retribusi_view', $data);
 		} else {
 			$this->session->sess_destroy();
@@ -74,7 +73,7 @@ class Retribusi extends CI_Controller {
 
             $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
 			$total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
-			if ($r->skrd_status == 0) {
+			if ($r->skrd_status == 1) {
 				$status = '<span class="label label-danger">BELUM BAYAR</span>';
 			} else {
             	$status = '<span class="label label-success">BAYAR</span>';
@@ -95,7 +94,7 @@ class Retribusi extends CI_Controller {
 								</button>
                                	</a>';
 				
-            if ($r->skrd_status==1) {
+            if ($r->skrd_status==2) {
             	$linkprint = site_url('admin/retribusi/printdata/'.$r->skrd_id);
             	$tombolprint = '<a href="'.$linkprint.'" target="_blank">
 								<button class="btn btn-default btn-xs" title="Cetak Surat Tagihan">

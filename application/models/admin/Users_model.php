@@ -16,24 +16,24 @@ class Users_model extends CI_Model {
 	function insert_data() {
 		if (!empty($_FILES['userfile']['name'])) {
 			$data = array(    			
-	    			'user_username' 		=> trim($this->input->post('username')),
-	    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-	    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-	    			'user_level' 			=> trim($this->input->post('lstLevel')),
+	    			'user_username' 		=> trim($this->input->post('username', 'true')),
+	    			'user_password' 		=> sha1(trim($this->input->post('password', 'true'))),
+	    			'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+	    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 	    			'user_avatar' 			=> $this->upload->file_name,
 	    			'user_date_update' 		=> date('Y-m-d'),
 	    			'user_time_update' 		=> date('Y-m-d H:i:s')
 				);
 		} else {
 			$data = array(    			
-	    			'user_username' 		=> trim($this->input->post('username')),
-	    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-	    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-	    			'user_level' 			=> trim($this->input->post('lstLevel')),
+	    			'user_username' 		=> trim($this->input->post('username', 'true')),
+	    			'user_password' 		=> sha1(trim($this->input->post('password', 'true'))),
+	    			'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+	    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+	    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+	    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 	    			'user_date_update' 		=> date('Y-m-d'),
 	    			'user_time_update' 		=> date('Y-m-d H:i:s')  			
 				);
@@ -51,28 +51,28 @@ class Users_model extends CI_Model {
 	}
 
 	function update_data() {
-		$user_username  = $this->input->post('id');
-		$password 		= trim($this->input->post('password'));
+		$user_username  = $this->input->post('id', 'true');
+		$password 		= trim($this->input->post('password', 'true'));
 
 		if (!empty($password)) { // Jika Password Diisi / Change Password
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(	    			
-		    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+		    			'user_password' 		=> sha1(trim($this->input->post('password', 'true'))),
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 		    			'user_avatar' 			=> $this->upload->file_name,
 		    			'user_date_update' 		=> date('Y-m-d'),
 		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			} else {
 				$data = array(	    			
-		    			'user_password' 		=> sha1(trim($this->input->post('password'))),
-		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-		    			'user_level' 			=> trim($this->input->post('lstLevel')),		    			
+		    			'user_password' 		=> sha1(trim($this->input->post('password', 'true'))),
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 		    			'user_date_update' 		=> date('Y-m-d'),
 		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
@@ -80,20 +80,20 @@ class Users_model extends CI_Model {
 		} else {
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(
-		    			'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+		    			'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 		    			'user_avatar' 			=> $this->upload->file_name,
 		    			'user_date_update' 		=> date('Y-m-d'),
 		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
 			} else {
 				$data = array(		    					    			
-	    				'user_name' 			=> strtoupper(trim($this->input->post('name'))),
-		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat'))),
-		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp'))),
-		    			'user_level' 			=> trim($this->input->post('lstLevel')),
+	    				'user_name' 			=> strtoupper(trim($this->input->post('name', 'true'))),
+		    			'user_address' 			=> strtoupper(trim($this->input->post('alamat', 'true'))),
+		    			'user_phone' 			=> strtoupper(trim($this->input->post('telp', 'true'))),
+		    			'user_level' 			=> trim($this->input->post('lstLevel', 'true')),
 		    			'user_date_update' 		=> date('Y-m-d'),
 		    			'user_time_update' 		=> date('Y-m-d H:i:s')
 					);
@@ -125,7 +125,7 @@ class Users_model extends CI_Model {
 	function insert_data_akses() {
 		$data = array(		
 	    		'user_username' 	=> trim($this->uri->segment(4)),
-	    		'pasar_id' 			=> trim($this->input->post('lstPasar'))
+	    		'pasar_id' 			=> trim($this->input->post('lstPasar', 'true'))
 			);
 		
 		$this->db->insert('sipp_akses', $data);

@@ -66,7 +66,7 @@ class Kelas_model extends CI_Model {
 	
 	function insert_data() {		
 		$data = array(
-				'kelas_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'kelas_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'kelas_date_update' 	=> date('Y-m-d'),
 		   		'kelas_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -75,10 +75,10 @@ class Kelas_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$kelas_id     = $this->input->post('id');
+		$kelas_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'kelas_nama'			=> strtoupper(trim($this->input->post('nama'))),				
+				'kelas_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),				
 		   		'kelas_date_update' 	=> date('Y-m-d'),
 		   		'kelas_time_update' 	=> date('Y-m-d H:i:s')
 		);

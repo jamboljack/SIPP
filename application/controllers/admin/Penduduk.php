@@ -29,7 +29,7 @@ class Penduduk extends CI_Controller {
 	public function updatedata() {
 		if (!empty($_FILES['userfile']['name'])) {
 			$jam 	= time();
-			$kode 	= seo_title($this->input->post('nama'));
+			$kode 	= seo_title($this->input->post('nama', 'true'));
 					
 			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 			$config['upload_path'] = './penduduk_image/';

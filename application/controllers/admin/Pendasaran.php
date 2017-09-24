@@ -41,7 +41,7 @@ class Pendasaran extends CI_Controller {
             $row[] = ucwords($r->pasar_nama).'<br>'.$r->tempat_nama.' Blok '.$r->dasar_blok.' Nomor '.$r->dasar_nomor.' Luas '.$r->dasar_luas.' m2';
 
             // Status NPWRD
-            if ($r->dasar_status=='Baru') {
+            if ($r->dasar_status == 'Baru') {
             	$status = '<span class="label label-info"><i class="fa fa-plus-circle"></i> '.$r->dasar_status.'</span>';
             } elseif ($r->dasar_status=='Perpanjangan') {
             	$status = '<span class="label label-warning"><i class="fa fa-copy (alias)"></i> '.$r->dasar_status.'</span>';
@@ -50,16 +50,16 @@ class Pendasaran extends CI_Controller {
             }
 
             // Status Print
-            if ($r->dasar_st_print == 1) {
+            if ($r->dasar_st_print == 2) {
             	$statusprint = '<span class="label label-warning"><i class="fa fa-print"></i> Di Cetak</span>';
-            } else {
+            } elseif ($r->dasar_st_print == 1) {
             	$statusprint = '<span class="label label-danger"><i class="fa fa-print"></i> Belum Cetak</span>';
             }
             
             // Status ACC
-            if ($r->dasar_acc == 0) {
+            if ($r->dasar_acc == 1) {
             	$statusacc 	= '<span class="label label-warning"><i class="fa fa-times-circle"></i> Belum ACC SPV</span>';
-            } else {
+            } elseif ($r->dasar_acc == 2) {
             	$statusacc = '<span class="label label-success"><i class="fa fa-check-square"></i> ACC SPV</span>';
             }
             
@@ -73,7 +73,7 @@ class Pendasaran extends CI_Controller {
 	                </button>
 	                </a>';
             
-            if ($r->dasar_acc == 1) {
+            if ($r->dasar_acc == 2) {
 	            $linkprint = site_url('admin/pendasaran/printdata/'.$r->dasar_id);
 				$print = '<a href="'.$linkprint.'">
 						<button class="btn btn-default btn-xs" title="Cetak Surat Pendasaran">
@@ -85,7 +85,7 @@ class Pendasaran extends CI_Controller {
 			}
 
 
-			if ($this->session->userdata('level') <> 'Operator' && $r->dasar_acc == 0) {
+			if ($this->session->userdata('level') <> 'Operator' && $r->dasar_acc == 1) {
 	            $tombolacc = '<a onclick="ACCData('.$dasar_id.')">
 	            				<button class="btn btn-success btn-xs" title="ACC"><i class="icon-check"></i> ACC Data</button>
 	            			</a>';
@@ -93,7 +93,7 @@ class Pendasaran extends CI_Controller {
 				$tombolacc = '';
 			}
 			
-			if ($r->dasar_st_print == 1) {
+			if ($r->dasar_st_print == 2) {
 	            $linkperpanjang = site_url('admin/pendasaran/perpanjangan/'.$r->dasar_id);			
 	           	$tombolperpanjang = '<a href="'.$linkperpanjang.'">
 	           						<button class="btn btn-warning btn-xs" title="Perpanjangan Surat">
@@ -110,7 +110,7 @@ class Pendasaran extends CI_Controller {
                             </button>
                             </a>';
             
-            if ($r->dasar_data == 0) {
+            if ($r->dasar_data == 1) {
             	$row[] = $edit.''.$print.''.$tombolacc.''.$tombolperpanjang.''.$tombolhapus;
             } else {
             	$row[] = '<span class="label label-danger"><i class="fa fa-remove (alias)"></i> Tidak Berlaku</span>';
@@ -136,7 +136,7 @@ class Pendasaran extends CI_Controller {
 
 	public function caridatapenduduk() {
 		$data['tampil']			= 'ya';
-		$nama 					= strtoupper(trim($this->input->post('nama')));
+		$nama 					= strtoupper(trim($this->input->post('nama', 'true')));
 		$data['listPenduduk'] 	= $this->pendasaran_model->select_penduduk_cari($nama)->result();
 		$this->template->display('admin/penduduk_pilih_view', $data);
 	}
@@ -175,7 +175,7 @@ class Pendasaran extends CI_Controller {
 		} else {
 			if (!empty($_FILES['userfile']['name'])) {
 				$jam 	= time();
-				$kode 	= seo_title($this->input->post('nama'));
+				$kode 	= seo_title($this->input->post('nama', true));
 
 				$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 				$config['upload_path'] = './penduduk_image/';
@@ -197,7 +197,7 @@ class Pendasaran extends CI_Controller {
 			}
 
 			// Simpan ke Tabel Pedagang
-			$tgl_lahir 		= $this->input->post('tgl_lahir');
+			$tgl_lahir 		= $this->input->post('tgl_lahir', 'true');
 			$xtgl 			= explode("-",$tgl_lahir);
 			$thn 			= $xtgl[2];
 			$bln 			= $xtgl[1];
@@ -206,17 +206,17 @@ class Pendasaran extends CI_Controller {
 
 			if (!empty($_FILES['userfile']['name'])) {
 				$data = array(
-						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
-						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
+						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir', 'true'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
-						'penduduk_jk'			=> $this->input->post('rdJk'),
-						'provinsi_id'			=> $this->input->post('lstProvinsi'),
-						'kabupaten_id'			=> $this->input->post('lstKabupaten'),
-						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
-						'desa_id'				=> $this->input->post('lstKelurahan'),
-						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
+						'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+						'provinsi_id'			=> $this->input->post('lstProvinsi', 'true'),
+						'kabupaten_id'			=> $this->input->post('lstKabupaten', 'true'),
+						'kecamatan_id'			=> $this->input->post('lstKecamatan', 'true'),
+						'desa_id'				=> $this->input->post('lstKelurahan', 'true'),
+						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
 						'penduduk_foto' 		=> $this->upload->file_name,
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
@@ -224,17 +224,17 @@ class Pendasaran extends CI_Controller {
 				);
 			} else {
 				$data = array(
-						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik'))),
-						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk'))),
-						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama'))),
-						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir'))),
+						'penduduk_nik'			=> strtoupper(trim($this->input->post('nik', 'true'))),
+						'penduduk_no_kk'		=> strtoupper(trim($this->input->post('no_kk', 'true'))),
+						'penduduk_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
+						'penduduk_tmpt_lhr'		=> strtoupper(trim($this->input->post('tmpt_lahir', 'true'))),
 						'penduduk_tgl_lahir'	=> $tanggal_lhr,
-						'penduduk_jk'			=> $this->input->post('rdJk'),
-						'provinsi_id'			=> $this->input->post('lstProvinsi'),
-						'kabupaten_id'			=> $this->input->post('lstKabupaten'),
-						'kecamatan_id'			=> $this->input->post('lstKecamatan'),
-						'desa_id'				=> $this->input->post('lstKelurahan'),
-						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat'))),
+						'penduduk_jk'			=> $this->input->post('rdJk', 'true'),
+						'provinsi_id'			=> $this->input->post('lstProvinsi', 'true'),
+						'kabupaten_id'			=> $this->input->post('lstKabupaten', 'true'),
+						'kecamatan_id'			=> $this->input->post('lstKecamatan', 'true'),
+						'desa_id'				=> $this->input->post('lstKelurahan', 'true'),
+						'penduduk_alamat'		=> strtoupper(trim($this->input->post('alamat', 'true'))),
 				   		'user_username' 		=> $this->session->userdata('username'),
 				   		'penduduk_date_update' 	=> date('Y-m-d'),
 				   		'penduduk_time_update' 	=> date('Y-m-d H:i:s')
@@ -258,7 +258,7 @@ class Pendasaran extends CI_Controller {
 	public function savedata() {
 		if (!empty($_FILES['userfile']['name'])) {
 			$jam 	= time();
-			$kode 	= $this->input->post('penduduk_id');
+			$kode 	= $this->input->post('penduduk_id', 'true');
 
 			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 			$config['upload_path'] = './penduduk_image/';
@@ -301,7 +301,7 @@ class Pendasaran extends CI_Controller {
 	public function updatedata() {
 		if (!empty($_FILES['userfile']['name'])) {
 			$jam 	= time();
-			$kode 	= $this->input->post('penduduk_id');
+			$kode 	= $this->input->post('penduduk_id', 'true');
 
 			$config['file_name']    = 'Penduduk_'.$kode.'_'.$jam.'.jpg';
 			$config['upload_path'] = './penduduk_image/';
@@ -330,7 +330,7 @@ class Pendasaran extends CI_Controller {
 		$data['detail'] = $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 		$cek 			= $this->pendasaran_model->select_detail_by_id($dasar_id)->row();
 
-		if ($cek->dasar_st_print == 0) {
+		if ($cek->dasar_st_print == 1) {
 			$this->pendasaran_model->update_data_print();
 		}
 		$this->template->display('admin/pendasaran_preview_view', $data);

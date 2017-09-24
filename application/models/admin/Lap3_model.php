@@ -34,11 +34,11 @@ class Lap3_model extends CI_Model {
 	}
 
 	function select_by_criteria() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
-		$status 	= trim($this->input->post('lstStatus')); // Status
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
+		$status 	= trim($this->input->post('lstStatus', 'true')); // Status
 		
 		if ($tempat_id == 'all' && $status == 'all') { // Semua Tempat dan Semua Status
 			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, 

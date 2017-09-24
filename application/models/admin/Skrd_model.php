@@ -13,42 +13,54 @@ class Skrd_model extends CI_Model {
        	$user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
 			}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
-			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
 			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
+			}
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
-			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
 			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
@@ -101,42 +113,54 @@ class Skrd_model extends CI_Model {
         $user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
 			}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
-			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
 			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
+			}
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstStatusCetak', 'true')) {
+            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
-			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
 			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
 			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
@@ -150,10 +174,10 @@ class Skrd_model extends CI_Model {
     }
 
 	function select_by_criteria() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= $this->input->post('lstPasar');
-		$tempat_id 	= $this->input->post('lstTempat');
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun','true');
+		$pasar_id	= $this->input->post('lstPasar','true');
+		$tempat_id 	= $this->input->post('lstTempat','true');
 
 		if ($tempat_id == 'all') {
 			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas,
@@ -166,6 +190,8 @@ class Skrd_model extends CI_Model {
 			$this->db->where('s.skrd_bulan', $bulan);
 			$this->db->where('s.skrd_tahun', $tahun);
 			$this->db->where('s.pasar_id', $pasar_id);
+			$this->db->where('s.skrd_st_print', 1); // Belum di Print
+			$this->db->where('s.skrd_status', 1); // Belum di Bayar
 			$this->db->order_by('s.skrd_id','asc');
 
 			return $this->db->get();
@@ -181,6 +207,8 @@ class Skrd_model extends CI_Model {
 			$this->db->where('s.skrd_tahun', $tahun);
 			$this->db->where('s.pasar_id', $pasar_id);
 			$this->db->where('s.tempat_id', $tempat_id);
+			$this->db->where('s.skrd_st_print', 1); // Belum di Print
+			$this->db->where('s.skrd_status', 1); // Belum di Bayar
 			$this->db->order_by('s.skrd_id','asc');
 
 			return $this->db->get();
@@ -220,36 +248,37 @@ class Skrd_model extends CI_Model {
 	}
 
 	function select_pedagang($pasar_id) {
-		$tempat_id 	= $this->input->post('lstTempat');
+		$tempat_id 	= $this->input->post('lstTempat', 'true');
 
 		$this->db->select('*');
 		$this->db->from('sipp_dasar');
 		$this->db->where('pasar_id', $pasar_id);
 		$this->db->where('tempat_id', $tempat_id);
-		$this->db->where('dasar_data', 0); // Aktif
-		$this->db->where('dasar_acc', 1); // ACC
+		$this->db->where('dasar_data', 1); // Masih Berlaku
+		$this->db->where('dasar_acc', 2); // Sudah ACC
 		$this->db->order_by('dasar_id', 'asc');
 
 		return $this->db->get();
 	}
 
 	function select_skrd($dasar_id) {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
 
 		$this->db->select('*');
 		$this->db->from('sipp_skrd');
 		$this->db->where('dasar_id', $dasar_id);
 		$this->db->where('skrd_bulan', $bulan); // Bulan
 		$this->db->where('skrd_tahun', $tahun); // Bulan
+		$this->db->where('skrd_status', 2); // Sudah Bayar
 
 		return $this->db->get();
 	}
 
 	function no_urut() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= $this->input->post('lstPasar');
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= $this->input->post('lstPasar', 'true');
 
 		$this->db->select('LEFT(skrd_no, 5) as kode', FALSE);
 		$this->db->where('skrd_bulan', $bulan);
@@ -280,11 +309,11 @@ class Skrd_model extends CI_Model {
 	}
 
 	function insert_data($dasar_id) {
-		$bln    	= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$tempat_id 	= $this->input->post('lstTempat');
-		$kelas_id 	= $this->input->post('kelas_id');
-		$pasar_id	= $this->input->post('lstPasar');
+		$bln    	= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$tempat_id 	= $this->input->post('lstTempat', 'true');
+		$kelas_id 	= $this->input->post('kelas_id', 'true');
+		$pasar_id	= $this->input->post('lstPasar', 'true');
 
 		$tglAkhir 	= tglAkhirBulan($tahun, $bln); // Cari Tgl. AKhir Bulan
 		$Tgl_tempo 	= $tahun.'-'.$bln.'-'.$tglAkhir; // Tgl. Tempo
@@ -328,8 +357,8 @@ class Skrd_model extends CI_Model {
                 break;
         }
 
-		$kode_tempat= $this->input->post('kode_tempat'); // Kode Tempat
-		$kode_pasar	= $this->input->post('kode_pasar'); // Kode Pasar
+		$kode_tempat= $this->input->post('kode_tempat', 'true'); // Kode Tempat
+		$kode_pasar	= $this->input->post('kode_pasar', 'true'); // Kode Pasar
 		$nourut 	= $this->skrd_model->no_urut(); // No Urut SKRD
 		$no_skrd 	= $nourut.'/'.$kode_tempat.'/511.2/'.$kode_pasar.'/'.$bulan.'/'.$tahun;
 
@@ -449,14 +478,14 @@ class Skrd_model extends CI_Model {
 	}
 
 	function update_data_item() {
-		$item_id     = $this->input->post('id');
+		$item_id     = $this->input->post('id', 'true');
 
 		$data = array(
-				'item_luas'				=> $this->input->post('luas'),
-				'item_tarif'			=> $this->input->post('harga'),
-				'item_satuan'			=> $this->input->post('satuan'),
-				'item_hari'				=> $this->input->post('hari'),
-				'item_subtotal'			=> $this->input->post('subtotal'),
+				'item_luas'				=> $this->input->post('luas', 'true'),
+				'item_tarif'			=> $this->input->post('harga', 'true'),
+				'item_satuan'			=> $this->input->post('satuan', 'true'),
+				'item_hari'				=> $this->input->post('hari', 'true'),
+				'item_subtotal'			=> $this->input->post('subtotal', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'item_date_update' 		=> date('Y-m-d'),
 			   	'item_time_update' 		=> date('Y-m-d H:i:s')
@@ -466,7 +495,7 @@ class Skrd_model extends CI_Model {
 		$this->db->update('sipp_skrd_item', $data);
 
 		//Total Retribusi
-		$skrd_id 	= $this->input->post('skrd_id');
+		$skrd_id 	= $this->input->post('skrd_id', 'true');
 		$Total  	= $this->skrd_model->select_total($skrd_id)->row();
 		$Total  	= $Total->total;
 
@@ -482,8 +511,8 @@ class Skrd_model extends CI_Model {
 		$skrd_id     = $this->input->post('id');
 
 		$data = array(
-				'skrd_bunga'		=> $this->input->post('bunga'),
-				'skrd_kenaikan'		=> $this->input->post('kenaikan'),
+				'skrd_bunga'		=> $this->input->post('bunga', 'true'),
+				'skrd_kenaikan'		=> $this->input->post('kenaikan', 'true'),
 			   	'user_username' 	=> $this->session->userdata('username'),
 			   	'skrd_date_update' 	=> date('Y-m-d'),
 			   	'skrd_time_update' 	=> date('Y-m-d H:i:s')
@@ -513,7 +542,8 @@ class Skrd_model extends CI_Model {
 			$this->db->where('skrd_bulan', $bulan);
 			$this->db->where('skrd_tahun', $tahun);
 			$this->db->where('pasar_id', $pasar_id);
-			$this->db->where('skrd_st_print', 0);
+			$this->db->where('skrd_st_print', 1); // Belum di Print
+			$this->db->where('skrd_status', 1); // Belum di Bayar
 			$this->db->order_by('skrd_id', 'asc');
 
 			return $this->db->get();
@@ -524,7 +554,8 @@ class Skrd_model extends CI_Model {
 			$this->db->where('skrd_tahun', $tahun);
 			$this->db->where('pasar_id', $pasar_id);
 			$this->db->where('tempat_id', $tempat_id);
-			$this->db->where('skrd_st_print', 0);
+			$this->db->where('skrd_st_print', 1); // Belum di Print
+			$this->db->where('skrd_status', 1); // Belum di Bayar
 			$this->db->order_by('skrd_id', 'asc');
 
 			return $this->db->get();
@@ -532,7 +563,8 @@ class Skrd_model extends CI_Model {
 	}
 
 	function delete_data_skrd() {
-		$hapus 		= $this->skrd_model->select_skrd_hapus()->result();		
+		$hapus 		= $this->skrd_model->select_skrd_hapus()->result();	
+
 		foreach($hapus as $i) {
 			$skrd_id = $i->skrd_id;
 			$this->db->where('skrd_id', $skrd_id);
@@ -547,7 +579,7 @@ class Skrd_model extends CI_Model {
 		$skrd_id    	= $this->uri->segment(4);
 
 		$data = array(
-				'skrd_st_print'			=> 1,
+				'skrd_st_print'			=> 2,
 				'skrd_tgl_print'		=> date('Y-m-d'),
 		   		'user_username' 		=> $this->session->userdata('username'),
 		   		'skrd_date_update' 		=> date('Y-m-d'),

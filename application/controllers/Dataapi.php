@@ -85,7 +85,7 @@ class Dataapi extends REST_Controller {
                 $this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
                 $this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
                 $this->db->where('d.dasar_npwrd', $id);
-                $this->db->where('s.skrd_status', 0);
+                $this->db->where('s.skrd_status', 1);
                 $this->db->group_by('d.dasar_npwrd');
 
                 $dataTagihan = $this->db->get()->row();
@@ -144,7 +144,7 @@ class Dataapi extends REST_Controller {
                 $this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
                 $this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
                 $this->db->where('d.dasar_npwrd', $id);
-                $this->db->where('s.skrd_status', 0);
+                $this->db->where('s.skrd_status', 1);
 
                 $ListTagihan    = $this->db->get()->result();
                 if (count($ListTagihan) > 0) {
@@ -152,7 +152,7 @@ class Dataapi extends REST_Controller {
                         $skrd_id = $row->skrd_id;
                         $data = array(
                                         'skrd_tgl_bayar'    => date('Y-m-d'),
-                                        'skrd_status'       => 1,
+                                        'skrd_status'       => 2,
                                         'skrd_bayar'        => $row->skrd_total,
                                         'skrd_kembali'      => 0,
                                         'skrd_date_update'  => date('Y-m-d'),
@@ -207,7 +207,7 @@ class Dataapi extends REST_Controller {
                 $this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
                 $this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
                 $this->db->where('d.dasar_npwrd', $id);
-                $this->db->where('s.skrd_status', 1);
+                $this->db->where('s.skrd_status', 2);
 
                 $ListTagihan    = $this->db->get()->result();
                 if (count($ListTagihan) > 0) {
@@ -215,7 +215,7 @@ class Dataapi extends REST_Controller {
                         $skrd_id = $row->skrd_id;
                         $data = array(
                                         'skrd_tgl_bayar'    => '',
-                                        'skrd_status'       => 0,
+                                        'skrd_status'       => 1,
                                         'skrd_bayar'        => 0,
                                         'skrd_kembali'      => 0,
                                         'skrd_date_update'  => date('Y-m-d'),

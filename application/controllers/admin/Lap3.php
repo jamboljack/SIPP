@@ -22,11 +22,11 @@ class Lap3 extends CI_Controller{
 	}
 
 	public function caridata() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= trim($this->input->post('lstPasar'));
-		$tempat_id 	= trim($this->input->post('lstTempat'));
-		$status 	= trim($this->input->post('lstStatus')); // Status
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= trim($this->input->post('lstPasar', 'true'));
+		$tempat_id 	= trim($this->input->post('lstTempat', 'true'));
+		$status 	= trim($this->input->post('lstStatus', 'true')); // Status
 
 		$data = array(
 			'Pasar' 	=> $pasar_id,

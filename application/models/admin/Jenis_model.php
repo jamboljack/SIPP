@@ -88,7 +88,7 @@ class Jenis_model extends CI_Model {
 
 		$data = array(
 				'jenis_kode'			=> $Kode_Jenis,
-				'jenis_nama'			=> strtoupper(trim($this->input->post('nama'))),
+				'jenis_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),
 		   		'jenis_date_update' 	=> date('Y-m-d'),
 		   		'jenis_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -97,10 +97,10 @@ class Jenis_model extends CI_Model {
 	}	
 
 	function update_data() {
-		$jenis_id     = $this->input->post('id');
+		$jenis_id     = $this->input->post('id', 'true');
 		
 		$data = array(
-				'jenis_nama'			=> strtoupper(trim($this->input->post('nama'))),				
+				'jenis_nama'			=> strtoupper(trim($this->input->post('nama', 'true'))),				
 		   		'jenis_date_update' 	=> date('Y-m-d'),
 		   		'jenis_time_update' 	=> date('Y-m-d H:i:s')
 		);

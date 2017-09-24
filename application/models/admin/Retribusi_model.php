@@ -9,57 +9,24 @@ class Retribusi_model extends CI_Model {
 		parent::__construct();
 	}
 
-	/*function select_all() {
-		$user_username 	= $this->session->userdata('username');
-		$bulan 			= date('m');
-		$tahun 			= date('Y');
-
-		if ($this->session->userdata('level') == 'Admin') {
-			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas,
-				p.penduduk_nama, r.pasar_nama, t.tempat_nama');
-			$this->db->from('sipp_skrd s');
-			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
-			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
-			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-			$this->db->where('s.skrd_bulan', $bulan);
-			$this->db->where('s.skrd_tahun', $tahun);
-			$this->db->order_by('s.skrd_id','asc');
-
-			return $this->db->get();
-		} else {
-			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas,
-				p.penduduk_nama, r.pasar_nama, t.tempat_nama');
-			$this->db->from('sipp_skrd s');
-			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
-			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
-			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-			$this->db->join('sipp_akses a', 'r.pasar_id = a.pasar_id');
-			$this->db->where('a.user_username', $user_username);
-			$this->db->where('s.skrd_bulan', $bulan);
-			$this->db->where('s.skrd_tahun', $tahun);
-			$this->db->order_by('s.skrd_id','asc');
-
-			return $this->db->get();
-		}
-	}*/
-
 	private function _get_datatables_query() {
        	$user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
 			}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
@@ -70,17 +37,20 @@ class Retribusi_model extends CI_Model {
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
+			}
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
@@ -137,17 +107,20 @@ class Retribusi_model extends CI_Model {
         $user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
 			}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
@@ -158,17 +131,20 @@ class Retribusi_model extends CI_Model {
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan'));
+			if ($this->input->post('lstBulan', 'true')) {
+            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
+			}
+        	if ($this->input->post('tahun', 'true')) {
+            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
         	}
-        	if ($this->input->post('tahun')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun'));
+        	if ($this->input->post('lstPasar', 'true')) {
+            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
         	}
-        	if ($this->input->post('lstPasar')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar'));
+        	if ($this->input->post('lstTempat', 'true')) {
+            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
-        	if ($this->input->post('lstTempat')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat'));
+        	if ($this->input->post('lstStatusBayar', 'true')) {
+            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
 
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
@@ -186,10 +162,10 @@ class Retribusi_model extends CI_Model {
     }
 
 	function select_by_criteria() {
-		$bulan 		= $this->input->post('lstBulan');
-		$tahun 		= $this->input->post('tahun');
-		$pasar_id	= $this->input->post('lstPasar');
-		$tempat_id 	= $this->input->post('lstTempat');
+		$bulan 		= $this->input->post('lstBulan', 'true');
+		$tahun 		= $this->input->post('tahun', 'true');
+		$pasar_id	= $this->input->post('lstPasar', 'true');
+		$tempat_id 	= $this->input->post('lstTempat', 'true');
 
 		if ($tempat_id == 'all') {
 			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas,
@@ -293,14 +269,14 @@ class Retribusi_model extends CI_Model {
 	}
 
 	function update_data_item() {
-		$item_id     = $this->input->post('id');
+		$item_id     = $this->input->post('id', 'true');
 
 		$data = array(
-				'item_luas'				=> $this->input->post('luas'),
-				'item_tarif'			=> $this->input->post('harga'),
-				'item_satuan'			=> $this->input->post('satuan'),
-				'item_hari'				=> $this->input->post('hari'),
-				'item_subtotal'			=> $this->input->post('subtotal'),
+				'item_luas'				=> $this->input->post('luas', 'true'),
+				'item_tarif'			=> $this->input->post('harga', 'true'),
+				'item_satuan'			=> $this->input->post('satuan', 'true'),
+				'item_hari'				=> $this->input->post('hari', 'true'),
+				'item_subtotal'			=> $this->input->post('subtotal', 'true'),
 			   	'user_username' 		=> $this->session->userdata('username'),
 			   	'item_date_update' 		=> date('Y-m-d'),
 			   	'item_time_update' 		=> date('Y-m-d H:i:s')
@@ -310,7 +286,7 @@ class Retribusi_model extends CI_Model {
 		$this->db->update('sipp_skrd_item', $data);
 
 		//Total Retribusi
-		$skrd_id 	= $this->input->post('skrd_id');
+		$skrd_id 	= $this->input->post('skrd_id', 'true');
 		$Total  	= $this->skrd_model->select_total($skrd_id)->row();
 		$Total  	= $Total->total;
 
@@ -327,9 +303,9 @@ class Retribusi_model extends CI_Model {
 
 		$data = array(
 				'skrd_tgl_bayar'	=> date('Y-m-d'),
-				'skrd_status'		=> 1,
-				'skrd_bayar'		=> $this->input->post('jumlahbayar'),
-				'skrd_kembali'		=> $this->input->post('kembalian'),
+				'skrd_status'		=> 2,
+				'skrd_bayar'		=> $this->input->post('jumlahbayar', 'true'),
+				'skrd_kembali'		=> $this->input->post('kembalian', 'true'),
 			   	'user_username' 	=> $this->session->userdata('username'),
 			   	'skrd_date_update' 	=> date('Y-m-d'),
 			   	'skrd_time_update' 	=> date('Y-m-d H:i:s')
@@ -342,7 +318,8 @@ class Retribusi_model extends CI_Model {
 	function delete_data($kode) {
 		$data = array(
 				'skrd_tgl_bayar'	=> '',
-				'skrd_status'		=> 0,
+				'skrd_status'		=> 1,
+				'skrd_bayar'		=> 0,
 			   	'user_username' 	=> $this->session->userdata('username'),
 			   	'skrd_date_update' 	=> date('Y-m-d'),
 			   	'skrd_time_update' 	=> date('Y-m-d H:i:s')
