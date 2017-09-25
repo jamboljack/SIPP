@@ -4,7 +4,7 @@
 <meta name="keyword" content="">
 <link rel="shortcut icon" href="<?php echo base_url(); ?>img/kudus.jpg">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>SIPP | Login Form</title>
+<title>SIPP | Sistem Informasi Pedagang Pasar</title>
 
 <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>css/bootstrap-reset.css" rel="stylesheet">

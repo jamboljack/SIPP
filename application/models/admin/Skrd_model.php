@@ -25,6 +25,9 @@ class Skrd_model extends CI_Model {
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
+        	}
         	if ($this->input->post('lstStatusCetak', 'true')) {
             	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
         	}
@@ -51,6 +54,9 @@ class Skrd_model extends CI_Model {
         	}
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
         	}
         	if ($this->input->post('lstStatusCetak', 'true')) {
             	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
@@ -125,6 +131,9 @@ class Skrd_model extends CI_Model {
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
+        	}
         	if ($this->input->post('lstStatusCetak', 'true')) {
             	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
         	}
@@ -151,6 +160,9 @@ class Skrd_model extends CI_Model {
         	}
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
         	}
         	if ($this->input->post('lstStatusCetak', 'true')) {
             	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));

@@ -25,6 +25,9 @@ class Retribusi_model extends CI_Model {
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
+        	}
         	if ($this->input->post('lstStatusBayar', 'true')) {
             	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
@@ -48,6 +51,9 @@ class Retribusi_model extends CI_Model {
         	}
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
         	}
         	if ($this->input->post('lstStatusBayar', 'true')) {
             	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
@@ -119,6 +125,9 @@ class Retribusi_model extends CI_Model {
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
         	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
+        	}
         	if ($this->input->post('lstStatusBayar', 'true')) {
             	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
         	}
@@ -142,6 +151,9 @@ class Retribusi_model extends CI_Model {
         	}
         	if ($this->input->post('lstTempat', 'true')) {
             	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
+        	}
+        	if ($this->input->post('blok', 'true')) {
+            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
         	}
         	if ($this->input->post('lstStatusBayar', 'true')) {
             	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));

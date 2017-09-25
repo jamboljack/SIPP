@@ -133,6 +133,10 @@ if ($this->session->flashdata('notification')) { ?>
                                                 </select>
                                                 <div class="form-control-focus"></div>
                                             </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" placeholder="BLOK" name="blok" id="blok">
+                                                <div class="form-control-focus"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -233,7 +237,12 @@ $(document).ready(function() {
     table = $('#tableData').DataTable({ 
         "processing": true,
         "serverSide": true,
-        "order": [],
+        "order": [1, 'asc'],
+        "lengthMenu": [
+                [20, 50, 75, 100, -1],
+                [20, 50, 75, 100, "All"] // change per page values here
+        ],
+        "pageLength": 20,
         "ajax": {
             "url": "<?php echo site_url('admin/skrd/data_list')?>",
             "type": "post",
@@ -242,6 +251,7 @@ $(document).ready(function() {
                 data.tahun = $('#tahun').val();
                 data.lstPasar = $('#lstPasar').val();
                 data.lstTempat = $('#lstTempat').val();
+                data.blok = $('#blok').val();
                 data.lstStatusCetak = $('#lstStatusCetak').val();
                 data.lstStatusBayar = $('#lstStatusBayar').val();
             }

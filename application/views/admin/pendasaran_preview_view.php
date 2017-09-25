@@ -6,6 +6,7 @@
         });        
     });
 </script>
+
 <div class="page-content-wrapper">
     <div class="page-content">            
         <h3 class="page-title">

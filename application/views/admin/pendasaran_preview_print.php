@@ -94,6 +94,7 @@
 	}
 }
 </style>
+
 </head>
 
 <body>
@@ -186,6 +187,7 @@ if (!empty($tgl_sampai)) {
             <td width="35%">: Kudus</td>
         </tr>
         <tr>
+            <!--<span id="datetime"></span>-->
             <td>&nbsp;</td>
             <td>Pada Tanggal</td>
             <td>: <?php echo tgl_indo(date('Y-m-d')); ?></td>
@@ -226,3 +228,10 @@ if (!empty($tgl_sampai)) {
 
 </body>
 </html>
+
+<!-- Menampilkan Tanggal Client Side -->
+<!--<script src="<?php // echo base_url(); ?>assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+var dt = new Date();
+document.getElementById("datetime").innerHTML = dt.toLocaleDateString();
+</script>-->

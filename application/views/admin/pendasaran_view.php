@@ -108,7 +108,7 @@ if ($this->session->flashdata('notification')) { ?>
                                     <div class="col-md-4">
                                         <div class="form-group form-md-line-input">
                                             <label class="control-label col-md-3">Tempat</label>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                                 <select class="form-control" name="lstTempat" id="lstTempat">
                                                     <option value="">- SEMUA -</option>
                                                     <?php
@@ -119,6 +119,10 @@ if ($this->session->flashdata('notification')) { ?>
                                                     }
                                                     ?>
                                                 </select>
+                                                <div class="form-control-focus"></div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" placeholder="BLOK" name="blok" id="blok">
                                                 <div class="form-control-focus"></div>
                                             </div>
                                         </div>
@@ -203,6 +207,9 @@ if ($this->session->flashdata('notification')) { ?>
                 <i class="fa fa-check"></i> ACC Semua
             </button>
         </a>
+        <a href="<?php echo site_url('admin/pendasaran/excel'); ?>">
+            <button type="submit" class="btn btn-danger"><i class="fa fa-file-excel-o"></i> Excel</button>
+        </a>
         <?php } ?>
         <br><br>
         <div class="row">
@@ -244,19 +251,26 @@ if ($this->session->flashdata('notification')) { ?>
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+
 <script type="text/javascript">
 var table;
 $(document).ready(function() {
     table = $('#tableData').DataTable({ 
         "processing": true,
         "serverSide": true,
-        "order": [],
+        "order": [2, 'asc'],
+        "lengthMenu": [
+                [20, 50, 75, 100, -1],
+                [20, 50, 75, 100, "All"] // change per page values here
+        ],
+        "pageLength": 20,
         "ajax": {
             "type": "POST",
             "url": "<?php echo site_url('admin/pendasaran/data_list')?>",
             "data": function(data) {
                 data.lstPasar = $('#lstPasar').val();
                 data.lstTempat = $('#lstTempat').val();
+                data.blok = $('#blok').val();
                 data.lstStatus = $('#lstStatus').val();
                 data.lstStatusCetak = $('#lstStatusCetak').val();
                 data.lstStatusACC = $('#lstStatusACC').val();

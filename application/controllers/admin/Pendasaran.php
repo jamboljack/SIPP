@@ -6,14 +6,14 @@ class Pendasaran extends CI_Controller {
 		parent::__construct();
 		if(!$this->session->userdata('logged_in_sipp')) redirect(base_url());
 		$this->load->library('template');
+		$this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
 		$this->load->model('admin/pendasaran_model');
 		$this->load->model('admin/chain_model');
 	}
 
 	public function index()
 	{
-		if($this->session->userdata('logged_in_sipp'))
-		{
+		if($this->session->userdata('logged_in_sipp')) {
 			$data['listPasar'] 	= $this->pendasaran_model->select_pasar()->result();
 			$data['listTempat'] = $this->pendasaran_model->select_tempat()->result();
 			$this->template->display('admin/pendasaran_view', $data);
@@ -401,6 +401,215 @@ class Pendasaran extends CI_Controller {
 		$this->pendasaran_model->update_data_acc_all();
 		$this->session->set_flashdata('notification','Data Telah di ACC Semua.');
 	 	redirect(site_url('admin/pendasaran'));
+	}
+
+	public function excel() {
+    	$data['listPasar'] 	= $this->pendasaran_model->select_pasar()->result();
+		$data['listTempat'] = $this->pendasaran_model->select_tempat()->result();
+		$this->template->display('admin/pendasaran_excel_view', $data);
+    }
+
+    public function exportexcel() {
+		// Data Export
+		$List 	= $this->pendasaran_model->select_data_export()->result();
+		
+		if (count($List) > 0) {
+			// Setting Excel
+			$objPHPExcel = new PHPExcel();
+			// Set document properties
+			$objPHPExcel->getProperties()->setCreator("Jama' Rochmad Muttaqin")
+				->setLastModifiedBy("Laporan Detail Pendasaran Pedagang")
+				->setTitle("Data Detail Pendasaran Pedagang")
+				->setSubject("Data Detail Pendasaran Pedagang");
+			// Create the worksheet
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->setCellValue('A6', "NO")
+				->setCellValue('B6', "NO. NPWRD")
+				->setCellValue('C6', "NIK")
+				->setCellValue('D6', "NAMA PEDAGANG")
+				->setCellValue('E6', "TEMPAT LHR")
+				->setCellValue('F6', "TGL. LAHIR")
+				->setCellValue('G6', "ALAMAT")
+				->setCellValue('H6', "ALAMAT2")
+				->setCellValue('I6', "TEMPAT")
+				->setCellValue('J6', "BLOK")
+				->setCellValue('K6', "NO.")
+				->setCellValue('L6', "UKURAN")
+				->setCellValue('M6', "JENIS DAGANG")
+				->setCellValue('N6', "DARI TGL.")
+				->setCellValue('O6', "SAMPAI TGL.")
+				->setCellValue('P6', "STATUS")
+				->setCellValue('Q6', "BERLAKU")
+				->setCellValue('R6', "ACC")
+				->setCellValue('S6', "CETAK");
+
+			$dataArray = array();
+			$no = 0;
+
+			foreach ($List as $r) {
+				if ($r->dasar_data == 1) {
+	                $berlaku = 'Masih Berlaku';
+	            } else {
+	                $berlaku = 'Tidak Berlaku';
+	            }
+
+	            if ($r->dasar_acc == 1) {
+	                $acc = 'Belum ACC';
+	            } else {
+	                $acc = 'Sudah ACC';
+	            }
+
+	            if ($r->dasar_st_print == 1) {
+	                $print = 'Belum Di Cetak';
+	            } else {
+	                $print = 'Sudah Di Cetak';
+	            }
+
+				$no++;
+				$row_array['no'] 		= $no;
+				$row_array['npwrd']		= trim($r->dasar_npwrd);
+				$row_array['nik'] 		= '@'.$r->penduduk_nik;
+				$row_array['nama'] 		= trim($r->penduduk_nama);
+				$row_array['tempatlhr'] = trim(ucwords(strtolower($r->penduduk_tmpt_lhr)));
+				$row_array['tgllhr'] 	= tgl_indo($r->penduduk_tgl_lahir);
+				$row_array['alamat'] 	= ucwords(strtolower($r->penduduk_alamat)).' Desa '.ucwords(strtolower($r->desa_nama)).' Kecamatan '.ucwords(strtolower($r->kecamatan_nama));
+				$row_array['kabupaten'] = ucwords(strtolower($r->kabupaten_nama)).' - '.ucwords(strtolower($r->provinsi_nama));
+				$row_array['tempat'] 	= ucwords(strtolower($r->tempat_nama)).' '.ucwords(strtolower($r->pasar_nama));
+				$row_array['blok'] 		= trim($r->dasar_blok);
+				$row_array['nomor'] 	= trim($r->dasar_nomor);
+				$row_array['luas'] 		= $r->dasar_panjang.' x '.$r->dasar_lebar;
+				$row_array['jenis'] 	= trim($r->jenis_nama);
+				$row_array['dari'] 		= tgl_indo($r->dasar_dari);
+				$row_array['sampai'] 	= tgl_indo($r->dasar_sampai);
+				$row_array['status'] 	= trim($r->dasar_status);
+				$row_array['berlaku'] 	= $berlaku;
+				$row_array['acc'] 		= $acc;
+				$row_array['print'] 	= $print;
+
+				array_push($dataArray, $row_array);
+			}
+			
+			$nox = $no+6;
+
+			$objPHPExcel->getActiveSheet()->fromArray($dataArray, NULL, 'A7');
+
+			// Set page orientation and size
+			$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+			$objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+			$objPHPExcel->getActiveSheet()->getPageMargins()->setTop(0.50);
+			$objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.50);
+			$objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.50);
+			$objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0.50);
+			//$objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' . $objPHPExcel->getProperties()->getTitle() . '&RPage &P of &N');		 
+			$objPHPExcel->getActiveSheet()
+    			->getHeaderFooter()->setOddFooter('&R&F Page &P / &N');
+			$objPHPExcel->getActiveSheet()
+    			->getHeaderFooter()->setEvenFooter('&R&F Page &P / &N');
+
+			// Set title row bold;
+			$objPHPExcel->getActiveSheet()->getStyle('A6:S6')->getFont()->setBold(true);
+			// Set fills
+			$objPHPExcel->getActiveSheet()->getStyle('A6:S6')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(16);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(25);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(60);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(5);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(5);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(10);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(20);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(16);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(16);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(15);
+			
+			$objPHPExcel->setActiveSheetIndex(0);
+			$sharedStyle1 = new PHPExcel_Style();
+			$sharedStyle2 = new PHPExcel_Style();
+
+			$sharedStyle1->applyFromArray(
+			 array(
+			 		'borders' 	=> array(
+			 		'bottom' 	=> array('style' => PHPExcel_Style_Border::BORDER_THIN),
+			 		'top' 		=> array('style' => PHPExcel_Style_Border::BORDER_THIN),
+			 		'right' 	=> array('style' => PHPExcel_Style_Border::BORDER_THIN),
+			 		'left' 		=> array('style' => PHPExcel_Style_Border::BORDER_THIN)
+			 	),
+			));
+			 
+			$objPHPExcel->getActiveSheet()->setSharedStyle($sharedStyle1, "A6:S$nox");
+			$objPHPExcel->getActiveSheet()->getRowDimension('6')->setRowHeight(20); // Row Height Header
+			$objPHPExcel->getActiveSheet()->getStyle()->getAlignment()->setWrapText(true); 
+			
+			$objPHPExcel->getActiveSheet()->getStyle('A6:S6')->applyFromArray(
+				array(
+			 		'font' => array(
+			 			'bold' 		=> true
+			 		),
+			 		'alignment' 	=> array(
+			 			'horizontal' 	=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+			 			'vertical' 		=> PHPExcel_Style_Alignment::VERTICAL_CENTER
+			 		),
+			 		'borders' 		=> array(
+			 			'top' 		=> array(
+			 				'style' => PHPExcel_Style_Border::BORDER_THIN
+			 			)
+			 		)
+			 	)
+			);
+
+			$objPHPExcel->getActiveSheet()->getStyle('A4:S1000')->getFont()->setName('Tahoma');
+			$objPHPExcel->getActiveSheet()->getStyle('A4:S1000')->getFont()->setSize(8);
+			// Merge cells
+			$objPHPExcel->getActiveSheet()->mergeCells('A2:S2');
+			$objPHPExcel->getActiveSheet()->setCellValue('A2', "LAPORAN DATA PENDASARAN PEDAGANG");
+			$objPHPExcel->getActiveSheet()->mergeCells('A3:S3');
+			$objPHPExcel->getActiveSheet()->setCellValue('A3', "KABUPATEN KUDUS");
+			//$objPHPExcel->getActiveSheet()->mergeCells('A4:S4');
+			//$objPHPExcel->getActiveSheet()->setCellValue('A4', "TAHUN : ".$Tahun1." s/d ".$Tahun2);
+			$objPHPExcel->getActiveSheet()->getStyle('A2:S4')->getFont()->setName('Tahoma');
+			$objPHPExcel->getActiveSheet()->getStyle('A2:S4')->getFont()->setSize(10);
+			$objPHPExcel->getActiveSheet()->getStyle('A3')->getFont()->setSize(10);
+			$objPHPExcel->getActiveSheet()->getStyle('A4')->getFont()->setSize(10);
+			$objPHPExcel->getActiveSheet()->getStyle('A2:S6')->getFont()->setBold(true);
+			$objPHPExcel->getActiveSheet()->getStyle('A2:S6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$objPHPExcel->getActiveSheet()->getStyle('A7:A1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$objPHPExcel->getActiveSheet()->getStyle('B7:B1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('C7:C1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('D7:D1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('E7:E1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('F7:F1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('G7:G1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('H7:H1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('I7:I1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('J7:J1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('K7:K1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('L7:L1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('M7:M1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('N7:N1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('O7:O1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('P7:P1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('Q7:Q1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('R7:R1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('S7:S1000')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			
+			$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);            
+			$date = date('Y-m-d');
+			$time = time();
+			$objWriter->save('download/Data_Pendasaran_'.$date.'_'.$time.'.xlsx');
+			redirect(base_url('download/Data_Pendasaran_'.$date.'_'.$time.'.xlsx'));
+		} else {
+			$this->session->set_flashdata('notification','Data Tidak Ada.');
+	 		redirect(site_url('admin/pendasaran/excel'));
+		}
 	}
 }
 /* Location: ./application/controller/admin/Pendasaran.php */
