@@ -299,7 +299,7 @@ function HitungSubTotalItem(){
                                     <span class="muted">
                                     Status : 
                                     <?php 
-                                    if ($detail->skrd_status == 0) {
+                                    if ($detail->skrd_status == 1) {
                                         echo '<b>BELUM BAYAR</b>';
                                     } else {
                                         echo '<b>BAYAR</b>';

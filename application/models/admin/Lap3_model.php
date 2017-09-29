@@ -111,22 +111,42 @@ class Lap3_model extends CI_Model {
 		$pasar_id	= $this->uri->segment(4);
 		$bulan 		= $this->uri->segment(6);
 		$tahun 		= $this->uri->segment(7);
+		$status 	= $this->uri->segment(8);
 
-		$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, 
-								p.penduduk_nama, r.pasar_nama, t.tempat_nama');
-		$this->db->from('sipp_skrd s');
-		$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
-		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
-		$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
-		$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
-		$this->db->where('s.pasar_id', $pasar_id);
-		$this->db->where('s.skrd_bulan', $bulan);
-		$this->db->where('s.skrd_tahun', $tahun);
-		$this->db->where('s.tempat_id', $tempat_id);		
-		$this->db->order_by('s.skrd_id','asc');
-		$this->db->order_by('s.skrd_tgl_bayar','asc');
-		
-		return $this->db->get();
+		if ($status == 'all') {
+			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, 
+									p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_skrd s');
+			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+			$this->db->where('s.pasar_id', $pasar_id);
+			$this->db->where('s.skrd_bulan', $bulan);
+			$this->db->where('s.skrd_tahun', $tahun);
+			$this->db->where('s.tempat_id', $tempat_id);		
+			$this->db->order_by('s.skrd_id','asc');
+			$this->db->order_by('s.skrd_tgl_bayar','asc');
+			
+			return $this->db->get();
+		} else {
+			$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, 
+									p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+			$this->db->from('sipp_skrd s');
+			$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
+			$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
+			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
+			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
+			$this->db->where('s.pasar_id', $pasar_id);
+			$this->db->where('s.skrd_bulan', $bulan);
+			$this->db->where('s.skrd_tahun', $tahun);
+			$this->db->where('s.tempat_id', $tempat_id);
+			$this->db->where('s.skrd_status', $status);
+			$this->db->order_by('s.skrd_id','asc');
+			$this->db->order_by('s.skrd_tgl_bayar','asc');
+			
+			return $this->db->get();
+		}
 	}
 
 	function select_by_id() {
@@ -184,6 +204,14 @@ class Lap3_model extends CI_Model {
 		$this->db->select('tempat_nama');
 		$this->db->from('sipp_tempat');		
 		$this->db->where('tempat_id', $tempat_id);
+		
+		return $this->db->get();
+	}
+
+	function select_rincian($skrd_id) {
+		$this->db->select('*');
+		$this->db->from('sipp_skrd_item');		
+		$this->db->where('skrd_id', $skrd_id);
 		
 		return $this->db->get();
 	}			

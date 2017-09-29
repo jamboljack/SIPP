@@ -16,9 +16,9 @@ class Dataapi extends REST_Controller {
         $Data_Pedagang = array();
 
         if ($id == '') { // Jika ID NPWRD Kosong
-            $Data_Pedagang[] = array(  'resp_code'  => 'S5', 
-                                       'resp_desc'  => 'Data hasn’t registered',
-                                       'nama'       => '',
+            $Data_Pedagang[] = array(   'resp_code'  => 'S5', 
+                                        'resp_desc'  => 'Data hasn’t registered',
+                                        'nama'       => '',
                                         'pasar'      => '',
                                         'tempat'     => '',
                                         'hp'         => ''
@@ -152,6 +152,7 @@ class Dataapi extends REST_Controller {
                         $skrd_id = $row->skrd_id;
                         $data = array(
                                         'skrd_tgl_bayar'    => date('Y-m-d'),
+                                        'skrd_waktu_bayar'  => date('Y-m-d H:i:s'),
                                         'skrd_status'       => 2,
                                         'skrd_bayar'        => $row->skrd_total,
                                         'skrd_kembali'      => 0,
@@ -215,6 +216,7 @@ class Dataapi extends REST_Controller {
                         $skrd_id = $row->skrd_id;
                         $data = array(
                                         'skrd_tgl_bayar'    => '',
+                                        'skrd_waktu_bayar'  => '',
                                         'skrd_status'       => 1,
                                         'skrd_bayar'        => 0,
                                         'skrd_kembali'      => 0,
@@ -232,7 +234,7 @@ class Dataapi extends REST_Controller {
                         $Data_Tagihan[] = array('resp_code' => 'S1', 'resp_desc' => 'Mailfunction System' );
                     }
                 } else {
-                    $Data_Tagihan[] = array('resp_code' => 'S6', 'resp_desc' => 'Data Expired');
+                    $Data_Tagihan[] = array('resp_code' => 'S6', 'resp_desc' => 'Tagihan Belum Terbayar');
                 }
             } else {
                 $Data_Tagihan[] = array('resp_code' => 'S3', 'resp_desc' => 'Data Not Found');
@@ -242,5 +244,4 @@ class Dataapi extends REST_Controller {
         }
     }
 }
-
 /* Location: ./application/controllers/Dataapi.php */

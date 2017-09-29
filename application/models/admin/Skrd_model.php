@@ -424,6 +424,7 @@ class Skrd_model extends CI_Model {
 
 			$data = array(
 				'skrd_id'				=> $skrd_id,
+				'komponen_id'			=> $r->komponen_id,
 				'item_kode'				=> $r->komponen_kode,
 				'item_uraian'			=> $r->komponen_uraian,
 				'item_luas'				=> $luas,

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="<?php echo base_url(); ?>img/kudus.jpg">
-<title>Print Laporan Retribusi Pedagang</title>
+<title>Print Laporan Pembayaran Retribusi</title>
 <style type="text/css">
 	table {
     	border: 1px solid #ccccb3;    	
@@ -38,6 +38,11 @@
         border-radius: 2px;
         background: white;
     }
+
+    table #rincian {
+        border: none;
+        width: 100%;
+    }
 </style>
 
 <style type="text/css">
@@ -61,70 +66,20 @@
 </style>
 </head>
 
-<?php 
-$bln        = $this->uri->segment(6);
-switch ($bln) {
-case 1:
-    $bulan = "Januari";
-    break;
-case 2:
-    $bulan = "Februari";
-    break;
-case 3:
-    $bulan = "Maret";
-    break;
-case 4:
-    $bulan = "April";
-    break;
-case 5:
-    $bulan = "Mei";
-    break;
-case 6:
-    $bulan = "Juni";
-    break;
-case 7:
-    $bulan = "Juli";
-    break;
-case 8:
-    $bulan = "Agustus";
-    break;
-case 9:
-    $bulan = "September";
-    break;
-case 10:
-    $bulan = "Oktober";
-    break;
-case 11:
-    $bulan = "November";
-    break;
-case 12:
-    $bulan = "Desember";
-    break;
-}
-?>
-
 <body>
 <a href="#Print">
 <img src="<?php echo base_url(); ?>img/print_icon.gif" height="36" width="32" title="Print" id="print-link" onClick="window.print(); return false;" />
 </a>
 <div class="page">
-<div align="center">LAPORAN RETRIBUSI PEDAGANG</div>
+<div align="center">LAPORAN DETAIL PEMBAYARAN RETRIBUSI</div>
 <div align="center">
 <?php 
 echo $detailpasar->pasar_nama;
 ?>
 </div>
-<?php 
-if ($this->uri->segment(8) == 'all') {
-    $status = 'SEMUA';
-} elseif ($this->uri->segment(8) == '1') {
-    $status = 'BELUM BAYAR';
-} elseif ($this->uri->segment(8) == '2') {
-    $status = 'SUDAH BAYAR';
-}
-?>
-<div align="center">PERIODE : <?php echo $bulan.' '.$this->uri->segment(7); ?></div>
-<div align="center">TEMPAT : <?php echo $detailtempat->tempat_nama; ?>, STATUS : <?php echo $status; ?></div>
+
+<div align="center">PERIODE : <?php echo strtoupper(tgl_indo($this->uri->segment(6))).' s/d '.strtoupper(tgl_indo($this->uri->segment(7))); ?></div>
+<div align="center">TEMPAT : <?php echo $detailtempat->tempat_nama; ?></div>
 <br>
 <table align="center">
     <tr>
@@ -139,6 +94,7 @@ if ($this->uri->segment(8) == 'all') {
     	$no = 1;
         $tot = 0;
     	foreach($daftarlist as $r) {
+            $skrd_id = $r->skrd_id;
             $ttl    = ($r->skrd_total+$r->skrd_bunga+$r->skrd_kenaikan);
             $total  = '<b>Rp. '.number_format($ttl, 0, '.', ',').'</b>';
 
@@ -163,6 +119,35 @@ if ($this->uri->segment(8) == 'all') {
         <td align="center" valign="top"><?php echo $tanggal_byr; ?></td>
         <td align="right" valign="top"><?php echo $total; ?></td>
     </tr>
+    <tr>
+        <td colspan="6">
+            <table align="center" id="rincian">
+                <tr>
+                    <th width="10%">Kode Rekening</th>
+                    <th width="20%">Uraian Retribusi</th>
+                    <th width="10%">Luas</th>
+                    <th width="10%">Tarif/Hari</th>
+                    <th width="10%">Jml. Hari</th>
+                    <th width="13%">Sub Total</th>
+                </tr>
+                <?php 
+                $listRinci = $this->lap4_model->select_rincian($skrd_id)->result();
+                foreach($listRinci as $x) {
+                ?>
+                <tr>
+                    <td><?php echo $x->item_kode; ?></td>
+                    <td><?php echo $x->item_uraian; ?></td>
+                    <td align="right"><?php echo $x->item_luas.' '.$x->item_satuan; ?></td>
+                    <td align="right"><?php echo $x->item_tarif; ?></td>
+                    <td align="right"><?php echo $x->item_hari; ?></td>
+                    <td align="right"><?php echo number_format($x->item_subtotal); ?></td>
+                </tr>
+                <?php
+                } 
+                ?>
+            </table>
+        </td>
+    </tr>
     <?php 
         $no++;
     }
@@ -170,6 +155,10 @@ if ($this->uri->segment(8) == 'all') {
     <tr>
         <td colspan="4" align="center"><b>SUB TOTAL : <?php echo $detailtempat->tempat_nama; ?></b></td>
         <td align="right" colspan="2"><?php echo '<b>Rp. '.number_format($tot, 0, '.', ',').'</b>'; ?></td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center"><b>TOTAL PEMBAYARAN :</b></td>
+        <td align="right" colspan="2"><?php echo '<b>Rp. '.number_format($detail->totalbayar, 0, '.', ',').'</b>'; ?></td>
     </tr>
   </table>
 </div>

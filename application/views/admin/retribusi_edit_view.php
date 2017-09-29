@@ -203,7 +203,7 @@ switch ($bln) {
                                     }
 
                                     if ($detail->skrd_status == 2) {
-                                        echo " / ".tgl_indo($detail->skrd_tgl_bayar)." / Kasir : ".$detail->user_username;
+                                        echo " / ".tgl_indo($detail->skrd_tgl_bayar)." / Jam : ".date("H:i", strtotime($detail->skrd_waktu_bayar))." WIB / Kasir : ".$detail->user_username;
                                     }
                                     ?>
                                     </span>

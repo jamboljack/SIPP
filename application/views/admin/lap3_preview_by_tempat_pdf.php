@@ -90,8 +90,17 @@ case 12:
 echo $detailpasar->pasar_nama;
 ?>
 </div>
-<div align="center">TEMPAT : <?php echo $detailtempat->tempat_nama; ?></div>
-<div align="center">PERIODE : <?php echo $bulan.' '.$this->uri->segment(7)?></div>
+<?php 
+if ($this->uri->segment(8) == 'all') {
+    $status = 'SEMUA';
+} elseif ($this->uri->segment(8) == '1') {
+    $status = 'BELUM BAYAR';
+} elseif ($this->uri->segment(8) == '2') {
+    $status = 'SUDAH BAYAR';
+}
+?>
+<div align="center">PERIODE : <?php echo $bulan.' '.$this->uri->segment(7); ?></div>
+<div align="center">TEMPAT : <?php echo $detailtempat->tempat_nama; ?>, STATUS : <?php echo $status; ?></div>
 <br>
 <table align="center">
     <tr>

@@ -98,5 +98,22 @@ class Lap3 extends CI_Controller{
 		redirect("download/$filename.pdf");			
 	}
 	
+	public function previewdetail() {  
+		$pasar_id 	= $this->uri->segment(4);
+		$tempat_id 	= $this->uri->segment(5);
+		$bulan 		= $this->uri->segment(6);
+		$tahun 		= $this->uri->segment(7);
+		$status 	= $this->uri->segment(8);
+
+		$data['detailpasar'] 	= $this->lap3_model->select_pasar_by_id($pasar_id)->row();
+		if ($tempat_id == 'all') {
+			$data['listTempat'] = $this->lap3_model->select_tempat()->result();
+			$this->load->view('admin/lap3_previewdetail_all', $data);
+		} else {
+			$data['detailtempat'] 	= $this->lap3_model->select_tempat_by_id($tempat_id)->row();
+			$data['daftarlist'] 	= $this->lap3_model->select_by_id()->result();			
+			$this->load->view('admin/lap3_previewdetail_by_tempat', $data);
+		}
+	}
 }
 /* Location: ./application/controllers/admin/Lap3.php */

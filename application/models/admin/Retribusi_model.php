@@ -315,6 +315,7 @@ class Retribusi_model extends CI_Model {
 
 		$data = array(
 				'skrd_tgl_bayar'	=> date('Y-m-d'),
+				'skrd_waktu_bayar'  => date('Y-m-d H:i:s'),
 				'skrd_status'		=> 2,
 				'skrd_bayar'		=> $this->input->post('jumlahbayar', 'true'),
 				'skrd_kembali'		=> $this->input->post('kembalian', 'true'),
@@ -330,6 +331,7 @@ class Retribusi_model extends CI_Model {
 	function delete_data($kode) {
 		$data = array(
 				'skrd_tgl_bayar'	=> '',
+				'skrd_waktu_bayar'  => '',
 				'skrd_status'		=> 1,
 				'skrd_bayar'		=> 0,
 			   	'user_username' 	=> $this->session->userdata('username'),
