@@ -22,9 +22,11 @@
     $(function() {
         $(document).on("click",'.edit_button', function(e) {
             var id      = $(this).data('id');
-            var name    = $(this).data('name');            
+            var name    = $(this).data('name');
+            var kd_rek    = $(this).data('kd_rek');
             $(".tempat_id").val(id);
-            $(".tempat_name").val(name);            
+            $(".tempat_name").val(name);
+            $(".tempat_kd_rek").val(kd_rek);
         })
     });
 </script>
@@ -59,6 +61,12 @@ if ($this->session->flashdata('notification')) { ?>
                     <div class="col-md-9 has-error">
                         <input type="text" class="form-control" placeholder="Enter Jenis Tempat" name="nama" autocomplete="off" required>
                     </div>
+                </div>
+                <div class="form-group">                    
+                    <label class="col-md-3 control-label">Kode Rekening</label>
+                    <div class="col-md-3 has-error">
+                        <input type="text" class="form-control" placeholder="Enter Kode Rekening" name="kd_rek" maxlength="2" autocomplete="off" required>
+                    </div>
                 </div>                
             </div>
                         
@@ -89,7 +97,13 @@ if ($this->session->flashdata('notification')) { ?>
                     <div class="col-md-9 has-error">
                         <input type="text" class="form-control tempat_name" placeholder="Enter Jenis Tempat" name="nama" autocomplete="off" required>
                     </div>
-                </div>                
+                </div>
+                <div class="form-group">                    
+                    <label class="col-md-3 control-label">Kode Rekening</label>
+                    <div class="col-md-3 has-error">
+                        <input type="text" class="form-control tempat_kd_rek" placeholder="Enter Kode Rekening" name="kd_rek" maxlength="2" autocomplete="off" required>
+                    </div>
+                </div>
             </div>
                         
             <div class="modal-footer">
@@ -141,8 +155,10 @@ if ($this->session->flashdata('notification')) { ?>
                         <table class="table table-striped table-bordered table-hover" id="tableData">
                         <thead>
                             <tr>
-                                <th width="5%">No</th>                                
-                                <th>Jenis Tempat</th>                                
+                                <th width="5%">No</th>
+                                <th width="5%">Kode</th>
+                                <th>Jenis Tempat</th>
+                                <th width="10%">Kode Rekening</th>
                                 <th width="16%">Aksi</th>
                             </tr>
                         </thead>

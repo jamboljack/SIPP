@@ -117,28 +117,6 @@ class Pendasaran_model extends CI_Model {
         $user_username = $this->session->userdata('username');
 		
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatus', 'true')) {
-            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
-        	}
-        	if ($this->input->post('lstStatusCetak', 'true')) {
-            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
-        	}
-        	if ($this->input->post('lstStatusACC', 'true')) {
-            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
-        	}
-        	if ($this->input->post('lstStatusSurat', 'true')) {
-            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
-        	}
-
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
 			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_dasar d');
@@ -146,28 +124,6 @@ class Pendasaran_model extends CI_Model {
 			$this->db->join('sipp_pasar s', 'd.pasar_id = s.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('d.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('d.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatus', 'true')) {
-            	$this->db->where('d.dasar_status', $this->input->post('lstStatus', 'true'));
-        	}
-        	if ($this->input->post('lstStatusCetak', 'true')) {
-            	$this->db->where('d.dasar_st_print', $this->input->post('lstStatusCetak', 'true'));
-        	}
-        	if ($this->input->post('lstStatusACC', 'true')) {
-            	$this->db->where('d.dasar_acc', $this->input->post('lstStatusACC', 'true'));
-        	}
-        	if ($this->input->post('lstStatusSurat', 'true')) {
-            	$this->db->where('d.dasar_data', $this->input->post('lstStatusSurat', 'true'));
-        	}
-
 			$this->db->select('d.dasar_id, d.dasar_no, d.dasar_sampai, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor,
 			d.dasar_luas, d.dasar_status, d.dasar_st_print, d.dasar_acc, d.dasar_data, p.penduduk_nama, s.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_dasar d');

@@ -79,7 +79,7 @@ class Lap4_model extends CI_Model {
 		$tgl2 		= $this->uri->segment(7);
 
 		$this->db->select('s.*, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, 
-							p.penduduk_nama, r.pasar_nama, t.tempat_nama');
+							p.penduduk_nama, r.pasar_nama, t.tempat_nama, t.tempat_kd_rek');
 		$this->db->from('sipp_skrd s');
 		$this->db->join('sipp_dasar d', 's.dasar_id = d.dasar_id');
 		$this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
@@ -150,7 +150,7 @@ class Lap4_model extends CI_Model {
 	}
 
 	function select_tempat_by_id($tempat_id) {
-		$this->db->select('tempat_nama');
+		$this->db->select('tempat_nama, tempat_kd_rek');
 		$this->db->from('sipp_tempat');		
 		$this->db->where('tempat_id', $tempat_id);
 		

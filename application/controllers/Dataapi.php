@@ -32,6 +32,7 @@ class Dataapi extends REST_Controller {
             $this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
             $this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
             $this->db->where('d.dasar_npwrd', $id);
+            $this->db->where('d.dasar_data', 1); // Masih Berlaku
 
             $data = $this->db->get()->row();
             if  (count($data) > 0) { 
@@ -75,6 +76,7 @@ class Dataapi extends REST_Controller {
             $this->db->from('sipp_dasar d');
             $this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
             $this->db->where('d.dasar_npwrd', $id);
+            $this->db->where('d.dasar_data', 1); // Masih Berlaku
 
             $data = $this->db->get()->row();
             if (count($data) > 0) { // Jika Data Pedagang Ada, Cek Total Tagihan
@@ -134,6 +136,7 @@ class Dataapi extends REST_Controller {
             $this->db->from('sipp_dasar d');
             $this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
             $this->db->where('d.dasar_npwrd', $id);
+            $this->db->where('d.dasar_data', 1); // Masih Berlaku
 
             $data = $this->db->get()->row();
             if (count($data) > 0) { // Jika Data Pedagang Ada, Cek Total Tagihan
@@ -198,6 +201,7 @@ class Dataapi extends REST_Controller {
             $this->db->from('sipp_dasar d');
             $this->db->join('sipp_penduduk p', 'd.penduduk_id = p.penduduk_id');
             $this->db->where('d.dasar_npwrd', $id);
+            $this->db->where('d.dasar_data', 1); // Masih Berlaku
 
             $data = $this->db->get()->row();
             if (count($data) > 0) { // Jika Data Pedagang Ada, Cek Total Tagihan

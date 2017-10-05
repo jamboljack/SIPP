@@ -29,9 +29,13 @@ class Tempat extends CI_Controller {
             $tempat_id = $r->tempat_id;
 
             $row[] = $no;
+            $row[] = $r->tempat_kode;
             $row[] = $r->tempat_nama;
-            $row[] = '<button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="'.$r->tempat_id.'" data-name="'.$r->tempat_nama.'" title="Edit Data"><i class="icon-pencil"></i> Edit</button>
-            		<a onclick="hapusData('.$tempat_id.')"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button></a>';
+            $row[] = $r->tempat_kd_rek;
+            $row[] = '<button type="button" class="btn btn-primary btn-xs edit_button" data-toggle="modal" data-target="#edit" data-id="'.$r->tempat_id.'" data-name="'.$r->tempat_nama.'" data-kd_rek="'.$r->tempat_kd_rek.'" title="Edit Data">
+            			<i class="icon-pencil"></i> Edit
+            			</button>
+            			<a onclick="hapusData('.$tempat_id.')"><button class="btn btn-danger btn-xs" title="Hapus Data"><i class="icon-trash"></i> Hapus</button></a>';
             
             $data[] = $row;
         }

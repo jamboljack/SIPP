@@ -99,12 +99,19 @@ echo $detailpasar->pasar_nama;
     $total  = 0;
     foreach($listKomponen as $k) {
         $komponen_id = $k->komponen_id;
+        // Tambahan
+        if ($k->komponen_id == 1) {
+            $komponen_kode = trim($k->komponen_kode.$detailtempat->tempat_kd_rek);
+        } else {
+            $komponen_kode = trim($k->komponen_kode);
+        }
+
         $dataSub     = $this->lap4_model->select_total($pasar_id, $tempat_id, $tgl1, $tgl2, $komponen_id)->row();
         $total       = ($total+$dataSub->subtotal);
     ?>
     <tr>
         <td align="center" valign="top"><?php echo $no; ?></td>                                
-        <td valign="top"><?php echo $k->komponen_kode; ?></td>                                
+        <td valign="top"><?php echo $komponen_kode; ?></td>                                
         <td valign="top"><?php echo $k->komponen_uraian; ?></td>
         <td align="right" valign="top"><?php echo number_format($dataSub->subtotal,0,'',','); ?></td>
     </tr>

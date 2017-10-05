@@ -90,7 +90,8 @@ echo $detailpasar->pasar_nama;
 
     foreach($listTempat as $d) {
         $tempat_id  = $d->tempat_id;
-        $cekdata    = $this->lap4_model->select_detail_by_tempat($tempat_id)->result(); 
+        $Kd_Rek     = $d->tempat_kd_rek;
+        $cekdata    = $this->lap4_model->select_detail_by_tempat($tempat_id)->row(); 
         if (count($cekdata) > 0) {
     ?>
     <tr>
@@ -100,11 +101,18 @@ echo $detailpasar->pasar_nama;
     $no = 1;
     foreach($listKomponen as $k) {
         $komponen_id = $k->komponen_id;
+        // Tambahan
+        if ($k->komponen_id == 1) {
+            $komponen_kode = trim($k->komponen_kode.$Kd_Rek);
+        } else {
+            $komponen_kode = trim($k->komponen_kode);
+        }
+
         $dataSub     = $this->lap4_model->select_total($pasar_id, $tempat_id, $tgl1, $tgl2, $komponen_id)->row();
     ?>
     <tr>
         <td align="center" valign="top"><?php echo $no; ?></td>                                
-        <td valign="top"><?php echo $k->komponen_kode; ?></td>                                
+        <td valign="top"><?php echo $komponen_kode; ?></td>                                
         <td valign="top"><?php echo $k->komponen_uraian; ?></td>
         <td align="right" valign="top"><?php echo number_format($dataSub->subtotal,0,'',','); ?></td>
     </tr>

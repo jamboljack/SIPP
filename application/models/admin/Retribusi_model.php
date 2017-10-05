@@ -113,25 +113,6 @@ class Retribusi_model extends CI_Model {
         $user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan', 'true')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
-			}
-        	if ($this->input->post('tahun', 'true')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
-        	}
-        	if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatusBayar', 'true')) {
-            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
-        	}
-
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
 			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
@@ -140,25 +121,6 @@ class Retribusi_model extends CI_Model {
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan', 'true')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
-			}
-        	if ($this->input->post('tahun', 'true')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
-        	}
-        	if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatusBayar', 'true')) {
-            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
-        	}
-
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
 			 d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');

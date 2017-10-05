@@ -119,28 +119,6 @@ class Skrd_model extends CI_Model {
         $user_username 	= $this->session->userdata('username');
 
 		if ($this->session->userdata('level') == 'Admin') {
-			if ($this->input->post('lstBulan', 'true')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
-			}
-        	if ($this->input->post('tahun', 'true')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
-        	}
-        	if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatusCetak', 'true')) {
-            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
-        	}
-        	if ($this->input->post('lstStatusBayar', 'true')) {
-            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
-        	}
-
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
 			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
@@ -149,28 +127,6 @@ class Skrd_model extends CI_Model {
 			$this->db->join('sipp_pasar r', 'd.pasar_id = r.pasar_id');
 			$this->db->join('sipp_tempat t', 'd.tempat_id = t.tempat_id');
 		} else {
-			if ($this->input->post('lstBulan', 'true')) {
-            	$this->db->where('s.skrd_bulan', $this->input->post('lstBulan', 'true'));
-			}
-        	if ($this->input->post('tahun', 'true')) {
-            	$this->db->where('s.skrd_tahun', $this->input->post('tahun', 'true'));
-        	}
-        	if ($this->input->post('lstPasar', 'true')) {
-            	$this->db->where('s.pasar_id', $this->input->post('lstPasar', 'true'));
-        	}
-        	if ($this->input->post('lstTempat', 'true')) {
-            	$this->db->where('s.tempat_id', $this->input->post('lstTempat', 'true'));
-        	}
-        	if ($this->input->post('blok', 'true')) {
-            	$this->db->where('d.dasar_blok', strtoupper($this->input->post('blok', 'true')));
-        	}
-        	if ($this->input->post('lstStatusCetak', 'true')) {
-            	$this->db->where('s.skrd_st_print', $this->input->post('lstStatusCetak', 'true'));
-        	}
-        	if ($this->input->post('lstStatusBayar', 'true')) {
-            	$this->db->where('s.skrd_status', $this->input->post('lstStatusBayar', 'true'));
-        	}
-
 			$this->db->select('s.skrd_id, s.skrd_no, s.skrd_bulan, s.skrd_tahun, s.skrd_total, s.skrd_bunga, s.skrd_kenaikan, s.skrd_status,
 			 s.skrd_st_print, d.dasar_npwrd, d.dasar_blok, d.dasar_nomor, d.dasar_luas, p.penduduk_nama, r.pasar_nama, t.tempat_nama');
 			$this->db->from('sipp_skrd s');
@@ -259,9 +215,7 @@ class Skrd_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	function select_pedagang($pasar_id) {
-		$tempat_id 	= $this->input->post('lstTempat', 'true');
-
+	function select_pedagang($pasar_id, $tempat_id) {
 		$this->db->select('*');
 		$this->db->from('sipp_dasar');
 		$this->db->where('pasar_id', $pasar_id);
@@ -373,7 +327,6 @@ class Skrd_model extends CI_Model {
 		$kode_pasar	= $this->input->post('kode_pasar', 'true'); // Kode Pasar
 		$nourut 	= $this->skrd_model->no_urut(); // No Urut SKRD
 		$no_skrd 	= $nourut.'/'.$kode_tempat.'/511.2/'.$kode_pasar.'/'.$bulan.'/'.$tahun;
-
 		//$jumHari 	= cal_days_in_month(CAL_GREGORIAN, $bln, $tahun); // Jumlah Hari 1 Bulan
 		$jumHari 	= $this->input->post('jumlahhari'); // Nilai dari Text Box
 
@@ -396,6 +349,11 @@ class Skrd_model extends CI_Model {
 		$this->db->insert('sipp_skrd', $data);
 		$skrd_id = $this->db->insert_id();
 
+		// Kode Rek Restribusi (Tambahan)
+		$dtKode 	= "SELECT tempat_kd_rek FROM sipp_tempat WHERE tempat_id='$tempat_id'";
+		$hslKode 	= $this->db->query($dtKode)->row();
+		$Kd_Rek 	= trim($hslKode->tempat_kd_rek);
+
 		// Cari Komponen Retribusi
 		$retribusi 	= $this->skrd_model->select_komponen()->result();
 		foreach($retribusi as $r) {
@@ -410,6 +368,7 @@ class Skrd_model extends CI_Model {
 								AND kelas_id = '$kelas_id' AND tempat_id = '$tempat_id'";
 				$hasil 		= $this->db->query($sql)->row();
 				$harga  	= $hasil->tarif_harga;
+
 				if ($hasil->st_tarif == 'H') {
 					$subtotal 	= ($harga*$jumHari); // per Hari (Harga * Hari)
 				} else {
@@ -422,10 +381,17 @@ class Skrd_model extends CI_Model {
 				$subtotal 	= ($harga*$jumHari);
 			}
 
+			// Tambahan
+			if ($r->komponen_id == 1) {
+				$komponen_kode = trim($r->komponen_kode.$Kd_Rek);
+			} else {
+				$komponen_kode = trim($r->komponen_kode);
+			}
+
 			$data = array(
 				'skrd_id'				=> $skrd_id,
 				'komponen_id'			=> $r->komponen_id,
-				'item_kode'				=> $r->komponen_kode,
+				'item_kode'				=> $komponen_kode,
 				'item_uraian'			=> $r->komponen_uraian,
 				'item_luas'				=> $luas,
 				'item_tarif'			=> $harga,

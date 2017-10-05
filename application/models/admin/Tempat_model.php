@@ -2,9 +2,9 @@
 
 class Tempat_model extends CI_Model {
 	var $table 			= 'sipp_tempat';
-    var $column_order 	= array(null, 'tempat_nama', null);
-    var $column_search 	= array('tempat_nama');
-    var $order 			= array('tempat_nama' => 'asc');
+    var $column_order 	= array(null, 'tempat_kode', 'tempat_nama', 'tempat_kd_rek', null);
+    var $column_search 	= array('tempat_nama', 'tempat_kd_rek');
+    var $order 			= array('tempat_id' => 'asc');
 
 	function __construct() {
 		parent::__construct();	
@@ -70,6 +70,7 @@ class Tempat_model extends CI_Model {
 		$data = array(
 				'tempat_kode'			=> $kode,
 				'tempat_nama'			=> $nama,
+				'tempat_kd_rek'			=> $this->input->post('kd_rek', 'true'),
 		   		'tempat_date_update' 	=> date('Y-m-d'),
 		   		'tempat_time_update' 	=> date('Y-m-d H:i:s')
 		);
@@ -86,6 +87,7 @@ class Tempat_model extends CI_Model {
 		$data = array(
 				'tempat_kode'			=> $kode,
 				'tempat_nama'			=> $nama,
+				'tempat_kd_rek'			=> $this->input->post('kd_rek', 'true'),
 		   		'tempat_date_update' 	=> date('Y-m-d'),
 		   		'tempat_time_update' 	=> date('Y-m-d H:i:s')
 		);

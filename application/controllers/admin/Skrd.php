@@ -183,11 +183,13 @@ class Skrd extends CI_Controller {
 
 	public function savedata() {
 		$pasar_id	= $this->input->post('lstPasar', 'true');
-		// Cari Data Pedagang by Pasar
-		$pedagang 	= $this->skrd_model->select_pedagang($pasar_id)->result();
+		$tempat_id 	= $this->input->post('lstTempat', 'true');
+		// Cari Data Pedagang by Pasar and Tempat
+		$pedagang 	= $this->skrd_model->select_pedagang($pasar_id, $tempat_id)->result();
 		foreach ($pedagang as $p) {
 			$dasar_id 	= $p->dasar_id;
 			$cek_skrd 	= $this->skrd_model->select_skrd($dasar_id)->row(); // Cari Data SKRD by Periode
+			
 			if (count($cek_skrd) == 0) { // Belum Ada
 				$this->skrd_model->insert_data($dasar_id);
 			}
